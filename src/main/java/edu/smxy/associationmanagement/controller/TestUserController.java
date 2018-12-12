@@ -1,19 +1,21 @@
 package edu.smxy.associationmanagement.controller;
 
 import edu.smxy.associationmanagement.domain.User;
+import edu.smxy.associationmanagement.services.users.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/testboot")
+@RequestMapping("/user")
 public class TestUserController {
+    @Autowired
+    private UserService userService;
 
-    @RequestMapping("getuser")
-    public User getUser(){
-        User user=new User();
-        user.setName("sdh");
-        return user;
+    @ResponseBody
+    @PostMapping("/adduser")
+    public int addUser(User user) {
+        return userService.addUser(user);
     }
 }
