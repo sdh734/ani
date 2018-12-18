@@ -1,7 +1,5 @@
 package edu.smxy.associationmanagement.services.users.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import edu.smxy.associationmanagement.domain.User;
 import edu.smxy.associationmanagement.mapper.UserMapper;
 import edu.smxy.associationmanagement.services.users.UserService;

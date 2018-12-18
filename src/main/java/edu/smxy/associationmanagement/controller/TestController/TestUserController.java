@@ -1,4 +1,4 @@
-package edu.smxy.associationmanagement.controller;
+package edu.smxy.associationmanagement.controller.TestController;
 
 import edu.smxy.associationmanagement.domain.User;
 import edu.smxy.associationmanagement.services.users.UserService;
