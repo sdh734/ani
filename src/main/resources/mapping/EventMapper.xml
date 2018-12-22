@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.smxy.associationmanagement.mapper.EventMapper" >
+  <resultMap id="BaseResultMap" type="edu.smxy.associationmanagement.domain.Event" >
+    <id column="eventid" property="eventid" jdbcType="INTEGER" />
+    <result column="event_name" property="eventName" jdbcType="VARCHAR" />
+    <result column="event_starttime" property="eventStarttime" jdbcType="TIMESTAMP" />
+    <result column="event_endtime" property="eventEndtime" jdbcType="TIMESTAMP" />
+    <result column="enent_authorid" property="enentAuthorid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    eventid, event_name, event_starttime, event_endtime, enent_authorid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_event
+    where eventid = #{eventid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_event
+    where eventid = #{eventid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="edu.smxy.associationmanagement.domain.Event" >
+    insert into t_event (eventid, event_name, event_starttime, 
+      event_endtime, enent_authorid)
+    values (#{eventid,jdbcType=INTEGER}, #{eventName,jdbcType=VARCHAR}, #{eventStarttime,jdbcType=TIMESTAMP}, 
+      #{eventEndtime,jdbcType=TIMESTAMP}, #{enentAuthorid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="edu.smxy.associationmanagement.domain.Event" >
+    insert into t_event
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eventid != null" >
+        eventid,
+      </if>
+      <if test="eventName != null" >
+        event_name,
+      </if>
+      <if test="eventStarttime != null" >
+        event_starttime,
+      </if>
+      <if test="eventEndtime != null" >
+        event_endtime,
+      </if>
+      <if test="enentAuthorid != null" >
+        enent_authorid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eventid != null" >
+        #{eventid,jdbcType=INTEGER},
+      </if>
+      <if test="eventName != null" >
+        #{eventName,jdbcType=VARCHAR},
+      </if>
+      <if test="eventStarttime != null" >
+        #{eventStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventEndtime != null" >
+        #{eventEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enentAuthorid != null" >
+        #{enentAuthorid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.smxy.associationmanagement.domain.Event" >
+    update t_event
+    <set >
+      <if test="eventName != null" >
+        event_name = #{eventName,jdbcType=VARCHAR},
+      </if>
+      <if test="eventStarttime != null" >
+        event_starttime = #{eventStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventEndtime != null" >
+        event_endtime = #{eventEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enentAuthorid != null" >
+        enent_authorid = #{enentAuthorid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where eventid = #{eventid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.smxy.associationmanagement.domain.Event" >
+    update t_event
+    set event_name = #{eventName,jdbcType=VARCHAR},
+      event_starttime = #{eventStarttime,jdbcType=TIMESTAMP},
+      event_endtime = #{eventEndtime,jdbcType=TIMESTAMP},
+      enent_authorid = #{enentAuthorid,jdbcType=INTEGER}
+    where eventid = #{eventid,jdbcType=INTEGER}
+  </update>
+</mapper>

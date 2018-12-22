@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.smxy.associationmanagement.mapper.AssociationMapper" >
+  <resultMap id="BaseResultMap" type="edu.smxy.associationmanagement.domain.Association" >
+    <id column="associationid" property="associationid" jdbcType="INTEGER" />
+    <result column="association_name" property="associationName" jdbcType="VARCHAR" />
+    <result column="presidentid" property="presidentid" jdbcType="INTEGER" />
+    <result column="creation_time" property="creationTime" jdbcType="TIMESTAMP" />
+    <result column="is_registered" property="isRegistered" jdbcType="BIT" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    associationid, association_name, presidentid, creation_time, is_registered, count
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_association
+    where associationid = #{associationid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_association
+    where associationid = #{associationid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="edu.smxy.associationmanagement.domain.Association" >
+    insert into t_association (associationid, association_name, presidentid, 
+      creation_time, is_registered, count
+      )
+    values (#{associationid,jdbcType=INTEGER}, #{associationName,jdbcType=VARCHAR}, #{presidentid,jdbcType=INTEGER}, 
+      #{creationTime,jdbcType=TIMESTAMP}, #{isRegistered,jdbcType=BIT}, #{count,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="edu.smxy.associationmanagement.domain.Association" >
+    insert into t_association
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="associationid != null" >
+        associationid,
+      </if>
+      <if test="associationName != null" >
+        association_name,
+      </if>
+      <if test="presidentid != null" >
+        presidentid,
+      </if>
+      <if test="creationTime != null" >
+        creation_time,
+      </if>
+      <if test="isRegistered != null" >
+        is_registered,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="associationid != null" >
+        #{associationid,jdbcType=INTEGER},
+      </if>
+      <if test="associationName != null" >
+        #{associationName,jdbcType=VARCHAR},
+      </if>
+      <if test="presidentid != null" >
+        #{presidentid,jdbcType=INTEGER},
+      </if>
+      <if test="creationTime != null" >
+        #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isRegistered != null" >
+        #{isRegistered,jdbcType=BIT},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.smxy.associationmanagement.domain.Association" >
+    update t_association
+    <set >
+      <if test="associationName != null" >
+        association_name = #{associationName,jdbcType=VARCHAR},
+      </if>
+      <if test="presidentid != null" >
+        presidentid = #{presidentid,jdbcType=INTEGER},
+      </if>
+      <if test="creationTime != null" >
+        creation_time = #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isRegistered != null" >
+        is_registered = #{isRegistered,jdbcType=BIT},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+    </set>
+    where associationid = #{associationid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.smxy.associationmanagement.domain.Association" >
+    update t_association
+    set association_name = #{associationName,jdbcType=VARCHAR},
+      presidentid = #{presidentid,jdbcType=INTEGER},
+      creation_time = #{creationTime,jdbcType=TIMESTAMP},
+      is_registered = #{isRegistered,jdbcType=BIT},
+      count = #{count,jdbcType=INTEGER}
+    where associationid = #{associationid,jdbcType=INTEGER}
+  </update>
+</mapper>

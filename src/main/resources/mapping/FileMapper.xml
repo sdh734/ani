@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.smxy.associationmanagement.mapper.FileMapper" >
+  <resultMap id="BaseResultMap" type="edu.smxy.associationmanagement.domain.File" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="filename" property="filename" jdbcType="VARCHAR" />
+    <result column="filepath" property="filepath" jdbcType="VARCHAR" />
+    <result column="eventid" property="eventid" jdbcType="INTEGER" />
+    <result column="authorid" property="authorid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, filename, filepath, eventid, authorid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_file
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByEvent" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List"/>
+    from t_file
+    where eventid = #{eventid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByAuthor" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List"/>
+    from t_file
+    where authorid = #{authorid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_file
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="edu.smxy.associationmanagement.domain.File" >
+    insert into t_file (id, filename, filepath, 
+      eventid, authorid)
+    values (#{id,jdbcType=INTEGER}, #{filename,jdbcType=VARCHAR}, #{filepath,jdbcType=VARCHAR}, 
+      #{eventid,jdbcType=INTEGER}, #{authorid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="edu.smxy.associationmanagement.domain.File" >
+    insert into t_file
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="filename != null" >
+        filename,
+      </if>
+      <if test="filepath != null" >
+        filepath,
+      </if>
+      <if test="eventid != null" >
+        eventid,
+      </if>
+      <if test="authorid != null" >
+        authorid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="filename != null" >
+        #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null" >
+        #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="eventid != null" >
+        #{eventid,jdbcType=INTEGER},
+      </if>
+      <if test="authorid != null" >
+        #{authorid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.smxy.associationmanagement.domain.File" >
+    update t_file
+    <set >
+      <if test="filename != null" >
+        filename = #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null" >
+        filepath = #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="eventid != null" >
+        eventid = #{eventid,jdbcType=INTEGER},
+      </if>
+      <if test="authorid != null" >
+        authorid = #{authorid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.smxy.associationmanagement.domain.File" >
+    update t_file
+    set filename = #{filename,jdbcType=VARCHAR},
+      filepath = #{filepath,jdbcType=VARCHAR},
+      eventid = #{eventid,jdbcType=INTEGER},
+      authorid = #{authorid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
