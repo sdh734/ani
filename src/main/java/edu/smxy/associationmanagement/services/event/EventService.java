@@ -1,10 +1,10 @@
-package edu.smxy.associationmanagement.mapper;
+package edu.smxy.associationmanagement.services.event;
 
 import edu.smxy.associationmanagement.domain.Event;
 
 import java.util.List;
 
-public interface EventMapper {
+public interface EventService {
     int deleteByPrimaryKey(Integer eventid);
 
     int insert(Event record);

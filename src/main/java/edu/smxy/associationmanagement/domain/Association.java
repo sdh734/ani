@@ -14,6 +14,23 @@ public class Association {
     private Boolean isRegistered;
 
     private Integer count;
+    private Integer teacher;
+
+    public Boolean getRegistered() {
+        return isRegistered;
+    }
+
+    public void setRegistered(Boolean registered) {
+        isRegistered = registered;
+    }
+
+    public Integer getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Integer teacher) {
+        this.teacher = teacher;
+    }
 
     public Integer getAssociationid() {
         return associationid;

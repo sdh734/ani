@@ -2,6 +2,10 @@ package edu.smxy.associationmanagement.domain;
 
 import java.util.Date;
 
+/**
+ * @author SDH
+ *
+ */
 public class Event {
     private Integer eventid;
 

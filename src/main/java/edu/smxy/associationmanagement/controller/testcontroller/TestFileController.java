@@ -1,4 +1,4 @@
-package edu.smxy.associationmanagement.controller.TestController;
+package edu.smxy.associationmanagement.controller.testcontroller;
 
 import edu.smxy.associationmanagement.services.file.FileService;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.List;
 
+/**
+ * @author SDH
+ */
 @RestController
 @EnableAutoConfiguration
 @RequestMapping("/file")
@@ -47,7 +50,8 @@ public class TestFileController {
         ) {
             //指明为下载
             response.setContentType("application/x-download");
-            response.addHeader("Content-Disposition", "attachment;fileName=" + filename);   // 设置文件名
+            // 设置文件名
+            response.addHeader("Content-Disposition", "attachment;fileName=" + filename);
             //把输入流copy到输出流
             IOUtils.copy(inputStream, outputStream);
             outputStream.flush();
