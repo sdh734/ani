@@ -20,4 +20,10 @@ public interface FileMapper {
     List<File> selectByEvent(int eventId);
 
     List<File> selectByAuthor(int authorId);
+
+    File selectByRecord(File record);
+
+    List<File> getAllFileByAssid(Integer assid);
+
+    List<File> getAllFile();
 }

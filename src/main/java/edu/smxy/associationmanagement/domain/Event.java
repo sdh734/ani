@@ -4,7 +4,6 @@ import java.util.Date;
 
 /**
  * @author SDH
- *
  */
 public class Event {
     private Integer eventid;
@@ -16,6 +15,26 @@ public class Event {
     private Date eventEndtime;
 
     private Integer enentAuthorid;
+
+    private String type;
+
+    private Integer templateFileId;
+
+    public Integer getTemplateFileId() {
+        return templateFileId;
+    }
+
+    public void setTemplateFileId(Integer templateFileId) {
+        this.templateFileId = templateFileId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public Integer getEventid() {
         return eventid;

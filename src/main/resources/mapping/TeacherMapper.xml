@@ -12,6 +12,17 @@
   <sql id="Base_Column_List" >
     teacher_id, teacher_name, teacher_college, teacher_association, teacher_phone, teacher_gender
   </sql>
+    <select id = "query" resultMap = "BaseResultMap" parameterType = "edu.smxy.associationmanagement.domain.Teacher">
+    SELECT
+	*
+    FROM
+	`t_teacher`
+    WHERE
+	teacher_name = #{teacherName,jdbcType=VARCHAR}
+	AND teacher_college =  #{teacherCollege,jdbcType=VARCHAR}
+	AND teacher_phone = #{teacherPhone,jdbcType=VARCHAR}
+	AND teacher_gender =  #{teacherGender,jdbcType=VARCHAR}
+    </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

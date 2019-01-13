@@ -1,5 +1,7 @@
 package edu.smxy.associationmanagement.domain;
 
+import java.util.Date;
+
 /**
  * @author  SDH
  * 协会指导情况表
@@ -14,6 +16,16 @@ public class ClassPeriod {
     private Double classperiodTime;
 
     private Integer classperiodTeacher;
+
+    private Date classperiodDate;
+
+    public Date getClassperiodDate() {
+        return classperiodDate;
+    }
+
+    public void setClassperiodDate(Date classperiodDate) {
+        this.classperiodDate = classperiodDate;
+    }
 
     public Integer getClassperiodId() {
         return classperiodId;

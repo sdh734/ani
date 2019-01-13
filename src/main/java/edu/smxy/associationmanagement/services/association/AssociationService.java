@@ -2,6 +2,8 @@ package edu.smxy.associationmanagement.services.association;
 
 import edu.smxy.associationmanagement.domain.Association;
 
+import java.util.List;
+
 public interface AssociationService {
     int deleteByPrimaryKey(Integer associationid);
 
@@ -14,4 +16,8 @@ public interface AssociationService {
     int updateByPrimaryKeySelective(Association record);
 
     int updateByPrimaryKey(Association record);
+
+    List<Association> getAll();
+
+    Association query(Association association);
 }

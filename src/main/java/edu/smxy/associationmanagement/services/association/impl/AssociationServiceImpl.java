@@ -6,6 +6,8 @@ import edu.smxy.associationmanagement.services.association.AssociationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @program: associationmanagement
  * @description: SDH
@@ -44,5 +46,15 @@ public class AssociationServiceImpl implements AssociationService {
     @Override
     public int updateByPrimaryKey(Association record) {
         return associationMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public List<Association> getAll() {
+        return associationMapper.getAll();
+    }
+
+    @Override
+    public Association query(Association association) {
+        return associationMapper.query(association);
     }
 }

@@ -1,5 +1,6 @@
 package edu.smxy.associationmanagement.services.event.impl;
 
+import edu.smxy.associationmanagement.domain.Association;
 import edu.smxy.associationmanagement.domain.Event;
 import edu.smxy.associationmanagement.mapper.EventMapper;
 import edu.smxy.associationmanagement.services.event.EventService;
@@ -25,6 +26,11 @@ public class EventServiceImpl implements EventService {
     @Override
     public int insert(Event record) {
         return eventMapper.insert(record);
+    }
+
+    @Override
+    public int insertFile(Event record) {
+        return eventMapper.insertFile(record);
     }
 
     @Override
@@ -55,5 +61,20 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<Event> getAllEventInTime() {
         return eventMapper.getAllEventInTime();
+    }
+
+    @Override
+    public List<Event> getAllFileNosubmit(Integer assid) {
+        return eventMapper.getAllFileNosubmit(assid);
+    }
+
+    @Override
+    public List<Event> getAllFileEvent() {
+        return eventMapper.getAllFileEvent();
+    }
+
+    @Override
+    public List<Association> getAllAssWithoutSubmitByEventId(Integer eventid) {
+        return eventMapper.getAllAssWithoutSubmitByEventId(eventid);
     }
 }

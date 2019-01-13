@@ -1,5 +1,6 @@
 package edu.smxy.associationmanagement.services.event;
 
+import edu.smxy.associationmanagement.domain.Association;
 import edu.smxy.associationmanagement.domain.Event;
 
 import java.util.List;
@@ -8,6 +9,8 @@ public interface EventService {
     int deleteByPrimaryKey(Integer eventid);
 
     int insert(Event record);
+
+    int insertFile(Event record);
 
     int insertSelective(Event record);
 
@@ -20,4 +23,11 @@ public interface EventService {
     List<Event> getAllEvent();
 
     List<Event> getAllEventInTime();
+
+    List<Event> getAllFileNosubmit(Integer assid);
+
+    List<Event> getAllFileEvent();
+
+    List<Association> getAllAssWithoutSubmitByEventId(Integer eventid);
+
 }

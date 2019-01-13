@@ -14,6 +14,11 @@ public class FileServiceImpl implements FileService {
     private FileMapper fileMapper;
 
     @Override
+    public int deleteByPrimaryKey(Integer id) {
+        return fileMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
     public void uploadFile(File file) {
         fileMapper.insert(file);
     }
@@ -36,5 +41,25 @@ public class FileServiceImpl implements FileService {
     @Override
     public List<File> searchFileByEvent(int eventId) {
         return fileMapper.selectByEvent(eventId);
+    }
+
+    @Override
+    public File selectByRecord(File record) {
+        return fileMapper.selectByRecord(record);
+    }
+
+    @Override
+    public List<File> getAllFileByAssid(Integer assid) {
+        return fileMapper.getAllFileByAssid(assid);
+    }
+
+    @Override
+    public int updateByPrimaryKey(File record) {
+        return fileMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public List<File> getAllFile() {
+        return fileMapper.getAllFile();
     }
 }

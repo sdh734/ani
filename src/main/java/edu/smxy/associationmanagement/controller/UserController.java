@@ -1,19 +1,16 @@
 package edu.smxy.associationmanagement.controller;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import edu.smxy.associationmanagement.domain.JSONResult;
 import edu.smxy.associationmanagement.domain.MyCookie;
 import edu.smxy.associationmanagement.domain.User;
 import edu.smxy.associationmanagement.services.users.UserService;
 import edu.smxy.associationmanagement.utils.CookieUtils;
-import edu.smxy.associationmanagement.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Objects;
 
 @ResponseBody
 @RestController

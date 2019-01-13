@@ -2,6 +2,8 @@ package edu.smxy.associationmanagement.mapper;
 
 import edu.smxy.associationmanagement.domain.Association;
 
+import java.util.List;
+
 public interface AssociationMapper {
     int deleteByPrimaryKey(Integer associationid);
 
@@ -14,4 +16,8 @@ public interface AssociationMapper {
     int updateByPrimaryKeySelective(Association record);
 
     int updateByPrimaryKey(Association record);
+
+    List<Association> getAll();
+
+    Association query(Association association);
 }

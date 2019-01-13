@@ -1,8 +1,8 @@
-package edu.smxy.associationmanagement.mapper;
+package edu.smxy.associationmanagement.services.teacher;
 
 import edu.smxy.associationmanagement.domain.Teacher;
 
-public interface TeacherMapper {
+public interface TeacherService {
     int deleteByPrimaryKey(Integer teacherId);
 
     int insert(Teacher record);

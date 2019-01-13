@@ -11,7 +11,7 @@ public class User {
 
     private String password;
 
-    private String email;
+    private String phone;
 
     private Integer associationid;
 
@@ -56,12 +56,12 @@ public class User {
         this.password = password == null ? null : password.trim();
     }
 
-    public String getEmail() {
-        return email;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
     }
 
     public Integer getAssociationid() {

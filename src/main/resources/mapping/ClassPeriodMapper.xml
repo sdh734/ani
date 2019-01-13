@@ -6,10 +6,18 @@
     <result column="classperiod_assciation" property="classperiodAssciation" jdbcType="INTEGER" />
     <result column="classperiod_time" property="classperiodTime" jdbcType="DOUBLE" />
     <result column="classperiod_teacher" property="classperiodTeacher" jdbcType="INTEGER" />
+      <result column="classperiod_date" property="classperiodDate" jdbcType="TIMESTAMP" />
+
   </resultMap>
   <sql id="Base_Column_List" >
-    classperiod_id, classperiod_assciation, classperiod_time, classperiod_teacher
+    classperiod_id, classperiod_assciation, classperiod_time, classperiod_teacher,classperiod_date
   </sql>
+    <select id="getAllByAssid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from t_classperiod
+        where classperiod_assciation = #{Assid,jdbcType=INTEGER}
+    </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -22,9 +30,9 @@
   </delete>
   <insert id="insert" parameterType="edu.smxy.associationmanagement.domain.ClassPeriod" >
     insert into t_classperiod (classperiod_id, classperiod_assciation, 
-      classperiod_time, classperiod_teacher)
+      classperiod_time, classperiod_teacher,classperiod_date)
     values (#{classperiodId,jdbcType=INTEGER}, #{classperiodAssciation,jdbcType=INTEGER}, 
-      #{classperiodTime,jdbcType=DOUBLE}, #{classperiodTeacher,jdbcType=INTEGER})
+      #{classperiodTime,jdbcType=DOUBLE}, #{classperiodTeacher,jdbcType=INTEGER},#{classperiodDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="edu.smxy.associationmanagement.domain.ClassPeriod" >
     insert into t_classperiod

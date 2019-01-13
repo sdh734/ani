@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class MemberController {
     }
 
     @RequestMapping("/getAllMembertoExcelByid")
-    public void getAllMembertoExcel(Integer id, HttpServletResponse response) {
+    public String getAllMembertoExcel(Integer id, HttpServletResponse response) {
         List<Member> members = memberService.getAllMemberByAssociationId(id);
         List<MemberResult> memberResults = new ArrayList<>();
         for (Member i : members) {
@@ -54,23 +55,29 @@ public class MemberController {
             memberResults.add(memberResult);
         }
         String name = associationService.selectByPrimaryKey(id).getAssociationName();
-        ExcelExportUtil.exportToFile(memberResults, "D://" + name + ".xls");
-        try (
-                InputStream inputStream = new FileInputStream(new File("D://" + name + ".xls"));
-                OutputStream outputStream = response.getOutputStream();
-        ) {
-            //指明为下载
-            response.setContentType("application/x-download");
-            // 设置文件名
-            response.addHeader("Content-Disposition", "attachment;fileName=" + name + ".xls");
-            //把输入流copy到输出流
-            IOUtils.copy(inputStream, outputStream);
-            outputStream.flush();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (memberResults.size() > 0) {
+            ExcelExportUtil.exportToFile(memberResults, "D://" + name + ".xls");
+            try (
+                    InputStream inputStream = new FileInputStream(new File("D://" + name + ".xls"));
+                    OutputStream outputStream = response.getOutputStream();
+            ) {
+                //指明为下载
+                response.setContentType("application/x-download");
+                // 设置文件名
+                response.addHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(name + ".xls", "UTF-8"));
+                //把输入流copy到输出流
+                IOUtils.copy(inputStream, outputStream);
+                outputStream.flush();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "ok";
+        } else {
+            return "无成员";
         }
+
     }
 
     @RequestMapping("/uploadFiletoMember")
