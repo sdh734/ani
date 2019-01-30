@@ -1,181 +1,146 @@
 package edu.smxy.associationmanagement.controller;
 
-import edu.smxy.associationmanagement.domain.JSONResult;
-import edu.smxy.associationmanagement.domain.Suggest;
-import edu.smxy.associationmanagement.domain.SuggestResult;
-import edu.smxy.associationmanagement.domain.User;
-import edu.smxy.associationmanagement.services.association.AssociationService;
-import edu.smxy.associationmanagement.services.suggest.SuggestService;
-import edu.smxy.associationmanagement.services.users.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.autoconfigure.*;
+import edu.smxy.associationmanagement.services.suggest.*;
+import org.springframework.beans.factory.annotation.*;
+import edu.smxy.associationmanagement.services.association.*;
+import edu.smxy.associationmanagement.services.users.*;
+import java.util.*;
+import org.springframework.web.bind.annotation.*;
+import edu.smxy.associationmanagement.domain.*;
+import javax.servlet.http.*;
+import java.text.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * @program: associationmanagement
- * @description: SDH
- * @author: SDH
- * @create: 2019-01-13 05:55
- */
 @ResponseBody
 @RestController
 @EnableAutoConfiguration
-public class SuggestController {
+public class SuggestController
+{
     @Autowired
     SuggestService suggestService;
     @Autowired
     AssociationService associationService;
     @Autowired
     UserService userService;
-
-    /**
-     * @param type 0 表示获取所有协会 1 表示获取所有社联管理人员
-     * @return 所有协会或者社联管理人员的集合经由JSONResult包装后的对象
-     */
-    @RequestMapping("/getSelectListByRadioValue")
-    public JSONResult getSelectListByRadioValue(int type) {
+    
+    @RequestMapping({ "/getSelectListByRadioValue" })
+    public JSONResult getSelectListByRadioValue(final int type) {
         if (type == 0) {
-            return JSONResult.build(200, "0", associationService.getAll());
-        } else {
-            List<User> userList = userService.getAll();
-            List<User> userList1 = new ArrayList<>();
-            for (User user : userList) {
-                if (user.getType() == 1) {
-                    userList1.add(user);
+            return JSONResult.build(200, "0", (Object)this.associationService.getAll());
+        }
+        final List<User> userList = (List<User>)this.userService.getAll();
+        final List<User> userList2 = new ArrayList<User>();
+        for (final User user : userList) {
+            if (user.getType() == 1) {
+                userList2.add(user);
+            }
+        }
+        return JSONResult.build(200, "1", (Object)userList2);
+    }
+    
+    @RequestMapping({ "/addSuggestAssToSL" })
+    public JSONResult addSuggestAssToSL(final Suggest suggest) {
+        final int result = this.suggestService.insert(suggest);
+        if (result > 0) {
+            return JSONResult.build(200, "ok", (Object)null);
+        }
+        return JSONResult.build(500, "error", (Object)null);
+    }
+    
+    @RequestMapping({ "/addSuggestSLToAss" })
+    public JSONResult addSuggestSLToAss(final Suggest suggest) {
+        final int result = this.suggestService.insert(suggest);
+        if (result > 0) {
+            return JSONResult.build(200, "ok", (Object)null);
+        }
+        return JSONResult.build(500, "error", (Object)null);
+    }
+    
+    @RequestMapping({ "/addSuggestAssToAss" })
+    public JSONResult addSuggestAssToAss(final Suggest suggest) {
+        final int result = this.suggestService.insert(suggest);
+        if (result > 0) {
+            return JSONResult.build(200, "ok", (Object)null);
+        }
+        return JSONResult.build(500, "error", (Object)null);
+    }
+    
+    @RequestMapping({ "/getAllSuggestByAuthorId" })
+    public JSONResult getAllSuggestByAuthorId(final Integer authorid) {
+        final List<Suggest> suggests = (List<Suggest>)this.suggestService.getAllSuggestByAuthorId(authorid);
+        final List<SuggestResult> suggestResults = new ArrayList<SuggestResult>();
+        for (final Suggest suggest : suggests) {
+            final SuggestResult suggestResult = new SuggestResult(suggest);
+            switch (suggest.getType()) {
+                case 0: {
+                    suggestResult.setAuthorname(this.associationService.selectByPrimaryKey(suggest.getAuthorid()).getAssociationName());
+                    suggestResult.setReveivename(this.userService.selectUserById((int)suggest.getReceiveid()).getName());
+                    break;
+                }
+                case 1: {
+                    suggestResult.setAuthorname(this.userService.selectUserById((int)suggest.getAuthorid()).getName());
+                    suggestResult.setReveivename(this.associationService.selectByPrimaryKey(suggest.getReceiveid()).getAssociationName());
+                    break;
+                }
+                case 2: {
+                    suggestResult.setAuthorname(this.associationService.selectByPrimaryKey(suggest.getAuthorid()).getAssociationName());
+                    suggestResult.setReveivename(this.associationService.selectByPrimaryKey(suggest.getReceiveid()).getAssociationName());
+                    break;
                 }
             }
-            return JSONResult.build(200, "1", userList1);
+            suggestResults.add(suggestResult);
         }
+        return JSONResult.build(200, "ok", (Object)suggestResults);
     }
-
-    // 0
-    @RequestMapping("/addSuggestAssToSL")
-    public JSONResult addSuggestAssToSL(Suggest suggest) {
-        int result = suggestService.insert(suggest);
-        if (result > 0) {
-            return JSONResult.build(200, "ok", null);
-        } else {
-            return JSONResult.build(500, "error", null);
-        }
-    }
-
-    // 1
-    @RequestMapping("/addSuggestSLToAss")
-    public JSONResult addSuggestSLToAss(Suggest suggest) {
-        int result = suggestService.insert(suggest);
-        if (result > 0) {
-            return JSONResult.build(200, "ok", null);
-        } else {
-            return JSONResult.build(500, "error", null);
-        }
-    }
-
-    // 2
-    @RequestMapping("/addSuggestAssToAss")
-    public JSONResult addSuggestAssToAss(Suggest suggest) {
-        int result = suggestService.insert(suggest);
-        if (result > 0) {
-            return JSONResult.build(200, "ok", null);
-        } else {
-            return JSONResult.build(500, "error", null);
-        }
-    }
-
-    @RequestMapping("/getAllSuggestByAuthorId")
-    public JSONResult getAllSuggestByAuthorId(Integer authorid) {
-        List<Suggest> suggests = suggestService.getAllSuggestByAuthorId(authorid);
-        List<SuggestResult> suggestResults = new ArrayList<>();
-        for (Suggest suggest : suggests) {
-            SuggestResult suggestResult = new SuggestResult(suggest);
+    
+    @RequestMapping({ "/getAllSuggestByReceiveId" })
+    public JSONResult getAllSuggestByReceiveId(final Integer receiveid) {
+        final List<Suggest> suggests = (List<Suggest>)this.suggestService.getAllSuggestByReceiveId(receiveid);
+        final List<SuggestResult> suggestResults = new ArrayList<SuggestResult>();
+        for (final Suggest suggest : suggests) {
+            final SuggestResult suggestResult = new SuggestResult(suggest);
             switch (suggest.getType()) {
-                case 0:
-                    // 0 协会对社联 作者为协会id 接收者为社联id
-                    suggestResult.setAuthorname(
-                            associationService.selectByPrimaryKey(suggest.getAuthorid()).getAssociationName());
-                    suggestResult.setReveivename(
-                            userService.selectUserById(suggest.getReceiveid()).getName());
+                case 0: {
+                    suggestResult.setAuthorname(this.associationService.selectByPrimaryKey(suggest.getAuthorid()).getAssociationName());
+                    suggestResult.setReveivename(this.userService.selectUserById((int)suggest.getReceiveid()).getName());
                     break;
-                case 1:
-                    // 1 社联对协会 作者为社联id 接收者为协会id
-                    suggestResult.setAuthorname(userService.selectUserById(suggest.getAuthorid()).getName());
-                    suggestResult.setReveivename(
-                            associationService.selectByPrimaryKey(suggest.getReceiveid()).getAssociationName());
+                }
+                case 1: {
+                    suggestResult.setAuthorname(this.userService.selectUserById((int)suggest.getAuthorid()).getName());
+                    suggestResult.setReveivename(this.associationService.selectByPrimaryKey(suggest.getReceiveid()).getAssociationName());
                     break;
-                case 2:
-                    // 2 协会对协会 作者为协会id 接收者为协会id
-                    suggestResult.setAuthorname(
-                            associationService.selectByPrimaryKey(suggest.getAuthorid()).getAssociationName());
-                    suggestResult.setReveivename(
-                            associationService.selectByPrimaryKey(suggest.getReceiveid()).getAssociationName());
+                }
+                case 2: {
+                    suggestResult.setAuthorname(this.associationService.selectByPrimaryKey(suggest.getAuthorid()).getAssociationName());
+                    suggestResult.setReveivename(this.associationService.selectByPrimaryKey(suggest.getReceiveid()).getAssociationName());
                     break;
-                default:
-                    break;
+                }
             }
             suggestResults.add(suggestResult);
         }
-        return JSONResult.build(200, "ok", suggestResults);
+        return JSONResult.build(200, "ok", (Object)suggestResults);
     }
-
-    @RequestMapping("/getAllSuggestByReceiveId")
-    public JSONResult getAllSuggestByReceiveId(Integer receiveid) {
-        List<Suggest> suggests = suggestService.getAllSuggestByReceiveId(receiveid);
-        List<SuggestResult> suggestResults = new ArrayList<>();
-        for (Suggest suggest : suggests) {
-            SuggestResult suggestResult = new SuggestResult(suggest);
-            switch (suggest.getType()) {
-                case 0:
-                    // 0 协会对社联 作者为协会id 接收者为社联id
-                    suggestResult.setAuthorname(
-                            associationService.selectByPrimaryKey(suggest.getAuthorid()).getAssociationName());
-                    suggestResult.setReveivename(
-                            userService.selectUserById(suggest.getReceiveid()).getName());
-                    break;
-                case 1:
-                    // 1 社联对协会 作者为社联id 接收者为协会id
-                    suggestResult.setAuthorname(userService.selectUserById(suggest.getAuthorid()).getName());
-                    suggestResult.setReveivename(
-                            associationService.selectByPrimaryKey(suggest.getReceiveid()).getAssociationName());
-                    break;
-                case 2:
-                    // 2 协会对协会 作者为协会id 接收者为协会id
-                    suggestResult.setAuthorname(
-                            associationService.selectByPrimaryKey(suggest.getAuthorid()).getAssociationName());
-                    suggestResult.setReveivename(
-                            associationService.selectByPrimaryKey(suggest.getReceiveid()).getAssociationName());
-                    break;
-                default:
-                    break;
-            }
-            suggestResults.add(suggestResult);
-        }
-        return JSONResult.build(200, "ok", suggestResults);
-    }
-
-    @RequestMapping("/updateSuggest")
-    public JSONResult updateSuggest(HttpServletRequest request) {
-        Suggest suggest = new Suggest();
-        // 2019-01-12T23:48:02.000+0000
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        suggest.setCreatetime(
-                simpleDateFormat.parse(request.getParameter("createtime").replace("T", " "), new ParsePosition(0)));
+    
+    @RequestMapping({ "/updateSuggest" })
+    public JSONResult updateSuggest(final HttpServletRequest request) {
+        final Suggest suggest = new Suggest();
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        suggest.setCreatetime(simpleDateFormat.parse(request.getParameter("createtime").replace("T", " "), new ParsePosition(0)));
         suggest.setId(Integer.valueOf(request.getParameter("id")));
         suggest.setAuthorid(Integer.valueOf(request.getParameter("authorid")));
         suggest.setReceiveid(Integer.valueOf(request.getParameter("receiveid")));
         suggest.setContent(request.getParameter("content"));
         suggest.setType(Integer.valueOf(request.getParameter("type")));
-        int result = suggestService.updateByPrimaryKeyWithBLOBs(suggest);
+        final int result = this.suggestService.updateByPrimaryKeyWithBLOBs(suggest);
         if (result > 0) {
-            return JSONResult.build(200, "ok", null);
-        } else {
-            return JSONResult.build(500, "error", null);
+            return JSONResult.build(200, "ok", (Object)null);
         }
+        return JSONResult.build(500, "error", (Object)null);
+    }
+    
+    @RequestMapping({ "/deleteSuggestById" })
+    public JSONResult deleteSuggestById(final int id) {
+        this.suggestService.deleteByPrimaryKey(id);
+        return JSONResult.build(200, "ok", (Object)null);
     }
 }

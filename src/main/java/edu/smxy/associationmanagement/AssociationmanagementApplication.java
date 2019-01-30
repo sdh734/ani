@@ -1,14 +1,14 @@
 package edu.smxy.associationmanagement;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.boot.autoconfigure.*;
+import org.mybatis.spring.annotation.*;
+import org.springframework.boot.*;
 
 @SpringBootApplication
-@MapperScan("edu.smxy.associationmanagement.mapper")
-public class AssociationmanagementApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(AssociationmanagementApplication.class, args);
+@MapperScan({ "edu.smxy.associationmanagement.mapper" })
+public class AssociationmanagementApplication
+{
+    public static void main(final String[] args) {
+        SpringApplication.run((Class)AssociationmanagementApplication.class, args);
     }
 }

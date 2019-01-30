@@ -17,14 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * @program: associationmanagement
- * @description: SDH
- * @author: SDH
- * @create: 2019-01-11 20:14
- **/
 @RestController
 @ResponseBody
 @EnableAutoConfiguration
@@ -36,57 +31,51 @@ public class ProgramController {
     @Autowired
     EventService eventService;
 
-    @RequestMapping("/addprogram")
-    public JSONResult addProgram(Program program) {
-        int line = programService.insert(program);
+    @RequestMapping({"/addprogram"})
+    public JSONResult addProgram(final Program program) {
+        final int line = this.programService.insert(program);
         if (line > 0) {
-            return JSONResult.build(200, "插入成功", null);
-        } else {
-            return JSONResult.build(500, "error", null);
+            return JSONResult.build(200, "\u63d2\u5165\u6210\u529f", null);
         }
+        return JSONResult.build(500, "error", null);
     }
 
-    @RequestMapping("/getProgramByEventId")
-    public JSONResult getProgramByEventId(int eventid) {
-        List<Program> programs = programService.getProgramByEventId(eventid);
-        List<ProgramResult> results = new ArrayList<>();
-        for (Program i : programs) {
-            Association association = associationService.selectByPrimaryKey(i.getAssociationid());
-            ProgramResult result = new ProgramResult(i);
-            result.setEventname(eventService.selectByPrimaryKey(eventid).getEventName());
+    @RequestMapping({"/getProgramByEventId"})
+    public JSONResult getProgramByEventId(final int eventid) {
+        final List<Program> programs = this.programService.getProgramByEventId(eventid);
+        final List<ProgramResult> results = new ArrayList<ProgramResult>();
+        for (final Program i : programs) {
+            final Association association = this.associationService.selectByPrimaryKey(i.getAssociationid());
+            final ProgramResult result = new ProgramResult(i);
+            result.setEventname(this.eventService.selectByPrimaryKey(eventid).getEventName());
             result.setAssociationname(association.getAssociationName());
             results.add(result);
         }
         return JSONResult.build(200, "ok", results);
     }
 
-    @RequestMapping("/getProgramtoExcel")
-    public void getProgramtoExcel(int eventid, HttpServletResponse response) {
-        List<Program> programs = programService.getProgramByEventId(eventid);
-        List<ProgramResult> results = new ArrayList<>();
-        for (Program i : programs) {
-            Association association = associationService.selectByPrimaryKey(i.getAssociationid());
-            ProgramResult result = new ProgramResult(i);
-            result.setEventname(eventService.selectByPrimaryKey(eventid).getEventName());
+    @RequestMapping({"/getProgramtoExcel"})
+    public void getProgramtoExcel(final int eventid, final HttpServletResponse response) {
+        final List<Program> programs = this.programService.getProgramByEventId(eventid);
+        final List<ProgramResult> results = new ArrayList<ProgramResult>();
+        for (final Program i : programs) {
+            final Association association = this.associationService.selectByPrimaryKey(i.getAssociationid());
+            final ProgramResult result = new ProgramResult(i);
+            result.setEventname(this.eventService.selectByPrimaryKey(eventid).getEventName());
             result.setAssociationname(association.getAssociationName());
             results.add(result);
         }
-        ExcelExportUtil.exportToFile(results, "D://" + eventid + ".xls");
-        try (
-                InputStream inputStream = new FileInputStream(new File("D://" + eventid + ".xls"));
-                OutputStream outputStream = response.getOutputStream();
-        ) {
-            //指明为下载
+        ExcelExportUtil.exportToFile((List) results, "/www/wwwroot/ass/upload/" + eventid + ".xls");
+        try (final InputStream inputStream = new FileInputStream(new File("/www/wwwroot/ass/upload/" + eventid + ".xls"));
+             final OutputStream outputStream = (OutputStream) response.getOutputStream()) {
             response.setContentType("application/x-download");
-            // 设置文件名
             response.addHeader("Content-Disposition", "attachment;fileName=" + eventid + ".xls");
-            //把输入流copy到输出流
             IOUtils.copy(inputStream, outputStream);
             outputStream.flush();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException e2) {
+            e2.printStackTrace();
         }
     }
 }

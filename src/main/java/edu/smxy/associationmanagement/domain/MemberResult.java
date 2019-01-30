@@ -1,38 +1,30 @@
 package edu.smxy.associationmanagement.domain;
 
-import com.xuxueli.poi.excel.annotation.ExcelField;
-import com.xuxueli.poi.excel.annotation.ExcelSheet;
+import com.alibaba.excel.annotation.*;
 
-/**
- * @program: associationmanagement
- * @description: SDH
- * @author: SDH
- * @create: 2019-01-12 01:50
- **/
-@ExcelSheet(name = "协会成员")
-public class MemberResult {
-    @ExcelField(name = "协会名称")
+public class MemberResult
+{
+    @ExcelProperty(value = { "\u534f\u4f1a\u540d\u79f0" }, index = 0)
     private String associationname;
-    @ExcelField(name = "姓名")
+    @ExcelProperty(value = { "\u59d3\u540d" }, index = 1)
     private String name;
-    @ExcelField(name = "性别")
+    @ExcelProperty(value = { "\u6027\u522b" }, index = 2)
     private String gender;
-    @ExcelField(name = "学院")
+    @ExcelProperty(value = { "\u5b66\u9662" }, index = 3)
     private String college;
-    @ExcelField(name = "学号")
+    @ExcelProperty(value = { "\u5b66\u53f7" }, index = 4)
     private String studentid;
-    @ExcelField(name = "联系方式")
+    @ExcelProperty(value = { "\u8054\u7cfb\u65b9\u5f0f" }, index = 5)
     private String phone;
-    @ExcelField(name = "部门")
+    @ExcelProperty(value = { "\u90e8\u95e8" }, index = 6)
     private String department;
-    @ExcelField(name = "职务")
+    @ExcelProperty(value = { "\u804c\u4f4d" }, index = 7)
     private String position;
-
+    
     public MemberResult() {
-
     }
-
-    public MemberResult(String associationname, String name, String gender, String college, String studentid, String phone, String department, String position) {
+    
+    public MemberResult(final String associationname, final String name, final String gender, final String college, final String studentid, final String phone, final String department, final String position) {
         this.associationname = associationname;
         this.name = name;
         this.gender = gender;
@@ -42,8 +34,8 @@ public class MemberResult {
         this.department = department;
         this.position = position;
     }
-
-    public MemberResult(Member member) {
+    
+    public MemberResult(final Member member) {
         this.college = member.getCollege();
         this.department = member.getDepartment();
         this.gender = member.getGender();
@@ -52,82 +44,73 @@ public class MemberResult {
         this.position = member.getPosition();
         this.studentid = member.getStudentid();
     }
-
+    
     public String getAssociationname() {
-        return associationname;
+        return this.associationname;
     }
-
-    public void setAssociationname(String associationname) {
+    
+    public void setAssociationname(final String associationname) {
         this.associationname = associationname;
     }
-
+    
     public String getName() {
-        return name;
+        return this.name;
     }
-
-    public void setName(String name) {
+    
+    public void setName(final String name) {
         this.name = name;
     }
-
+    
     public String getGender() {
-        return gender;
+        return this.gender;
     }
-
-    public void setGender(String gender) {
+    
+    public void setGender(final String gender) {
         this.gender = gender;
     }
-
+    
     public String getCollege() {
-        return college;
+        return this.college;
     }
-
-    public void setCollege(String college) {
+    
+    public void setCollege(final String college) {
         this.college = college;
     }
-
+    
     public String getStudentid() {
-        return studentid;
+        return this.studentid;
     }
-
-    public void setStudentid(String studentid) {
+    
+    public void setStudentid(final String studentid) {
         this.studentid = studentid;
     }
-
+    
     public String getPhone() {
-        return phone;
+        return this.phone;
     }
-
-    public void setPhone(String phone) {
+    
+    public void setPhone(final String phone) {
         this.phone = phone;
     }
-
+    
     public String getDepartment() {
-        return department;
+        return this.department;
     }
-
-    public void setDepartment(String department) {
+    
+    public void setDepartment(final String department) {
         this.department = department;
     }
-
+    
     public String getPosition() {
-        return position;
+        return this.position;
     }
-
-    public void setPosition(String position) {
+    
+    public void setPosition(final String position) {
         this.position = position;
     }
-
+    
     @Override
     public String toString() {
-        return "MemberResult{" +
-                "associationname='" + associationname + '\'' +
-                ", name='" + name + '\'' +
-                ", gender='" + gender + '\'' +
-                ", college='" + college + '\'' +
-                ", studentid='" + studentid + '\'' +
-                ", phone='" + phone + '\'' +
-                ", department='" + department + '\'' +
-                ", position='" + position + '\'' +
-                '}';
+        return "MemberResult{associationname='" + this.associationname + '\'' + ", name='" + this.name + '\'' + ", gender='" + this.gender + '\'' + ", college='" + this.college + '\'' + ", studentid='" + this.studentid + '\'' + ", phone='" + this.phone + '\'' + ", department='" + this.department + '\'' + ", position='" + this.position + '\'' + '}';
     }
 }

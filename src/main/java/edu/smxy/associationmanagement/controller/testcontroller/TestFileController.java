@@ -1,84 +1,77 @@
 package edu.smxy.associationmanagement.controller.testcontroller;
 
-import edu.smxy.associationmanagement.services.file.FileService;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.boot.autoconfigure.*;
+import edu.smxy.associationmanagement.services.file.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.web.multipart.*;
+import javax.servlet.http.*;
+import org.apache.tomcat.util.http.fileupload.*;
 import java.io.*;
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
 
-/**
- * @author SDH
- */
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/file")
-public class TestFileController {
+@RequestMapping({ "/file" })
+public class TestFileController
+{
     @Autowired
     private FileService fileService;
-
-    @PostMapping("/upload")
-    public String upload(MultipartFile fileupload) {
-        String filename = fileupload.getOriginalFilename();
-        String path = "G:\\upload\\";
+    
+    @PostMapping({ "/upload" })
+    public String upload(final MultipartFile fileupload) {
+        final String filename = fileupload.getOriginalFilename();
+        final String path = "G:\\upload\\";
         try {
             fileupload.transferTo(new File(path + filename));
-            edu.smxy.associationmanagement.domain.File file = new edu.smxy.associationmanagement.domain.File();
+            final edu.smxy.associationmanagement.domain.File file = new edu.smxy.associationmanagement.domain.File();
             file.setFilename(filename);
             file.setFilepath(path);
-            fileService.uploadFile(file);
+            this.fileService.uploadFile(file);
             return "OK";
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
             return "ERROR";
         }
     }
-
-    @GetMapping("/downloadbyid")
-    public void downloadFileById(int id, HttpServletResponse response) {
-        edu.smxy.associationmanagement.domain.File file = fileService.searchFileById(id);
-        String filepath = file.getFilepath();
-        String filename = file.getFilename();
-        try (
-                //jdk7新特性，可以直接写到try()括号里面，java会自动关闭
-                InputStream inputStream = new FileInputStream(new File(filepath + filename));
-                OutputStream outputStream = response.getOutputStream()
-        ) {
-            //指明为下载
+    
+    @GetMapping({ "/downloadbyid" })
+    public void downloadFileById(final int id, final HttpServletResponse response) {
+        final edu.smxy.associationmanagement.domain.File file = this.fileService.searchFileById(id);
+        final String filepath = file.getFilepath();
+        final String filename = file.getFilename();
+        try (final InputStream inputStream = new FileInputStream(new File(filepath + filename));
+             final OutputStream outputStream = (OutputStream)response.getOutputStream()) {
             response.setContentType("application/x-download");
-            // 设置文件名
             response.addHeader("Content-Disposition", "attachment;fileName=" + filename);
-            //把输入流copy到输出流
             IOUtils.copy(inputStream, outputStream);
             outputStream.flush();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        }
+        catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
+        catch (IOException e2) {
+            e2.printStackTrace();
+        }
     }
-
+    
     @ResponseBody
-    @GetMapping("/searchbyid")
-    public edu.smxy.associationmanagement.domain.File searchById(int id) {
-        edu.smxy.associationmanagement.domain.File file = fileService.searchFileById(id);
+    @GetMapping({ "/searchbyid" })
+    public edu.smxy.associationmanagement.domain.File searchById(final int id) {
+        final edu.smxy.associationmanagement.domain.File file = this.fileService.searchFileById(id);
         return file;
     }
-
+    
     @ResponseBody
-    @GetMapping("/searchbyeventid")
-    public List<edu.smxy.associationmanagement.domain.File> searchFileByEventId(int eventid) {
-        return fileService.searchFileByEvent(eventid);
+    @GetMapping({ "/searchbyeventid" })
+    public List<edu.smxy.associationmanagement.domain.File> searchFileByEventId(final int eventid) {
+        return this.fileService.searchFileByEvent(eventid);
     }
-
+    
     @ResponseBody
-    @GetMapping("/searchbyauthorid")
-    public List<edu.smxy.associationmanagement.domain.File> searchFileByAuthorId(int authorid) {
-        return fileService.searchFileByAuthor(authorid);
+    @GetMapping({ "/searchbyauthorid" })
+    public List<edu.smxy.associationmanagement.domain.File> searchFileByAuthorId(final int authorid) {
+        return this.fileService.searchFileByAuthor(authorid);
     }
 }

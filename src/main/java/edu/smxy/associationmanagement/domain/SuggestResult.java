@@ -1,127 +1,113 @@
 package edu.smxy.associationmanagement.domain;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
+import java.text.*;
 
-/**
- * @program: associationmanagement
- * @description: SDH
- * @author: SDH
- * @create: 2019-01-13 07:29
- **/
-public class SuggestResult {
+public class SuggestResult
+{
     private Integer id;
-
     private Integer type;
-
     private Integer authorid;
-
     private String authorname;
-
     private Integer receiveid;
-
     private String reveivename;
-
     private Date createtime;
-
     private String time;
-
     private String content;
-
     private String contentreport;
-
+    
     public String getContentreport() {
-        return contentreport;
+        return this.contentreport;
     }
-
-    public void setContentreport(String contentreport) {
+    
+    public void setContentreport(final String contentreport) {
         this.contentreport = contentreport;
     }
-
+    
     public SuggestResult() {
     }
-
-    public SuggestResult(Suggest suggest) {
+    
+    public SuggestResult(final Suggest suggest) {
         this.id = suggest.getId();
         this.authorid = suggest.getAuthorid();
         this.content = suggest.getContent();
         this.createtime = suggest.getCreatetime();
         this.receiveid = suggest.getReceiveid();
         this.type = suggest.getType();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.time = simpleDateFormat.format(suggest.getCreatetime());
-        this.contentreport = suggest.getContent().substring(0, suggest.getContent().length() > 5 ? 5 : suggest.getContent().length());
+        this.contentreport = suggest.getContent().substring(0, (suggest.getContent().length() > 5) ? 5 : suggest.getContent().length());
     }
-
+    
     public Integer getId() {
-        return id;
+        return this.id;
     }
-
-    public void setId(Integer id) {
+    
+    public void setId(final Integer id) {
         this.id = id;
     }
-
+    
     public Integer getType() {
-        return type;
+        return this.type;
     }
-
-    public void setType(Integer type) {
+    
+    public void setType(final Integer type) {
         this.type = type;
     }
-
+    
     public Integer getAuthorid() {
-        return authorid;
+        return this.authorid;
     }
-
-    public void setAuthorid(Integer authorid) {
+    
+    public void setAuthorid(final Integer authorid) {
         this.authorid = authorid;
     }
-
+    
     public String getAuthorname() {
-        return authorname;
+        return this.authorname;
     }
-
-    public void setAuthorname(String authorname) {
+    
+    public void setAuthorname(final String authorname) {
         this.authorname = authorname;
     }
-
+    
     public Integer getReceiveid() {
-        return receiveid;
+        return this.receiveid;
     }
-
-    public void setReceiveid(Integer receiveid) {
+    
+    public void setReceiveid(final Integer receiveid) {
         this.receiveid = receiveid;
     }
-
+    
     public String getReveivename() {
-        return reveivename;
+        return this.reveivename;
     }
-
-    public void setReveivename(String reveivename) {
+    
+    public void setReveivename(final String reveivename) {
         this.reveivename = reveivename;
     }
-
+    
     public Date getCreatetime() {
-        return createtime;
+        return this.createtime;
     }
-
-    public void setCreatetime(Date createtime) {
+    
+    public void setCreatetime(final Date createtime) {
         this.createtime = createtime;
     }
-
+    
     public String getTime() {
-        return time;
+        return this.time;
     }
-
-    public void setTime(String time) {
+    
+    public void setTime(final String time) {
         this.time = time;
     }
-
+    
     public String getContent() {
-        return content;
+        return this.content;
     }
-
-    public void setContent(String content) {
+    
+    public void setContent(final String content) {
         this.content = content;
     }
 }

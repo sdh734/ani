@@ -1,23 +1,23 @@
 package edu.smxy.associationmanagement.mapper;
 
-import edu.smxy.associationmanagement.domain.User;
+import edu.smxy.associationmanagement.domain.*;
+import java.util.*;
 
-import java.util.List;
-
-public interface UserMapper {
-    int deleteByPrimaryKey(Integer id);
-
-    int insert(User record);
-
-    int insertSelective(User record);
-
-    User selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(User record);
-
-    int updateByPrimaryKey(User record);
-
-    User query(User user);
-
+public interface UserMapper
+{
+    int deleteByPrimaryKey(final Integer id);
+    
+    int insert(final User record);
+    
+    int insertSelective(final User record);
+    
+    User selectByPrimaryKey(final Integer id);
+    
+    int updateByPrimaryKeySelective(final User record);
+    
+    int updateByPrimaryKey(final User record);
+    
+    User query(final User user);
+    
     List<User> getAll();
 }

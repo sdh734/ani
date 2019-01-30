@@ -1,21 +1,21 @@
 package edu.smxy.associationmanagement.mapper;
 
-import edu.smxy.associationmanagement.domain.ClassPeriod;
+import edu.smxy.associationmanagement.domain.*;
+import java.util.*;
 
-import java.util.List;
-
-public interface ClassPeriodMapper {
-    int deleteByPrimaryKey(Integer classperiodId);
-
-    int insert(ClassPeriod record);
-
-    int insertSelective(ClassPeriod record);
-
-    ClassPeriod selectByPrimaryKey(Integer classperiodId);
-
-    int updateByPrimaryKeySelective(ClassPeriod record);
-
-    int updateByPrimaryKey(ClassPeriod record);
-
-    List<ClassPeriod> getAllByAssid(int Assid);
+public interface ClassPeriodMapper
+{
+    int deleteByPrimaryKey(final Integer classperiodId);
+    
+    int insert(final ClassPeriod record);
+    
+    int insertSelective(final ClassPeriod record);
+    
+    ClassPeriod selectByPrimaryKey(final Integer classperiodId);
+    
+    int updateByPrimaryKeySelective(final ClassPeriod record);
+    
+    int updateByPrimaryKey(final ClassPeriod record);
+    
+    List<ClassPeriod> getAllByAssid(final int Assid);
 }

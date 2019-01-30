@@ -1,63 +1,59 @@
 package edu.smxy.associationmanagement.domain;
 
-public class Teacher {
+public class Teacher
+{
     private Integer teacherId;
-
     private String teacherName;
-
     private String teacherCollege;
-
     private Integer teacherAssociation;
-
     private String teacherPhone;
-
     private String teacherGender;
-
+    
     public Integer getTeacherId() {
-        return teacherId;
+        return this.teacherId;
     }
-
-    public void setTeacherId(Integer teacherId) {
+    
+    public void setTeacherId(final Integer teacherId) {
         this.teacherId = teacherId;
     }
-
+    
     public String getTeacherName() {
-        return teacherName;
+        return this.teacherName;
     }
-
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName == null ? null : teacherName.trim();
+    
+    public void setTeacherName(final String teacherName) {
+        this.teacherName = ((teacherName == null) ? null : teacherName.trim());
     }
-
+    
     public String getTeacherCollege() {
-        return teacherCollege;
+        return this.teacherCollege;
     }
-
-    public void setTeacherCollege(String teacherCollege) {
-        this.teacherCollege = teacherCollege == null ? null : teacherCollege.trim();
+    
+    public void setTeacherCollege(final String teacherCollege) {
+        this.teacherCollege = ((teacherCollege == null) ? null : teacherCollege.trim());
     }
-
+    
     public Integer getTeacherAssociation() {
-        return teacherAssociation;
+        return this.teacherAssociation;
     }
-
-    public void setTeacherAssociation(Integer teacherAssociation) {
+    
+    public void setTeacherAssociation(final Integer teacherAssociation) {
         this.teacherAssociation = teacherAssociation;
     }
-
+    
     public String getTeacherPhone() {
-        return teacherPhone;
+        return this.teacherPhone;
     }
-
-    public void setTeacherPhone(String teacherPhone) {
-        this.teacherPhone = teacherPhone == null ? null : teacherPhone.trim();
+    
+    public void setTeacherPhone(final String teacherPhone) {
+        this.teacherPhone = ((teacherPhone == null) ? null : teacherPhone.trim());
     }
-
+    
     public String getTeacherGender() {
-        return teacherGender;
+        return this.teacherGender;
     }
-
-    public void setTeacherGender(String teacherGender) {
-        this.teacherGender = teacherGender == null ? null : teacherGender.trim();
+    
+    public void setTeacherGender(final String teacherGender) {
+        this.teacherGender = ((teacherGender == null) ? null : teacherGender.trim());
     }
 }

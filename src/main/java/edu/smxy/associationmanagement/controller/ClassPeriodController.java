@@ -24,12 +24,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @program: associationmanagement
- * @description: SDH
- * @author: SDH
- * @create: 2019-01-12 18:19
- **/
 @ResponseBody
 @RestController
 @EnableAutoConfiguration
@@ -41,57 +35,52 @@ public class ClassPeriodController {
     @Autowired
     TeacherService teacherService;
 
-    @RequestMapping("/addguide")
-    public JSONResult AddGuide(HttpServletRequest request) {
-        ClassPeriod classPeriod = new ClassPeriod();
-        String assid = request.getParameter("assid");
-        String guidetime = request.getParameter("guidetime");
-        String guidedate = request.getParameter("guidedate");
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    @RequestMapping({"/addguide"})
+    public JSONResult AddGuide(final HttpServletRequest request) {
+        final ClassPeriod classPeriod = new ClassPeriod();
+        final String assid = request.getParameter("assid");
+        final String guidetime = request.getParameter("guidetime");
+        final String guidedate = request.getParameter("guidedate");
+        final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         classPeriod.setClassperiodDate(formatter.parse(guidedate, new ParsePosition(0)));
         classPeriod.setClassperiodTime(Double.valueOf(guidetime));
         classPeriod.setClassperiodAssciation(Integer.valueOf(assid));
-        classPeriod.setClassperiodTeacher(associationService.selectByPrimaryKey(Integer.valueOf(assid)).getTeacher());
-        classPeriodService.insert(classPeriod);
-        return JSONResult.build(200, "ok", null);
+        classPeriod.setClassperiodTeacher(this.associationService.selectByPrimaryKey(Integer.valueOf(assid)).getTeacher());
+        this.classPeriodService.insert(classPeriod);
+        return JSONResult.build(200, "ok", (Object) null);
     }
 
-    @RequestMapping("/getAllGuideByAssid")
-    public JSONResult getAllGuideByAssid(String assid) {
-        List<ClassPeriod> classPeriods = classPeriodService.getAllByAssid(Integer.valueOf(assid));
-        List<ClassPeriodResult> classPeriodResults = new ArrayList<>();
-        for (ClassPeriod i : classPeriods) {
-            ClassPeriodResult classPeriodResult = new ClassPeriodResult(i);
-            classPeriodResult.setClassperiodAssciation(associationService.selectByPrimaryKey(i.getClassperiodAssciation()).getAssociationName());
-            classPeriodResult.setClassperiodTeacher(teacherService.selectByPrimaryKey(i.getClassperiodTeacher()).getTeacherName());
+    @RequestMapping({"/getAllGuideByAssid"})
+    public JSONResult getAllGuideByAssid(final String assid) {
+        final List<ClassPeriod> classPeriods = (List<ClassPeriod>) this.classPeriodService.getAllByAssid((int) Integer.valueOf(assid));
+        final List<ClassPeriodResult> classPeriodResults = new ArrayList<ClassPeriodResult>();
+        for (final ClassPeriod i : classPeriods) {
+            final ClassPeriodResult classPeriodResult = new ClassPeriodResult(i);
+            classPeriodResult.setClassperiodAssciation(this.associationService.selectByPrimaryKey(i.getClassperiodAssciation()).getAssociationName());
+            classPeriodResult.setClassperiodTeacher(this.teacherService.selectByPrimaryKey(i.getClassperiodTeacher()).getTeacherName());
             classPeriodResults.add(classPeriodResult);
         }
-        return JSONResult.build(200, "ok", classPeriodResults);
+        return JSONResult.build(200, "ok", (Object) classPeriodResults);
     }
 
-    @RequestMapping("/getAllGuideByAssidtoExcel")
-    public void getAllGuideByAssidtoExcel(String assid, HttpServletResponse response) {
-        List<ClassPeriod> classPeriods = classPeriodService.getAllByAssid(Integer.valueOf(assid));
-        List<ClassPeriodResult> classPeriodResults = new ArrayList<>();
-        for (ClassPeriod i : classPeriods) {
-            ClassPeriodResult classPeriodResult = new ClassPeriodResult(i);
-            classPeriodResult.setClassperiodAssciation(associationService.selectByPrimaryKey(i.getClassperiodAssciation()).getAssociationName());
-            classPeriodResult.setClassperiodTeacher(teacherService.selectByPrimaryKey(i.getClassperiodTeacher()).getTeacherName());
+    @RequestMapping({"/getAllGuideByAssidtoExcel"})
+    public void getAllGuideByAssidtoExcel(final String assid, final HttpServletResponse response) {
+        final List<ClassPeriod> classPeriods = (List<ClassPeriod>) this.classPeriodService.getAllByAssid((int) Integer.valueOf(assid));
+        final List<ClassPeriodResult> classPeriodResults = new ArrayList<ClassPeriodResult>();
+        for (final ClassPeriod i : classPeriods) {
+            final ClassPeriodResult classPeriodResult = new ClassPeriodResult(i);
+            classPeriodResult.setClassperiodAssciation(this.associationService.selectByPrimaryKey(i.getClassperiodAssciation()).getAssociationName());
+            classPeriodResult.setClassperiodTeacher(this.teacherService.selectByPrimaryKey(i.getClassperiodTeacher()).getTeacherName());
             classPeriodResults.add(classPeriodResult);
         }
-        Association association = associationService.selectByPrimaryKey(Integer.valueOf(assid));
-        String filepath = "D://" + association.getAssociationName() + "-指导情况统计.xls";
-        String filename = association.getAssociationName() + "-指导情况统计.xls";
-        ExcelExportUtil.exportToFile(classPeriodResults, filepath);
-        try (
-                InputStream inputStream = new FileInputStream(new File(filepath));
-                OutputStream outputStream = response.getOutputStream();
-        ) {
-            //指明为下载
+        final Association association = this.associationService.selectByPrimaryKey(Integer.valueOf(assid));
+        final String filepath = "/www/wwwroot/ass/upload/" + association.getAssociationName() + "-指导情况统计.xls";
+        final String filename = association.getAssociationName() + "-指导情况统计.xls";
+        ExcelExportUtil.exportToFile((List) classPeriodResults, filepath);
+        try (final InputStream inputStream = new FileInputStream(new File(filepath));
+             final OutputStream outputStream = (OutputStream) response.getOutputStream()) {
             response.setContentType("application/x-download");
-            // 设置文件名
             response.addHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(filename, "UTF-8"));
-            //把输入流copy到输出流
             IOUtils.copy(inputStream, outputStream);
             outputStream.flush();
         } catch (IOException e) {

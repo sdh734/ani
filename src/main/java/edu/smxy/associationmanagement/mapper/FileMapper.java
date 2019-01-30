@@ -1,29 +1,29 @@
 package edu.smxy.associationmanagement.mapper;
 
-import edu.smxy.associationmanagement.domain.File;
+import edu.smxy.associationmanagement.domain.*;
+import java.util.*;
 
-import java.util.List;
-
-public interface FileMapper {
-    int deleteByPrimaryKey(Integer id);
-
-    int insert(File record);
-
-    int insertSelective(File record);
-
-    File selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(File record);
-
-    int updateByPrimaryKey(File record);
-
-    List<File> selectByEvent(int eventId);
-
-    List<File> selectByAuthor(int authorId);
-
-    File selectByRecord(File record);
-
-    List<File> getAllFileByAssid(Integer assid);
-
+public interface FileMapper
+{
+    int deleteByPrimaryKey(final Integer id);
+    
+    int insert(final File record);
+    
+    int insertSelective(final File record);
+    
+    File selectByPrimaryKey(final Integer id);
+    
+    int updateByPrimaryKeySelective(final File record);
+    
+    int updateByPrimaryKey(final File record);
+    
+    List<File> selectByEvent(final int eventId);
+    
+    List<File> selectByAuthor(final int authorId);
+    
+    File selectByRecord(final File record);
+    
+    List<File> getAllFileByAssid(final Integer assid);
+    
     List<File> getAllFile();
 }

@@ -1,24 +1,23 @@
 package edu.smxy.associationmanagement.mapper;
 
-import edu.smxy.associationmanagement.domain.Member;
-import edu.smxy.associationmanagement.domain.MemberResult;
+import java.util.*;
+import edu.smxy.associationmanagement.domain.*;
 
-import java.util.List;
-
-public interface MemberMapper {
-    int deleteByPrimaryKey(Integer id);
-
-    int insert(Member record);
-
-    int insertSelective(Member record);
-
-    Member selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Member record);
-
-    int updateByPrimaryKey(Member record);
-
-    List<Member> getAllMemberByAssociationId(Integer id);
-
-    int insertbyexcel(MemberResult result);
+public interface MemberMapper
+{
+    int deleteByPrimaryKey(final Integer id);
+    
+    int insert(final Member record);
+    
+    int insertSelective(final Member record);
+    
+    Member selectByPrimaryKey(final Integer id);
+    
+    int updateByPrimaryKeySelective(final Member record);
+    
+    int updateByPrimaryKey(final Member record);
+    
+    List<Member> getAllMemberByAssociationId(final Integer id);
+    
+    int insertbyexcel(final MemberResult result);
 }

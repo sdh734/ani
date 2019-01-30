@@ -1,23 +1,23 @@
 package edu.smxy.associationmanagement.services.association;
 
-import edu.smxy.associationmanagement.domain.Association;
+import edu.smxy.associationmanagement.domain.*;
+import java.util.*;
 
-import java.util.List;
-
-public interface AssociationService {
-    int deleteByPrimaryKey(Integer associationid);
-
-    int insert(Association record);
-
-    int insertSelective(Association record);
-
-    Association selectByPrimaryKey(Integer associationid);
-
-    int updateByPrimaryKeySelective(Association record);
-
-    int updateByPrimaryKey(Association record);
-
+public interface AssociationService
+{
+    int deleteByPrimaryKey(final Integer associationid);
+    
+    int insert(final Association record);
+    
+    int insertSelective(final Association record);
+    
+    Association selectByPrimaryKey(final Integer associationid);
+    
+    int updateByPrimaryKeySelective(final Association record);
+    
+    int updateByPrimaryKey(final Association record);
+    
     List<Association> getAll();
-
-    Association query(Association association);
+    
+    Association query(final Association association);
 }

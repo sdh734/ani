@@ -1,66 +1,51 @@
 package edu.smxy.associationmanagement.services.suggest.impl;
 
-import edu.smxy.associationmanagement.domain.Suggest;
-import edu.smxy.associationmanagement.mapper.SuggestMapper;
-import edu.smxy.associationmanagement.services.suggest.SuggestService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import edu.smxy.associationmanagement.services.suggest.*;
+import org.springframework.stereotype.*;
+import edu.smxy.associationmanagement.mapper.*;
+import org.springframework.beans.factory.annotation.*;
+import edu.smxy.associationmanagement.domain.*;
+import java.util.*;
 
-import java.util.List;
-
-/**
- * @program: associationmanagement
- * @description: SDH
- * @author: SDH
- * @create: 2019-01-13 05:02
- **/
-@Service(value = "SuggestService")
-public class SuggestServiceImpl implements SuggestService {
+@Service("SuggestService")
+public class SuggestServiceImpl implements SuggestService
+{
     @Autowired
     SuggestMapper suggestMapper;
-
-    @Override
-    public int deleteByPrimaryKey(Integer id) {
-        return suggestMapper.deleteByPrimaryKey(id);
+    
+    public int deleteByPrimaryKey(final Integer id) {
+        return this.suggestMapper.deleteByPrimaryKey(id);
     }
-
-    @Override
-    public int insert(Suggest record) {
-        return suggestMapper.insert(record);
+    
+    public int insert(final Suggest record) {
+        return this.suggestMapper.insert(record);
     }
-
-    @Override
-    public int insertSelective(Suggest record) {
-        return suggestMapper.insertSelective(record);
+    
+    public int insertSelective(final Suggest record) {
+        return this.suggestMapper.insertSelective(record);
     }
-
-    @Override
-    public Suggest selectByPrimaryKey(Integer id) {
-        return suggestMapper.selectByPrimaryKey(id);
+    
+    public Suggest selectByPrimaryKey(final Integer id) {
+        return this.suggestMapper.selectByPrimaryKey(id);
     }
-
-    @Override
-    public int updateByPrimaryKeySelective(Suggest record) {
-        return suggestMapper.updateByPrimaryKeySelective(record);
+    
+    public int updateByPrimaryKeySelective(final Suggest record) {
+        return this.suggestMapper.updateByPrimaryKeySelective(record);
     }
-
-    @Override
-    public int updateByPrimaryKeyWithBLOBs(Suggest record) {
-        return suggestMapper.updateByPrimaryKeyWithBLOBs(record);
+    
+    public int updateByPrimaryKeyWithBLOBs(final Suggest record) {
+        return this.suggestMapper.updateByPrimaryKeyWithBLOBs(record);
     }
-
-    @Override
-    public int updateByPrimaryKey(Suggest record) {
-        return suggestMapper.updateByPrimaryKey(record);
+    
+    public int updateByPrimaryKey(final Suggest record) {
+        return this.suggestMapper.updateByPrimaryKey(record);
     }
-
-    @Override
-    public List<Suggest> getAllSuggestByAuthorId(Integer authorid) {
-        return suggestMapper.getAllSuggestByAuthorId(authorid);
+    
+    public List<Suggest> getAllSuggestByAuthorId(final Integer authorid) {
+        return (List<Suggest>)this.suggestMapper.getAllSuggestByAuthorId(authorid);
     }
-
-    @Override
-    public List<Suggest> getAllSuggestByReceiveId(Integer receiveid) {
-        return suggestMapper.getAllSuggestByReceiveId(receiveid);
+    
+    public List<Suggest> getAllSuggestByReceiveId(final Integer receiveid) {
+        return (List<Suggest>)this.suggestMapper.getAllSuggestByReceiveId(receiveid);
     }
 }

@@ -1,26 +1,23 @@
 package edu.smxy.associationmanagement.utils;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
-public class CookieUtils {
-    public static String getCookie(HttpServletRequest request, String cookieName) {
-
-        Cookie[] cookies = request.getCookies();
+public class CookieUtils
+{
+    public static String getCookie(final HttpServletRequest request, final String cookieName) {
+        final Cookie[] cookies = request.getCookies();
         if (cookies != null) {
-            for (Cookie cookie : cookies) {
+            for (final Cookie cookie : cookies) {
                 if (cookie.getName().equals(cookieName)) {
                     return cookie.getValue();
                 }
             }
         }
-
         return null;
     }
-
-    public static void writeCookie(HttpServletResponse response, String cookieName, String value) {
-        Cookie cookie = new Cookie(cookieName, value);
+    
+    public static void writeCookie(final HttpServletResponse response, final String cookieName, final String value) {
+        final Cookie cookie = new Cookie(cookieName, value);
         cookie.setPath("/");
         cookie.setMaxAge(3600);
         response.addCookie(cookie);

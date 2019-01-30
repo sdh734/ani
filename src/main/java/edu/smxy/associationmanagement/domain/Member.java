@@ -1,95 +1,86 @@
 package edu.smxy.associationmanagement.domain;
 
-import com.xuxueli.poi.excel.annotation.ExcelSheet;
-
-public class Member {
+public class Member
+{
     private Integer id;
-
     private Integer associationid;
-
     private String name;
-
     private String gender;
-
     private String college;
-
     private String phone;
-
     private String position;
-
     private String studentid;
-
     private String department;
-
+    
     public Integer getId() {
-        return id;
+        return this.id;
     }
-
-    public void setId(Integer id) {
+    
+    public void setId(final Integer id) {
         this.id = id;
     }
-
+    
     public Integer getAssociationid() {
-        return associationid;
+        return this.associationid;
     }
-
-    public void setAssociationid(Integer associationid) {
+    
+    public void setAssociationid(final Integer associationid) {
         this.associationid = associationid;
     }
-
+    
     public String getName() {
-        return name;
+        return this.name;
     }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    
+    public void setName(final String name) {
+        this.name = ((name == null) ? null : name.trim());
     }
-
+    
     public String getGender() {
-        return gender;
+        return this.gender;
     }
-
-    public void setGender(String gender) {
-        this.gender = gender == null ? null : gender.trim();
+    
+    public void setGender(final String gender) {
+        this.gender = ((gender == null) ? null : gender.trim());
     }
-
+    
     public String getCollege() {
-        return college;
+        return this.college;
     }
-
-    public void setCollege(String college) {
-        this.college = college == null ? null : college.trim();
+    
+    public void setCollege(final String college) {
+        this.college = ((college == null) ? null : college.trim());
     }
-
+    
     public String getPhone() {
-        return phone;
+        return this.phone;
     }
-
-    public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
+    
+    public void setPhone(final String phone) {
+        this.phone = ((phone == null) ? null : phone.trim());
     }
-
+    
     public String getPosition() {
-        return position;
+        return this.position;
     }
-
-    public void setPosition(String position) {
-        this.position = position == null ? null : position.trim();
+    
+    public void setPosition(final String position) {
+        this.position = ((position == null) ? null : position.trim());
     }
-
+    
     public String getStudentid() {
-        return studentid;
+        return this.studentid;
     }
-
-    public void setStudentid(String studentid) {
-        this.studentid = studentid == null ? null : studentid.trim();
+    
+    public void setStudentid(final String studentid) {
+        this.studentid = ((studentid == null) ? null : studentid.trim());
     }
-
+    
     public String getDepartment() {
-        return department;
+        return this.department;
     }
-
-    public void setDepartment(String department) {
-        this.department = department == null ? null : department.trim();
+    
+    public void setDepartment(final String department) {
+        this.department = ((department == null) ? null : department.trim());
     }
 }

@@ -1,56 +1,43 @@
 package edu.smxy.associationmanagement.services.program.impl;
 
-import edu.smxy.associationmanagement.domain.Program;
-import edu.smxy.associationmanagement.mapper.ProgramMapper;
-import edu.smxy.associationmanagement.services.program.ProgramService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import edu.smxy.associationmanagement.services.program.*;
+import org.springframework.stereotype.*;
+import edu.smxy.associationmanagement.mapper.*;
+import org.springframework.beans.factory.annotation.*;
+import edu.smxy.associationmanagement.domain.*;
+import java.util.*;
 
-import java.util.List;
-
-/**
- * @program: associationmanagement
- * @description: SDH
- * @author: SDH
- * @create: 2019-01-11 20:12
- **/
-@Service(value = "ProgramService")
-public class ProgramServiceImpl implements ProgramService {
+@Service("ProgramService")
+public class ProgramServiceImpl implements ProgramService
+{
     @Autowired
     ProgramMapper programMapper;
-
-    @Override
-    public int deleteByPrimaryKey(Integer id) {
-        return programMapper.deleteByPrimaryKey(id);
+    
+    public int deleteByPrimaryKey(final Integer id) {
+        return this.programMapper.deleteByPrimaryKey(id);
     }
-
-    @Override
-    public int insert(Program record) {
-        return programMapper.insert(record);
+    
+    public int insert(final Program record) {
+        return this.programMapper.insert(record);
     }
-
-    @Override
-    public int insertSelective(Program record) {
-        return programMapper.insertSelective(record);
+    
+    public int insertSelective(final Program record) {
+        return this.programMapper.insertSelective(record);
     }
-
-    @Override
-    public Program selectByPrimaryKey(Integer id) {
-        return programMapper.selectByPrimaryKey(id);
+    
+    public Program selectByPrimaryKey(final Integer id) {
+        return this.programMapper.selectByPrimaryKey(id);
     }
-
-    @Override
-    public int updateByPrimaryKeySelective(Program record) {
-        return programMapper.updateByPrimaryKeySelective(record);
+    
+    public int updateByPrimaryKeySelective(final Program record) {
+        return this.programMapper.updateByPrimaryKeySelective(record);
     }
-
-    @Override
-    public int updateByPrimaryKey(Program record) {
-        return programMapper.updateByPrimaryKey(record);
+    
+    public int updateByPrimaryKey(final Program record) {
+        return this.programMapper.updateByPrimaryKey(record);
     }
-
-    @Override
-    public List<Program> getProgramByEventId(int eventid) {
-        return programMapper.getProgramByEventId(eventid);
+    
+    public List<Program> getProgramByEventId(final int eventid) {
+        return (List<Program>)this.programMapper.getProgramByEventId(eventid);
     }
 }

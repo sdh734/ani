@@ -1,74 +1,68 @@
 package edu.smxy.associationmanagement.domain;
 
-public class User {
+public class User
+{
     private Integer id;
-
     private String name;
-
     private Integer type;
-
     private String account;
-
     private String password;
-
     private String phone;
-
     private Integer associationid;
-
-
+    
     public Integer getId() {
-        return id;
+        return this.id;
     }
-
-    public void setId(Integer id) {
+    
+    public void setId(final Integer id) {
         this.id = id;
     }
-
+    
     public String getName() {
-        return name;
+        return this.name;
     }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    
+    public void setName(final String name) {
+        this.name = ((name == null) ? null : name.trim());
     }
-
+    
     public Integer getType() {
-        return type;
+        return this.type;
     }
-
-    public void setType(Integer type) {
+    
+    public void setType(final Integer type) {
         this.type = type;
     }
-
+    
     public String getAccount() {
-        return account;
+        return this.account;
     }
-
-    public void setAccount(String account) {
-        this.account = account == null ? null : account.trim();
+    
+    public void setAccount(final String account) {
+        this.account = ((account == null) ? null : account.trim());
     }
-
+    
     public String getPassword() {
-        return password;
+        return this.password;
     }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+    
+    public void setPassword(final String password) {
+        this.password = ((password == null) ? null : password.trim());
     }
-
+    
     public String getPhone() {
-        return phone;
+        return this.phone;
     }
-
-    public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
+    
+    public void setPhone(final String phone) {
+        this.phone = ((phone == null) ? null : phone.trim());
     }
-
+    
     public Integer getAssociationid() {
-        return associationid;
+        return this.associationid;
     }
-
-    public void setAssociationid(Integer associationid) {
+    
+    public void setAssociationid(final Integer associationid) {
         this.associationid = associationid;
     }
 }

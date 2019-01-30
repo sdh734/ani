@@ -1,89 +1,72 @@
 package edu.smxy.associationmanagement.controller;
 
-import edu.smxy.associationmanagement.domain.Association;
-import edu.smxy.associationmanagement.domain.JSONResult;
-import edu.smxy.associationmanagement.domain.Teacher;
-import edu.smxy.associationmanagement.domain.User;
-import edu.smxy.associationmanagement.services.association.AssociationService;
-import edu.smxy.associationmanagement.services.teacher.TeacherService;
-import edu.smxy.associationmanagement.services.users.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.autoconfigure.*;
+import edu.smxy.associationmanagement.services.association.*;
+import org.springframework.beans.factory.annotation.*;
+import edu.smxy.associationmanagement.services.users.*;
+import edu.smxy.associationmanagement.services.teacher.*;
+import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.*;
+import edu.smxy.associationmanagement.domain.*;
+import java.util.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-/**
- * @program: associationmanagement
- * @description: SDH
- * @author: SDH
- * @create: 2019-01-12 16:03
- **/
 @RestController
 @ResponseBody
 @EnableAutoConfiguration
-public class AssociationController {
+public class AssociationController
+{
     @Autowired
     AssociationService associationService;
     @Autowired
     UserService userService;
     @Autowired
     TeacherService teacherService;
-
-    @RequestMapping("/getassbyid")
-    public JSONResult getAssByid(int id) {
-        List<Object> list = new ArrayList<>();
-        Association association = associationService.selectByPrimaryKey(id);
+    
+    @RequestMapping({ "/getassbyid" })
+    public JSONResult getAssByid(final int id) {
+        final List<Object> list = new ArrayList<Object>();
+        final Association association = this.associationService.selectByPrimaryKey(id);
         list.add(association);
-        list.add(userService.selectUserById(association.getPresidentid()));
-        list.add(teacherService.selectByPrimaryKey(association.getTeacher()));
-        return JSONResult.build(200, "ok", list);
+        list.add(this.userService.selectUserById((int)association.getPresidentid()));
+        list.add(this.teacherService.selectByPrimaryKey(association.getTeacher()));
+        return JSONResult.build(200, "ok", (Object)list);
     }
-
-    @RequestMapping("/getAllAss")
+    
+    @RequestMapping({ "/getAllAss" })
     public JSONResult getAll() {
-        List<Association> list = associationService.getAll();
-        return JSONResult.build(200, "AllAss", list);
+        final List<Association> list = (List<Association>)this.associationService.getAll();
+        return JSONResult.build(200, "AllAss", (Object)list);
     }
-
-    @RequestMapping("/addNewAss")
-    public JSONResult addNewAss(HttpServletRequest request) {
-        Association association = new Association();
-        User user = new User();
-        Teacher teacher = new Teacher();
-
+    
+    @RequestMapping({ "/addNewAss" })
+    public JSONResult addNewAss(final HttpServletRequest request) {
+        final Association association = new Association();
+        final User user = new User();
+        final Teacher teacher = new Teacher();
         association.setAssociationName(request.getParameter("assname"));
         association.setCount(Integer.valueOf(request.getParameter("assnumber")));
         association.setCreationTime(new Date());
         association.setIsRegistered(true);
-        associationService.insert(association);
-        Association association1 = associationService.query(association);
+        this.associationService.insert(association);
+        final Association association2 = this.associationService.query(association);
         teacher.setTeacherName(request.getParameter("assteachername"));
         teacher.setTeacherCollege(request.getParameter("assteachercollege"));
         teacher.setTeacherGender(request.getParameter("assteachergender"));
         teacher.setTeacherPhone(request.getParameter("assteacherphone"));
-        teacher.setTeacherAssociation(association1.getAssociationid());
-        teacherService.insert(teacher);
+        teacher.setTeacherAssociation(association2.getAssociationid());
+        this.teacherService.insert(teacher);
         user.setName(request.getParameter("assprename"));
         user.setAccount(request.getParameter("asspreaccount"));
         user.setPassword(request.getParameter("assprepwd"));
         user.setPhone(request.getParameter("assprephone"));
         user.setType(0);
-        user.setAssociationid(association1.getAssociationid());
-        userService.insert(user);
-        User user1 = userService.query(user);
-        association1.setPresidentid(user1.getId());
-
-
-        Teacher teacher1 = teacherService.query(teacher);
-
-        association1.setTeacher(teacher1.getTeacherId());
-        associationService.updateByPrimaryKey(association1);
-        return JSONResult.build(200, "ok", null);
+        user.setAssociationid(association2.getAssociationid());
+        this.userService.insert(user);
+        final User user2 = this.userService.query(user);
+        association2.setPresidentid(user2.getId());
+        final Teacher teacher2 = this.teacherService.query(teacher);
+        association2.setTeacher(teacher2.getTeacherId());
+        this.associationService.updateByPrimaryKey(association2);
+        return JSONResult.build(200, "ok", (Object)null);
     }
 }

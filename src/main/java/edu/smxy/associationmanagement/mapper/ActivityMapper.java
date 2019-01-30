@@ -1,9 +1,9 @@
-package edu.smxy.associationmanagement.services.activity;
+package edu.smxy.associationmanagement.mapper;
 
 import edu.smxy.associationmanagement.domain.*;
 import java.util.*;
 
-public interface ActivityService
+public interface ActivityMapper
 {
     int deleteByPrimaryKey(final Integer id);
     

@@ -1,60 +1,55 @@
 package edu.smxy.associationmanagement.services.association.impl;
 
-import edu.smxy.associationmanagement.domain.Association;
-import edu.smxy.associationmanagement.mapper.AssociationMapper;
-import edu.smxy.associationmanagement.services.association.AssociationService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import edu.smxy.associationmanagement.services.association.*;
+import org.springframework.stereotype.*;
+import edu.smxy.associationmanagement.mapper.*;
+import org.springframework.beans.factory.annotation.*;
+import edu.smxy.associationmanagement.domain.*;
+import java.util.*;
 
-import java.util.List;
-
-/**
- * @program: associationmanagement
- * @description: SDH
- * @author: SDH
- * @create: 2019-01-11 23:49
- **/
-@Service(value = "AssociationService")
-public class AssociationServiceImpl implements AssociationService {
+@Service("AssociationService")
+public class AssociationServiceImpl implements AssociationService
+{
     @Autowired
     AssociationMapper associationMapper;
+    
     @Override
-    public int deleteByPrimaryKey(Integer associationid) {
-        return associationMapper.deleteByPrimaryKey(associationid);
+    public int deleteByPrimaryKey(final Integer associationid) {
+        return this.associationMapper.deleteByPrimaryKey(associationid);
     }
-
+    
     @Override
-    public int insert(Association record) {
-        return associationMapper.insert(record);
+    public int insert(final Association record) {
+        return this.associationMapper.insert(record);
     }
-
+    
     @Override
-    public int insertSelective(Association record) {
-        return associationMapper.insertSelective(record);
+    public int insertSelective(final Association record) {
+        return this.associationMapper.insertSelective(record);
     }
-
+    
     @Override
-    public Association selectByPrimaryKey(Integer associationid) {
-        return associationMapper.selectByPrimaryKey(associationid);
+    public Association selectByPrimaryKey(final Integer associationid) {
+        return this.associationMapper.selectByPrimaryKey(associationid);
     }
-
+    
     @Override
-    public int updateByPrimaryKeySelective(Association record) {
-        return associationMapper.updateByPrimaryKeySelective(record);
+    public int updateByPrimaryKeySelective(final Association record) {
+        return this.associationMapper.updateByPrimaryKeySelective(record);
     }
-
+    
     @Override
-    public int updateByPrimaryKey(Association record) {
-        return associationMapper.updateByPrimaryKey(record);
+    public int updateByPrimaryKey(final Association record) {
+        return this.associationMapper.updateByPrimaryKey(record);
     }
-
+    
     @Override
     public List<Association> getAll() {
-        return associationMapper.getAll();
+        return this.associationMapper.getAll();
     }
-
+    
     @Override
-    public Association query(Association association) {
-        return associationMapper.query(association);
+    public Association query(final Association association) {
+        return this.associationMapper.query(association);
     }
 }

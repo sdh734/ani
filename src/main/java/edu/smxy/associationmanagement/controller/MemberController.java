@@ -1,13 +1,16 @@
 package edu.smxy.associationmanagement.controller;
 
+import com.alibaba.excel.EasyExcelFactory;
+import com.alibaba.excel.event.AnalysisEventListener;
+import com.alibaba.excel.metadata.Sheet;
 import com.xuxueli.poi.excel.ExcelExportUtil;
-import com.xuxueli.poi.excel.ExcelImportUtil;
 import edu.smxy.associationmanagement.domain.Association;
 import edu.smxy.associationmanagement.domain.JSONResult;
 import edu.smxy.associationmanagement.domain.Member;
 import edu.smxy.associationmanagement.domain.MemberResult;
 import edu.smxy.associationmanagement.services.association.AssociationService;
 import edu.smxy.associationmanagement.services.member.MemberService;
+import edu.smxy.associationmanagement.utils.ExcelListener;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -24,11 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @program: associationmanagement
- * @description: SDH
- * @author: SDH
- * @create: 2019-01-12 01:25
- **/
+ * @author SDH
+ */
 @RestController
 @ResponseBody
 @EnableAutoConfiguration
@@ -38,63 +38,54 @@ public class MemberController {
     @Autowired
     AssociationService associationService;
 
-    @RequestMapping("/getAllMemberByAssId")
-    public JSONResult getAllMemberByAssId(Integer id) {
-        List<Member> members = memberService.getAllMemberByAssociationId(id);
+    @RequestMapping({"/getAllMemberByAssId"})
+    public JSONResult getAllMemberByAssId(final Integer id) {
+        final List<Member> members = this.memberService.getAllMemberByAssociationId(id);
         return JSONResult.build(200, "ok", members);
     }
 
-    @RequestMapping("/getAllMembertoExcelByid")
-    public String getAllMembertoExcel(Integer id, HttpServletResponse response) {
-        List<Member> members = memberService.getAllMemberByAssociationId(id);
-        List<MemberResult> memberResults = new ArrayList<>();
-        for (Member i : members) {
-            MemberResult memberResult = new MemberResult(i);
-            Association association = associationService.selectByPrimaryKey(i.getAssociationid());
+    @RequestMapping({"/getAllMembertoExcelByid"})
+    public String getAllMembertoExcel(final Integer id, final HttpServletResponse response) {
+        final List<Member> members = this.memberService.getAllMemberByAssociationId(id);
+        final List<MemberResult> memberResults = new ArrayList<MemberResult>();
+        for (final Member i : members) {
+            final MemberResult memberResult = new MemberResult(i);
+            final Association association = this.associationService.selectByPrimaryKey(i.getAssociationid());
             memberResult.setAssociationname(association.getAssociationName());
             memberResults.add(memberResult);
         }
-        String name = associationService.selectByPrimaryKey(id).getAssociationName();
+        final String name = this.associationService.selectByPrimaryKey(id).getAssociationName();
         if (memberResults.size() > 0) {
-            ExcelExportUtil.exportToFile(memberResults, "D://" + name + ".xls");
-            try (
-                    InputStream inputStream = new FileInputStream(new File("D://" + name + ".xls"));
-                    OutputStream outputStream = response.getOutputStream();
-            ) {
-                //指明为下载
+            ExcelExportUtil.exportToFile((List) memberResults, "/www/wwwroot/ass/upload/" + name + ".xls");
+            try (final InputStream inputStream = new FileInputStream(new File("/www/wwwroot/ass/upload/" + name + ".xls"));
+                 final OutputStream outputStream = (OutputStream) response.getOutputStream()) {
                 response.setContentType("application/x-download");
-                // 设置文件名
                 response.addHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(name + ".xls", "UTF-8"));
-                //把输入流copy到输出流
                 IOUtils.copy(inputStream, outputStream);
                 outputStream.flush();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException e2) {
+                e2.printStackTrace();
             }
             return "ok";
-        } else {
-            return "无成员";
         }
-
+        return "\u65e0\u6210\u5458";
     }
 
-    @RequestMapping("/uploadFiletoMember")
-    public JSONResult uploadFiletoMember(@RequestParam("file") MultipartFile file){
-        String filename = file.getOriginalFilename();
-        String path = "G:\\upload\\";
+    @RequestMapping({"/uploadFiletoMember"})
+    public JSONResult uploadFiletoMember(@RequestParam("file") final MultipartFile file) {
+        final String filename = file.getOriginalFilename();
+        final String path = "/www/wwwroot/ass/upload/";
         try {
             file.transferTo(new File(path + filename));
-            List<Object> memberResults = ExcelImportUtil.importExcel(MemberResult.class, path+filename);
-            for (Object i : memberResults){
-                MemberResult memberResult = (MemberResult) i;
-                memberService.insertbyexcel(memberResult);
-            }
-            return  JSONResult.build(200, "ok", null);
+            final File file2 = new File(path + filename);
+            final InputStream inputStream = new FileInputStream(file2);
+            EasyExcelFactory.readBySax((InputStream) new BufferedInputStream(inputStream), new Sheet(1, 1), (AnalysisEventListener) new ExcelListener());
+            return JSONResult.build(200, "ok", null);
         } catch (IOException e) {
             e.printStackTrace();
+            return JSONResult.build(500, "error", null);
         }
-        return  JSONResult.build(500, "error", null);
     }
 }

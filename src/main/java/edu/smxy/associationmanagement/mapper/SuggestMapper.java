@@ -1,9 +1,9 @@
-package edu.smxy.associationmanagement.services.suggest;
+package edu.smxy.associationmanagement.mapper;
 
 import edu.smxy.associationmanagement.domain.*;
 import java.util.*;
 
-public interface SuggestService
+public interface SuggestMapper
 {
     int deleteByPrimaryKey(final Integer id);
     

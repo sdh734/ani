@@ -1,82 +1,70 @@
 package edu.smxy.associationmanagement.domain;
 
-import com.xuxueli.poi.excel.annotation.ExcelField;
-import com.xuxueli.poi.excel.annotation.ExcelSheet;
+import com.xuxueli.poi.excel.annotation.*;
+import java.text.*;
 
-import javax.naming.Name;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-/**
- * @program: associationmanagement
- * @description: SDH
- * @author: SDH
- * @create: 2019-01-12 18:48
- **/
-@ExcelSheet(name = "指导情况")
-public class ClassPeriodResult {
-    @ExcelField(name = "指导协会")
+@ExcelSheet(name = "\u6307\u5bfc\u60c5\u51b5")
+public class ClassPeriodResult
+{
+    @ExcelField(name = "\u6307\u5bfc\u534f\u4f1a")
     private String classperiodAssciation;
-    @ExcelField(name = "指导时长")
+    @ExcelField(name = "\u6307\u5bfc\u65f6\u957f")
     private Double classperiodTime;
-    @ExcelField(name = "指导教师")
+    @ExcelField(name = "\u6307\u5bfc\u6559\u5e08")
     private String classperiodTeacher;
-    @ExcelField(name = "指导日期")
+    @ExcelField(name = "\u6307\u5bfc\u65e5\u671f")
     private String classperiodDate;
-
+    
     public ClassPeriodResult() {
     }
-    public ClassPeriodResult(ClassPeriod classPeriod) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        this.classperiodDate=simpleDateFormat.format(classPeriod.getClassperiodDate());
-        this.classperiodTime=classPeriod.getClassperiodTime();
+    
+    public ClassPeriodResult(final ClassPeriod classPeriod) {
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        this.classperiodDate = simpleDateFormat.format(classPeriod.getClassperiodDate());
+        this.classperiodTime = classPeriod.getClassperiodTime();
     }
+    
     @Override
     public String toString() {
-        return "ClassPeriodResult{" +
-                "classperiodAssciation='" + classperiodAssciation + '\'' +
-                ", classperiodTime=" + classperiodTime +
-                ", classperiodTeacher='" + classperiodTeacher + '\'' +
-                ", classperiodDate=" + classperiodDate +
-                '}';
+        return "ClassPeriodResult{classperiodAssciation='" + this.classperiodAssciation + '\'' + ", classperiodTime=" + this.classperiodTime + ", classperiodTeacher='" + this.classperiodTeacher + '\'' + ", classperiodDate=" + this.classperiodDate + '}';
     }
-
-    public ClassPeriodResult(String classperiodAssciation, Double classperiodTime, String classperiodTeacher, String classperiodDate) {
+    
+    public ClassPeriodResult(final String classperiodAssciation, final Double classperiodTime, final String classperiodTeacher, final String classperiodDate) {
         this.classperiodAssciation = classperiodAssciation;
         this.classperiodTime = classperiodTime;
         this.classperiodTeacher = classperiodTeacher;
         this.classperiodDate = classperiodDate;
     }
-
+    
     public String getClassperiodAssciation() {
-        return classperiodAssciation;
+        return this.classperiodAssciation;
     }
-
-    public void setClassperiodAssciation(String classperiodAssciation) {
+    
+    public void setClassperiodAssciation(final String classperiodAssciation) {
         this.classperiodAssciation = classperiodAssciation;
     }
-
+    
     public Double getClassperiodTime() {
-        return classperiodTime;
+        return this.classperiodTime;
     }
-
-    public void setClassperiodTime(Double classperiodTime) {
+    
+    public void setClassperiodTime(final Double classperiodTime) {
         this.classperiodTime = classperiodTime;
     }
-
+    
     public String getClassperiodTeacher() {
-        return classperiodTeacher;
+        return this.classperiodTeacher;
     }
-
-    public void setClassperiodTeacher(String classperiodTeacher) {
+    
+    public void setClassperiodTeacher(final String classperiodTeacher) {
         this.classperiodTeacher = classperiodTeacher;
     }
-
+    
     public String getClassperiodDate() {
-        return classperiodDate;
+        return this.classperiodDate;
     }
-
-    public void setClassperiodDate(String classperiodDate) {
+    
+    public void setClassperiodDate(final String classperiodDate) {
         this.classperiodDate = classperiodDate;
     }
 }

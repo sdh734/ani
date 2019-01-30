@@ -1,62 +1,47 @@
 package edu.smxy.associationmanagement.services.member.impl;
 
-import edu.smxy.associationmanagement.domain.Member;
-import edu.smxy.associationmanagement.domain.MemberResult;
-import edu.smxy.associationmanagement.mapper.MemberMapper;
-import edu.smxy.associationmanagement.services.member.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import edu.smxy.associationmanagement.services.member.*;
+import org.springframework.stereotype.*;
+import edu.smxy.associationmanagement.mapper.*;
+import org.springframework.beans.factory.annotation.*;
+import java.util.*;
+import edu.smxy.associationmanagement.domain.*;
 
-import java.util.List;
-
-/**
- * @program: associationmanagement
- * @description: SDH
- * @author: SDH
- * @create: 2019-01-12 01:22
- **/
-@Service(value = "MemberService")
-public class MemberServiceImpl implements MemberService {
+@Service("MemberService")
+public class MemberServiceImpl implements MemberService
+{
     @Autowired
     MemberMapper memberMapper;
-
-    @Override
-    public int deleteByPrimaryKey(Integer id) {
-        return memberMapper.deleteByPrimaryKey(id);
+    
+    public int deleteByPrimaryKey(final Integer id) {
+        return this.memberMapper.deleteByPrimaryKey(id);
     }
-
-    @Override
-    public int insert(Member record) {
-        return memberMapper.insert(record);
+    
+    public int insert(final Member record) {
+        return this.memberMapper.insert(record);
     }
-
-    @Override
-    public int insertSelective(Member record) {
-        return memberMapper.insertSelective(record);
+    
+    public int insertSelective(final Member record) {
+        return this.memberMapper.insertSelective(record);
     }
-
-    @Override
-    public Member selectByPrimaryKey(Integer id) {
-        return memberMapper.selectByPrimaryKey(id);
+    
+    public Member selectByPrimaryKey(final Integer id) {
+        return this.memberMapper.selectByPrimaryKey(id);
     }
-
-    @Override
-    public int updateByPrimaryKeySelective(Member record) {
-        return memberMapper.updateByPrimaryKeySelective(record);
+    
+    public int updateByPrimaryKeySelective(final Member record) {
+        return this.memberMapper.updateByPrimaryKeySelective(record);
     }
-
-    @Override
-    public int updateByPrimaryKey(Member record) {
-        return memberMapper.updateByPrimaryKey(record);
+    
+    public int updateByPrimaryKey(final Member record) {
+        return this.memberMapper.updateByPrimaryKey(record);
     }
-
-    @Override
-    public List<Member> getAllMemberByAssociationId(Integer id) {
-        return memberMapper.getAllMemberByAssociationId(id);
+    
+    public List<Member> getAllMemberByAssociationId(final Integer id) {
+        return (List<Member>)this.memberMapper.getAllMemberByAssociationId(id);
     }
-
-    @Override
-    public int insertbyexcel(MemberResult result) {
-        return memberMapper.insertbyexcel(result);
+    
+    public int insertbyexcel(final MemberResult result) {
+        return this.memberMapper.insertbyexcel(result);
     }
 }

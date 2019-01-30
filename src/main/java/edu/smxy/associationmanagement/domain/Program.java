@@ -1,85 +1,77 @@
 package edu.smxy.associationmanagement.domain;
 
-import com.xuxueli.poi.excel.annotation.ExcelField;
-
-public class Program {
+public class Program
+{
     private Integer id;
-
     private Integer associationid;
-
     private Integer eventid;
-
     private String programname;
-
     private Integer programnumber;
-
     private String programmanager;
-
     private String managerphone;
-
     private String programprops;
-
+    
     public Integer getId() {
-        return id;
+        return this.id;
     }
-
-    public void setId(Integer id) {
+    
+    public void setId(final Integer id) {
         this.id = id;
     }
-
+    
     public Integer getAssociationid() {
-        return associationid;
+        return this.associationid;
     }
-
-    public void setAssociationid(Integer associationid) {
+    
+    public void setAssociationid(final Integer associationid) {
         this.associationid = associationid;
     }
-
+    
     public Integer getEventid() {
-        return eventid;
+        return this.eventid;
     }
-
-    public void setEventid(Integer eventid) {
+    
+    public void setEventid(final Integer eventid) {
         this.eventid = eventid;
     }
-
+    
     public String getProgramname() {
-        return programname;
+        return this.programname;
     }
-
-    public void setProgramname(String programname) {
+    
+    public void setProgramname(final String programname) {
         this.programname = programname;
     }
-
+    
     public Integer getProgramnumber() {
-        return programnumber;
+        return this.programnumber;
     }
-
-    public void setProgramnumber(Integer programnumber) {
+    
+    public void setProgramnumber(final Integer programnumber) {
         this.programnumber = programnumber;
     }
-
+    
     public String getProgrammanager() {
-        return programmanager;
+        return this.programmanager;
     }
-
-    public void setProgrammanager(String programmanager) {
+    
+    public void setProgrammanager(final String programmanager) {
         this.programmanager = programmanager;
     }
-
+    
     public String getManagerphone() {
-        return managerphone;
+        return this.managerphone;
     }
-
-    public void setManagerphone(String managerphone) {
+    
+    public void setManagerphone(final String managerphone) {
         this.managerphone = managerphone;
     }
-
+    
     public String getProgramprops() {
-        return programprops;
+        return this.programprops;
     }
-
-    public void setProgramprops(String programprops) {
+    
+    public void setProgramprops(final String programprops) {
         this.programprops = programprops;
     }
 }

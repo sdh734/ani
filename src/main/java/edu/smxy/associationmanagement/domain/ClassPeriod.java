@@ -1,61 +1,52 @@
 package edu.smxy.associationmanagement.domain;
 
-import java.util.Date;
+import java.util.*;
 
-/**
- * @author  SDH
- * 协会指导情况表
- *
- */
-public class ClassPeriod {
-
+public class ClassPeriod
+{
     private Integer classperiodId;
-
     private Integer classperiodAssciation;
-
     private Double classperiodTime;
-
     private Integer classperiodTeacher;
-
     private Date classperiodDate;
-
+    
     public Date getClassperiodDate() {
-        return classperiodDate;
+        return this.classperiodDate;
     }
-
-    public void setClassperiodDate(Date classperiodDate) {
+    
+    public void setClassperiodDate(final Date classperiodDate) {
         this.classperiodDate = classperiodDate;
     }
-
+    
     public Integer getClassperiodId() {
-        return classperiodId;
+        return this.classperiodId;
     }
-
-    public void setClassperiodId(Integer classperiodId) {
+    
+    public void setClassperiodId(final Integer classperiodId) {
         this.classperiodId = classperiodId;
     }
-
+    
     public Integer getClassperiodAssciation() {
-        return classperiodAssciation;
+        return this.classperiodAssciation;
     }
-
-    public void setClassperiodAssciation(Integer classperiodAssciation) {
+    
+    public void setClassperiodAssciation(final Integer classperiodAssciation) {
         this.classperiodAssciation = classperiodAssciation;
     }
-
+    
     public Double getClassperiodTime() {
-        return classperiodTime;
+        return this.classperiodTime;
     }
-
-    public void setClassperiodTime(Double classperiodTime) {
+    
+    public void setClassperiodTime(final Double classperiodTime) {
         this.classperiodTime = classperiodTime;
     }
-
+    
     public Integer getClassperiodTeacher() {
-        return classperiodTeacher;
+        return this.classperiodTeacher;
     }
-
-    public void setClassperiodTeacher(Integer classperiodTeacher) {
+    
+    public void setClassperiodTeacher(final Integer classperiodTeacher) {
         this.classperiodTeacher = classperiodTeacher;
     }
 }

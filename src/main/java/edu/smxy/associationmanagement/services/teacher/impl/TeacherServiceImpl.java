@@ -1,54 +1,42 @@
 package edu.smxy.associationmanagement.services.teacher.impl;
 
-import edu.smxy.associationmanagement.domain.Teacher;
-import edu.smxy.associationmanagement.mapper.TeacherMapper;
-import edu.smxy.associationmanagement.services.teacher.TeacherService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import edu.smxy.associationmanagement.services.teacher.*;
+import org.springframework.stereotype.*;
+import edu.smxy.associationmanagement.mapper.*;
+import org.springframework.beans.factory.annotation.*;
+import edu.smxy.associationmanagement.domain.*;
 
-/**
- * @program: associationmanagement
- * @description: SDH
- * @author: SDH
- * @create: 2019-01-12 16:16
- **/
-@Service(value = "TeacherService")
-public class TeacherServiceImpl implements TeacherService {
+@Service("TeacherService")
+public class TeacherServiceImpl implements TeacherService
+{
     @Autowired
     TeacherMapper teacherMapper;
-
-    @Override
-    public int deleteByPrimaryKey(Integer teacherId) {
-        return teacherMapper.deleteByPrimaryKey(teacherId);
+    
+    public int deleteByPrimaryKey(final Integer teacherId) {
+        return this.teacherMapper.deleteByPrimaryKey(teacherId);
     }
-
-    @Override
-    public int insert(Teacher record) {
-        return teacherMapper.insert(record);
+    
+    public int insert(final Teacher record) {
+        return this.teacherMapper.insert(record);
     }
-
-    @Override
-    public int insertSelective(Teacher record) {
-        return teacherMapper.insertSelective(record);
+    
+    public int insertSelective(final Teacher record) {
+        return this.teacherMapper.insertSelective(record);
     }
-
-    @Override
-    public Teacher selectByPrimaryKey(Integer teacherId) {
-        return teacherMapper.selectByPrimaryKey(teacherId);
+    
+    public Teacher selectByPrimaryKey(final Integer teacherId) {
+        return this.teacherMapper.selectByPrimaryKey(teacherId);
     }
-
-    @Override
-    public int updateByPrimaryKeySelective(Teacher record) {
-        return teacherMapper.updateByPrimaryKeySelective(record);
+    
+    public int updateByPrimaryKeySelective(final Teacher record) {
+        return this.teacherMapper.updateByPrimaryKeySelective(record);
     }
-
-    @Override
-    public int updateByPrimaryKey(Teacher record) {
-        return teacherMapper.updateByPrimaryKey(record);
+    
+    public int updateByPrimaryKey(final Teacher record) {
+        return this.teacherMapper.updateByPrimaryKey(record);
     }
-
-    @Override
-    public Teacher query(Teacher teacher) {
-        return teacherMapper.query(teacher);
+    
+    public Teacher query(final Teacher teacher) {
+        return this.teacherMapper.query(teacher);
     }
 }

@@ -1,53 +1,50 @@
 package edu.smxy.associationmanagement.domain;
 
-public class File {
+public class File
+{
     private Integer id;
-
     private String filename;
-
     private String filepath;
-
     private Integer eventid;
-
     private Integer authorid;
-
+    
     public Integer getId() {
-        return id;
+        return this.id;
     }
-
-    public void setId(Integer id) {
+    
+    public void setId(final Integer id) {
         this.id = id;
     }
-
+    
     public String getFilename() {
-        return filename;
+        return this.filename;
     }
-
-    public void setFilename(String filename) {
-        this.filename = filename == null ? null : filename.trim();
+    
+    public void setFilename(final String filename) {
+        this.filename = ((filename == null) ? null : filename.trim());
     }
-
+    
     public String getFilepath() {
-        return filepath;
+        return this.filepath;
     }
-
-    public void setFilepath(String filepath) {
-        this.filepath = filepath == null ? null : filepath.trim();
+    
+    public void setFilepath(final String filepath) {
+        this.filepath = ((filepath == null) ? null : filepath.trim());
     }
-
+    
     public Integer getEventid() {
-        return eventid;
+        return this.eventid;
     }
-
-    public void setEventid(Integer eventid) {
+    
+    public void setEventid(final Integer eventid) {
         this.eventid = eventid;
     }
-
+    
     public Integer getAuthorid() {
-        return authorid;
+        return this.authorid;
     }
-
-    public void setAuthorid(Integer authorid) {
+    
+    public void setAuthorid(final Integer authorid) {
         this.authorid = authorid;
     }
 }

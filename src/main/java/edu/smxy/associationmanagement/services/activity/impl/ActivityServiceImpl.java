@@ -1,61 +1,55 @@
 package edu.smxy.associationmanagement.services.activity.impl;
 
-import edu.smxy.associationmanagement.domain.Activity;
-import edu.smxy.associationmanagement.mapper.ActivityMapper;
-import edu.smxy.associationmanagement.services.activity.ActivityService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import edu.smxy.associationmanagement.services.activity.*;
+import org.springframework.stereotype.*;
+import edu.smxy.associationmanagement.mapper.*;
+import org.springframework.beans.factory.annotation.*;
+import edu.smxy.associationmanagement.domain.*;
+import java.util.*;
 
-import java.util.List;
-
-/**
- * @program: associationmanagement
- * @description: SDH
- * @author: SDH
- * @create: 2019-01-13 01:45
- **/
-@Service(value = "ActivityService")
-public class ActivityServiceImpl implements ActivityService {
+@Service("ActivityService")
+public class ActivityServiceImpl implements ActivityService
+{
     @Autowired
     ActivityMapper activityMapper;
-
+    
     @Override
-    public int deleteByPrimaryKey(Integer id) {
-        return activityMapper.deleteByPrimaryKey(id);
+    public int deleteByPrimaryKey(final Integer id) {
+        return this.activityMapper.deleteByPrimaryKey(id);
     }
-
+    
     @Override
-    public int insert(Activity record) {
-        return activityMapper.insert(record);
+    public int insert(final Activity record) {
+        return this.activityMapper.insert(record);
     }
-
+    
     @Override
-    public int insertSelective(Activity record) {
-        return activityMapper.insertSelective(record);
+    public int insertSelective(final Activity record) {
+        return this.activityMapper.insertSelective(record);
     }
-
+    
     @Override
-    public Activity selectByPrimaryKey(Integer id) {
-        return activityMapper.selectByPrimaryKey(id);
+    public Activity selectByPrimaryKey(final Integer id) {
+        return this.activityMapper.selectByPrimaryKey(id);
     }
-
+    
     @Override
-    public int updateByPrimaryKeySelective(Activity record) {
-        return activityMapper.updateByPrimaryKeySelective(record);
+    public int updateByPrimaryKeySelective(final Activity record) {
+        return this.activityMapper.updateByPrimaryKeySelective(record);
     }
-
+    
     @Override
-    public int updateByPrimaryKey(Activity record) {
-        return activityMapper.updateByPrimaryKey(record);
+    public int updateByPrimaryKey(final Activity record) {
+        return this.activityMapper.updateByPrimaryKey(record);
     }
-
+    
     @Override
-    public List<Activity> getAllActivityByAssid(Integer assid) {
-        return activityMapper.getAllActivityByAssid(assid);
+    public List<Activity> getAllActivityByAssid(final Integer assid) {
+        return this.activityMapper.getAllActivityByAssid(assid);
     }
-
+    
     @Override
     public List<Activity> getAllActivity() {
-        return activityMapper.getAllActivity();
+        return this.activityMapper.getAllActivity();
     }
 }
