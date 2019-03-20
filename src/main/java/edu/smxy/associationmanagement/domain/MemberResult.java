@@ -1,24 +1,24 @@
 package edu.smxy.associationmanagement.domain;
 
-import com.alibaba.excel.annotation.*;
+import com.alibaba.excel.annotation.ExcelProperty;
 
 public class MemberResult
 {
-    @ExcelProperty(value = { "\u534f\u4f1a\u540d\u79f0" }, index = 0)
+    @ExcelProperty(value = {"协会名称"}, index = 0)
     private String associationname;
-    @ExcelProperty(value = { "\u59d3\u540d" }, index = 1)
+    @ExcelProperty(value = {"姓名"}, index = 1)
     private String name;
-    @ExcelProperty(value = { "\u6027\u522b" }, index = 2)
+    @ExcelProperty(value = {"性别"}, index = 2)
     private String gender;
-    @ExcelProperty(value = { "\u5b66\u9662" }, index = 3)
+    @ExcelProperty(value = {"学院"}, index = 3)
     private String college;
-    @ExcelProperty(value = { "\u5b66\u53f7" }, index = 4)
+    @ExcelProperty(value = {"学号"}, index = 4)
     private String studentid;
-    @ExcelProperty(value = { "\u8054\u7cfb\u65b9\u5f0f" }, index = 5)
+    @ExcelProperty(value = {"联系电话"}, index = 5)
     private String phone;
-    @ExcelProperty(value = { "\u90e8\u95e8" }, index = 6)
+    @ExcelProperty(value = {"部门"}, index = 6)
     private String department;
-    @ExcelProperty(value = { "\u804c\u4f4d" }, index = 7)
+    @ExcelProperty(value = {"职务"}, index = 7)
     private String position;
     
     public MemberResult() {

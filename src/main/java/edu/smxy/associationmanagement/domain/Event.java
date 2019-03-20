@@ -1,6 +1,6 @@
 package edu.smxy.associationmanagement.domain;
 
-import java.util.*;
+import java.util.Date;
 
 public class Event
 {
@@ -11,6 +11,26 @@ public class Event
     private Integer enentAuthorid;
     private String type;
     private Integer templateFileId;
+    private String eventContent;
+    private int eventType;
+
+    public String getEventContent() {
+        return eventContent;
+    }
+
+    public void setEventContent(String eventContent) {
+        this.eventContent = eventContent;
+    }
+
+    public int geteventType() {
+        return eventType;
+    }
+
+    public void seteventType(int eventType) {
+        this.eventType = eventType;
+    }
+
+
     
     public Integer getTemplateFileId() {
         return this.templateFileId;
@@ -66,5 +86,20 @@ public class Event
     
     public void setEnentAuthorid(final Integer enentAuthorid) {
         this.enentAuthorid = enentAuthorid;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "eventid=" + eventid +
+                ", eventName='" + eventName + '\'' +
+                ", eventStarttime=" + eventStarttime +
+                ", eventEndtime=" + eventEndtime +
+                ", enentAuthorid=" + enentAuthorid +
+                ", type='" + type + '\'' +
+                ", templateFileId=" + templateFileId +
+                ", eventContent='" + eventContent + '\'' +
+                ", eventType=" + eventType +
+                '}';
     }
 }

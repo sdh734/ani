@@ -43,9 +43,10 @@ public class ProgramController {
     @RequestMapping({"/getProgramByEventId"})
     public JSONResult getProgramByEventId(final int eventid) {
         final List<Program> programs = this.programService.getProgramByEventId(eventid);
-        final List<ProgramResult> results = new ArrayList<ProgramResult>();
+        final List<ProgramResult> results = new ArrayList<>();
         for (final Program i : programs) {
-            final Association association = this.associationService.selectByPrimaryKey(i.getAssociationid());
+            final Association association =
+                    this.associationService.selectByPrimaryKey(i.getAssociationid());
             final ProgramResult result = new ProgramResult(i);
             result.setEventname(this.eventService.selectByPrimaryKey(eventid).getEventName());
             result.setAssociationname(association.getAssociationName());
@@ -56,26 +57,29 @@ public class ProgramController {
 
     @RequestMapping({"/getProgramtoExcel"})
     public void getProgramtoExcel(final int eventid, final HttpServletResponse response) {
+        // 本地目录
+        String path = "G:\\upload\\exceltemp\\";
+        // 服务器目录
+        // String path = ""/www/wwwroot/ass/upload/";
         final List<Program> programs = this.programService.getProgramByEventId(eventid);
-        final List<ProgramResult> results = new ArrayList<ProgramResult>();
+        final List<ProgramResult> results = new ArrayList<>();
         for (final Program i : programs) {
-            final Association association = this.associationService.selectByPrimaryKey(i.getAssociationid());
+            final Association association =
+                    this.associationService.selectByPrimaryKey(i.getAssociationid());
             final ProgramResult result = new ProgramResult(i);
             result.setEventname(this.eventService.selectByPrimaryKey(eventid).getEventName());
             result.setAssociationname(association.getAssociationName());
             results.add(result);
         }
-        ExcelExportUtil.exportToFile((List) results, "/www/wwwroot/ass/upload/" + eventid + ".xls");
-        try (final InputStream inputStream = new FileInputStream(new File("/www/wwwroot/ass/upload/" + eventid + ".xls"));
-             final OutputStream outputStream = (OutputStream) response.getOutputStream()) {
+        ExcelExportUtil.exportToFile(results, path + eventid + ".xls");
+        try (final InputStream inputStream = new FileInputStream(new File(path + eventid + ".xls"));
+             final OutputStream outputStream = response.getOutputStream()) {
             response.setContentType("application/x-download");
             response.addHeader("Content-Disposition", "attachment;fileName=" + eventid + ".xls");
             IOUtils.copy(inputStream, outputStream);
             outputStream.flush();
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e2) {
-            e2.printStackTrace();
         }
     }
 }

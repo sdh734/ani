@@ -1,18 +1,20 @@
 package edu.smxy.associationmanagement.domain;
 
-import com.xuxueli.poi.excel.annotation.*;
-import java.text.*;
+import com.xuxueli.poi.excel.annotation.ExcelField;
+import com.xuxueli.poi.excel.annotation.ExcelSheet;
 
-@ExcelSheet(name = "\u6307\u5bfc\u60c5\u51b5")
+import java.text.SimpleDateFormat;
+
+@ExcelSheet(name = "指导情况表")
 public class ClassPeriodResult
 {
-    @ExcelField(name = "\u6307\u5bfc\u534f\u4f1a")
+    @ExcelField(name = "指导协会")
     private String classperiodAssciation;
-    @ExcelField(name = "\u6307\u5bfc\u65f6\u957f")
+    @ExcelField(name = "指导时长")
     private Double classperiodTime;
-    @ExcelField(name = "\u6307\u5bfc\u6559\u5e08")
+    @ExcelField(name = "指导老师")
     private String classperiodTeacher;
-    @ExcelField(name = "\u6307\u5bfc\u65e5\u671f")
+    @ExcelField(name = "指导日期")
     private String classperiodDate;
     
     public ClassPeriodResult() {

@@ -1,7 +1,9 @@
 package edu.smxy.associationmanagement.mapper;
 
-import java.util.*;
-import edu.smxy.associationmanagement.domain.*;
+import edu.smxy.associationmanagement.domain.Association;
+import edu.smxy.associationmanagement.domain.Event;
+
+import java.util.List;
 
 public interface EventMapper
 {
@@ -10,6 +12,8 @@ public interface EventMapper
     int insert(final Event record);
     
     int insertFile(final Event record);
+
+    int addNotice(final Event record);
     
     int insertSelective(final Event record);
     

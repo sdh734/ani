@@ -9,6 +9,8 @@
         <result column = "enent_authorid" jdbcType = "INTEGER" property = "enentAuthorid"/>
         <result column = "type" jdbcType = "VARCHAR" property = "type"/>
         <result column = "template_fileid" jdbcType = "INTEGER" property = "templateFileId"/>
+        <result column = "event_content" jdbcType = "VARCHAR" property = "eventContent"/>
+        <result column = "event_type" jdbcType = "INTEGER" property = "eventType"/>
     </resultMap>
     <resultMap id = "BaseResultMap1" type = "edu.smxy.associationmanagement.domain.Association">
         <id column = "associationid" property = "associationid" jdbcType = "INTEGER"/>
@@ -38,6 +40,12 @@
     values (#{eventid,jdbcType=INTEGER}, #{eventName,jdbcType=VARCHAR}, #{eventStarttime,jdbcType=TIMESTAMP}, 
       #{eventEndtime,jdbcType=TIMESTAMP}, #{enentAuthorid,jdbcType=INTEGER})
   </insert>
+    <insert id = "addNotice" parameterType = "edu.smxy.associationmanagement.domain.Event">
+        insert into t_event (eventid, event_name, event_starttime,
+      event_endtime, enent_authorid,event_content,event_type)
+    values (#{eventid,jdbcType=INTEGER}, #{eventName,jdbcType=VARCHAR}, #{eventStarttime,jdbcType=TIMESTAMP},
+      #{eventEndtime,jdbcType=TIMESTAMP}, #{enentAuthorid,jdbcType=INTEGER}, #{eventContent,jdbcType=VARCHAR}, #{eventType,jdbcType=INTEGER})
+    </insert>
     <insert id = "insertFile" parameterType = "edu.smxy.associationmanagement.domain.Event">
     insert into t_event (eventid, event_name, event_starttime,
       event_endtime, enent_authorid,type,template_fileid)
@@ -129,7 +137,9 @@
     set event_name = #{eventName,jdbcType=VARCHAR},
       event_starttime = #{eventStarttime,jdbcType=TIMESTAMP},
       event_endtime = #{eventEndtime,jdbcType=TIMESTAMP},
-      enent_authorid = #{enentAuthorid,jdbcType=INTEGER}
+      enent_authorid = #{enentAuthorid,jdbcType=INTEGER},
+      event_content = #{eventContent,jdbcType=VARCHAR},
+      event_type = #{eventType,jdbcType=INTEGER}
     where eventid = #{eventid,jdbcType=INTEGER}
   </update>
     <select id = "getAllEvent" resultMap = "BaseResultMap">

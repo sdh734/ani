@@ -35,8 +35,15 @@ public class ClassPeriodController {
     @Autowired
     TeacherService teacherService;
 
+    /**
+     * 添加指导记录
+     *
+     * @param request
+     * @return
+     */
     @RequestMapping({"/addguide"})
     public JSONResult AddGuide(final HttpServletRequest request) {
+        // TODO: 2019/03/13 添加更多详细指导信息-教学内容简介等 参与人数等
         final ClassPeriod classPeriod = new ClassPeriod();
         final String assid = request.getParameter("assid");
         final String guidetime = request.getParameter("guidetime");
@@ -45,46 +52,83 @@ public class ClassPeriodController {
         classPeriod.setClassperiodDate(formatter.parse(guidedate, new ParsePosition(0)));
         classPeriod.setClassperiodTime(Double.valueOf(guidetime));
         classPeriod.setClassperiodAssciation(Integer.valueOf(assid));
-        classPeriod.setClassperiodTeacher(this.associationService.selectByPrimaryKey(Integer.valueOf(assid)).getTeacher());
+        classPeriod.setClassperiodTeacher(
+                this.associationService.selectByPrimaryKey(Integer.valueOf(assid)).getTeacher());
         this.classPeriodService.insert(classPeriod);
-        return JSONResult.build(200, "ok", (Object) null);
+        return JSONResult.build(200, "ok", null);
     }
 
+    /**
+     * 根据协会id获得所有指导记录
+     *
+     * @param assid
+     * @return
+     */
     @RequestMapping({"/getAllGuideByAssid"})
     public JSONResult getAllGuideByAssid(final String assid) {
-        final List<ClassPeriod> classPeriods = (List<ClassPeriod>) this.classPeriodService.getAllByAssid((int) Integer.valueOf(assid));
-        final List<ClassPeriodResult> classPeriodResults = new ArrayList<ClassPeriodResult>();
+        // TODO: 2019/03/13 设置更多筛选条件
+        final List<ClassPeriod> classPeriods =
+                this.classPeriodService.getAllByAssid(Integer.valueOf(assid));
+        final List<ClassPeriodResult> classPeriodResults = new ArrayList<>();
         for (final ClassPeriod i : classPeriods) {
             final ClassPeriodResult classPeriodResult = new ClassPeriodResult(i);
-            classPeriodResult.setClassperiodAssciation(this.associationService.selectByPrimaryKey(i.getClassperiodAssciation()).getAssociationName());
-            classPeriodResult.setClassperiodTeacher(this.teacherService.selectByPrimaryKey(i.getClassperiodTeacher()).getTeacherName());
+            classPeriodResult.setClassperiodAssciation(
+                    this.associationService
+                            .selectByPrimaryKey(i.getClassperiodAssciation())
+                            .getAssociationName());
+            classPeriodResult.setClassperiodTeacher(
+                    this.teacherService.selectByPrimaryKey(i.getClassperiodTeacher()).getTeacherName());
             classPeriodResults.add(classPeriodResult);
         }
-        return JSONResult.build(200, "ok", (Object) classPeriodResults);
+        return JSONResult.build(200, "ok", classPeriodResults);
     }
 
+    /**
+     * 获得指定协会的指导情况表
+     *
+     * @param assid
+     * @param response
+     */
     @RequestMapping({"/getAllGuideByAssidtoExcel"})
-    public void getAllGuideByAssidtoExcel(final String assid, final HttpServletResponse response) {
-        final List<ClassPeriod> classPeriods = (List<ClassPeriod>) this.classPeriodService.getAllByAssid((int) Integer.valueOf(assid));
-        final List<ClassPeriodResult> classPeriodResults = new ArrayList<ClassPeriodResult>();
+    public JSONResult getAllGuideByAssidtoExcel(
+            final String assid, final HttpServletResponse response) {
+        // TODO: 2019/03/13 修改方法增加按指定时间段内所有的指导情况
+        final List<ClassPeriod> classPeriods =
+                this.classPeriodService.getAllByAssid(Integer.valueOf(assid));
+        final List<ClassPeriodResult> classPeriodResults = new ArrayList<>();
         for (final ClassPeriod i : classPeriods) {
             final ClassPeriodResult classPeriodResult = new ClassPeriodResult(i);
-            classPeriodResult.setClassperiodAssciation(this.associationService.selectByPrimaryKey(i.getClassperiodAssciation()).getAssociationName());
-            classPeriodResult.setClassperiodTeacher(this.teacherService.selectByPrimaryKey(i.getClassperiodTeacher()).getTeacherName());
+            classPeriodResult.setClassperiodAssciation(
+                    this.associationService
+                            .selectByPrimaryKey(i.getClassperiodAssciation())
+                            .getAssociationName());
+            classPeriodResult.setClassperiodTeacher(
+                    this.teacherService.selectByPrimaryKey(i.getClassperiodTeacher()).getTeacherName());
             classPeriodResults.add(classPeriodResult);
         }
-        final Association association = this.associationService.selectByPrimaryKey(Integer.valueOf(assid));
-        final String filepath = "/www/wwwroot/ass/upload/" + association.getAssociationName() + "-指导情况统计.xls";
+        final Association association =
+                this.associationService.selectByPrimaryKey(Integer.valueOf(assid));
+        // 本地目录
+        final String filepath =
+                "G:\\upload\\guideinfo\\" + association.getAssociationName() + "-指导情况统计.xls";
+        // 服务器目录
+        // final String filepath = "/www/wwwroot/ass/upload/";
         final String filename = association.getAssociationName() + "-指导情况统计.xls";
-        ExcelExportUtil.exportToFile((List) classPeriodResults, filepath);
-        try (final InputStream inputStream = new FileInputStream(new File(filepath));
-             final OutputStream outputStream = (OutputStream) response.getOutputStream()) {
-            response.setContentType("application/x-download");
-            response.addHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(filename, "UTF-8"));
-            IOUtils.copy(inputStream, outputStream);
-            outputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (classPeriodResults.size() > 0) {
+            ExcelExportUtil.exportToFile(classPeriodResults, filepath);
+            try (final InputStream inputStream = new FileInputStream(new File(filepath));
+                 final OutputStream outputStream = response.getOutputStream()) {
+                response.setContentType("application/x-download");
+                response.addHeader(
+                        "Content-Disposition", "attachment;fileName=" + URLEncoder.encode(filename, "UTF-8"));
+                IOUtils.copy(inputStream, outputStream);
+                outputStream.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return JSONResult.build(200, "ok", "ok");
+        } else {
+            return JSONResult.build(404, "error", "当前协会无指导历史记录");
         }
     }
 }
