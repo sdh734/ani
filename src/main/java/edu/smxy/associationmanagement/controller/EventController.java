@@ -7,10 +7,7 @@ import edu.smxy.associationmanagement.services.event.EventService;
 import edu.smxy.associationmanagement.services.file.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -80,6 +77,23 @@ public class EventController {
             return JSONResult.build(200, "ok", null);
         }
         return JSONResult.build(500, "error", null);
+    }
+
+    /**
+     * 根据id 删除指定的通知记录
+     *
+     * @param event 通知id
+     * @return 是否删除成功的消息
+     */
+    @RequestMapping({"/deletenoticebyid"})
+    public JSONResult deleteNoticeById(@RequestBody Event event) {
+        //返回受影响的行数 删除 插入 修改 都会返回受影响的行数 行数 > 0 表示成功
+        int record = eventService.deleteByPrimaryKey(event.getEventid());
+        if (record > 0) {
+            return JSONResult.build(200, "删除成功", null);
+        } else {
+            return JSONResult.build(500, "删除失败", null);
+        }
     }
 
     /**
@@ -292,6 +306,13 @@ public class EventController {
         return JSONResult.build(200, "ok", list);
     }
 
+    /**
+     * 为某个材料收集项提交文件
+     * @param file
+     * @param assid 协会id
+     * @param eventid 事件id
+     * @return
+     */
     @RequestMapping({"/uploadFiletoEvent"})
     public JSONResult uploadFiletoEvent(
             @RequestParam("file") final MultipartFile file,
@@ -318,6 +339,10 @@ public class EventController {
         }
     }
 
+    /**
+     * 获得所有文件收集事项
+     * @return 事件集合
+     */
     @RequestMapping({"/getAllFileEvent"})
     public JSONResult getAllFileEvent() {
         return JSONResult.build(200, "ok", this.eventService.getAllFileEvent());

@@ -68,7 +68,7 @@ public class UserController {
         if (record > 0) {
             return JSONResult.build(200, "修改成功", null);
         } else {
-            return JSONResult.build(400, "修改失败", null);
+            return JSONResult.build(500, "修改失败", null);
         }
     }
 
