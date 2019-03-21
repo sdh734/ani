@@ -8,6 +8,7 @@ import edu.smxy.associationmanagement.utils.CookieUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping({"/finduser"})
-    public JSONResult findUser(final MyCookie cookie) {
+    public JSONResult findUser(@RequestBody final MyCookie cookie) {
         final User user = new User();
         final int userid = cookie.getUserId();
         if ("".equals(userid + "")) {
@@ -65,5 +66,5 @@ public class UserController {
         CookieUtils.writeCookie(response, "userid", "");
         CookieUtils.writeCookie(response, "sessionid", "");
         return 0;
-    }
+  }
 }
