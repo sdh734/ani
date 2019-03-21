@@ -30,6 +30,12 @@ public class FileController {
     @Autowired
     private AssociationService associationService;
 
+    /**
+     * 上传文件
+     *
+     * @param file
+     * @return
+     */
     @PostMapping({"/upload"})
     public String upload(@RequestParam("file") final MultipartFile file) {
         final String filename = file.getOriginalFilename();
@@ -51,6 +57,11 @@ public class FileController {
         }
     }
 
+    /**
+     * 通过文件id下载文件
+     * @param id
+     * @param response
+     */
     @GetMapping({"/downloadbyid"})
     public void downloadFileById(final int id, final HttpServletResponse response) {
         final edu.smxy.associationmanagement.domain.File file = this.fileService.searchFileById(id);
@@ -69,7 +80,7 @@ public class FileController {
     }
 
     /**
-     * 根据传入的文件id字符串下载压缩包
+     * 根据传入的文件id字符串 下载压缩包
      *
      * @param idstr    id字符串
      * @param response
@@ -120,12 +131,22 @@ public class FileController {
         }
     }
 
+    /**
+     * 根据文件id搜索文件
+     * @param id
+     * @return
+     */
     @GetMapping({"/searchbyid"})
     public edu.smxy.associationmanagement.domain.File searchById(final int id) {
         final edu.smxy.associationmanagement.domain.File file = this.fileService.searchFileById(id);
         return file;
     }
 
+    /**
+     * 根据事件id搜索文件
+     * @param eventid
+     * @return 文件集合
+     */
     @GetMapping({"/searchbyeventid"})
     public List<edu.smxy.associationmanagement.domain.File> searchFileByEventId(final int eventid) {
         List<edu.smxy.associationmanagement.domain.File> files =
@@ -133,11 +154,21 @@ public class FileController {
         return files;
     }
 
+    /**
+     * 根据创建人的id搜索文件
+     * @param authorid
+     * @return 文件集合
+     */
     @GetMapping({"/searchbyauthorid"})
     public List<edu.smxy.associationmanagement.domain.File> searchFileByAuthorId(final int authorid) {
         return this.fileService.searchFileByAuthor(authorid);
     }
 
+    /**
+     * 根据协会id 获得提交的所有文件集合
+     * @param assid
+     * @return
+     */
     @RequestMapping({"/getAllFileByAssid"})
     public JSONResult getAllFileByAssid(final int assid) {
         final List<edu.smxy.associationmanagement.domain.File> files =
@@ -145,6 +176,11 @@ public class FileController {
         return getJsonResult(files);
     }
 
+    /**
+     *  根据文件集合构建JSONResult
+     * @param files
+     * @return JSONResult
+     */
     private JSONResult getJsonResult(List<edu.smxy.associationmanagement.domain.File> files) {
         final List<FileResult> fileResults = new ArrayList<>();
         for (final edu.smxy.associationmanagement.domain.File file : files) {
@@ -158,12 +194,24 @@ public class FileController {
         return JSONResult.build(200, "ok", fileResults);
     }
 
+    /**
+     * 获得所有文件的集合
+     * @return
+     */
     @RequestMapping({"/getAllFile"})
     public JSONResult getAllFile() {
         final List<edu.smxy.associationmanagement.domain.File> files = this.fileService.getAllFile();
         return getJsonResult(files);
     }
 
+    /**
+     * 更新上传的文件
+     * @param file
+     * @param authorid
+     * @param eventid
+     * @param id
+     * @return
+     */
     @RequestMapping({"/updateFiletoEvent"})
     public JSONResult updateFiletoEvent(
             @RequestParam("file") final MultipartFile file,

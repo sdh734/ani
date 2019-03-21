@@ -51,6 +51,12 @@ public class EventController {
         return JSONResult.build(200, "查询成功", events);
     }
 
+    /**
+     * 更新事件
+     *
+     * @param request 请求体 获取各种参数
+     * @return
+     */
     @RequestMapping({"/updateEvent"})
     public JSONResult updateEvent(final HttpServletRequest request) {
         final Event event = new Event();
@@ -73,9 +79,14 @@ public class EventController {
         if (result > 0) {
             return JSONResult.build(200, "ok", null);
         }
-        return JSONResult.build(400, "error", null);
+        return JSONResult.build(500, "error", null);
     }
 
+    /**
+     * 根据事件id 获取未提交此项文件的协会集合
+     * @param eventid
+     * @return
+     */
     @RequestMapping({"/getAllAssWithoutSubmitByEventId"})
     public JSONResult getAllAssWithoutSubmitByEventId(final int eventid) {
         final List<Association> associations =
@@ -267,7 +278,7 @@ public class EventController {
     }
 
     /**
-     * 获得所有登陆协会当前未提交的收集材料事项列表
+     * 获得 当前登陆协会 未提交的收集材料事项列表
      *
      * @param assid 当前登录协会id
      * @return

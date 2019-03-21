@@ -1,15 +1,26 @@
 package edu.smxy.associationmanagement.controller;
 
-import org.springframework.boot.autoconfigure.*;
-import edu.smxy.associationmanagement.services.association.*;
-import org.springframework.beans.factory.annotation.*;
-import edu.smxy.associationmanagement.services.users.*;
-import edu.smxy.associationmanagement.services.teacher.*;
-import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.*;
-import edu.smxy.associationmanagement.domain.*;
-import java.util.*;
+import edu.smxy.associationmanagement.domain.Association;
+import edu.smxy.associationmanagement.domain.JSONResult;
+import edu.smxy.associationmanagement.domain.Teacher;
+import edu.smxy.associationmanagement.domain.User;
+import edu.smxy.associationmanagement.services.association.AssociationService;
+import edu.smxy.associationmanagement.services.teacher.TeacherService;
+import edu.smxy.associationmanagement.services.users.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * 协会Controller 主要功能:获取协会信息 创建新协会
+ */
 @RestController
 @ResponseBody
 @EnableAutoConfiguration
@@ -21,23 +32,38 @@ public class AssociationController
     UserService userService;
     @Autowired
     TeacherService teacherService;
-    
+
+    /**
+     * 根据协会id 获取协会信息
+     *
+     * @param id
+     * @return
+     */
     @RequestMapping({ "/getassbyid" })
     public JSONResult getAssByid(final int id) {
         final List<Object> list = new ArrayList<Object>();
         final Association association = this.associationService.selectByPrimaryKey(id);
         list.add(association);
-        list.add(this.userService.selectUserById((int)association.getPresidentid()));
+        list.add(this.userService.selectUserById(association.getPresidentid()));
         list.add(this.teacherService.selectByPrimaryKey(association.getTeacher()));
-        return JSONResult.build(200, "ok", (Object)list);
+        return JSONResult.build(200, "ok", list);
     }
-    
+
+    /**
+     * 获得所有协会信息
+     * @return
+     */
     @RequestMapping({ "/getAllAss" })
     public JSONResult getAll() {
-        final List<Association> list = (List<Association>)this.associationService.getAll();
-        return JSONResult.build(200, "AllAss", (Object)list);
+        final List<Association> list = this.associationService.getAll();
+        return JSONResult.build(200, "AllAss", list);
     }
-    
+
+    /**
+     * 添加协会
+     * @param request 请求体 获取各种参数
+     * @return
+     */
     @RequestMapping({ "/addNewAss" })
     public JSONResult addNewAss(final HttpServletRequest request) {
         final Association association = new Association();
@@ -67,6 +93,6 @@ public class AssociationController
         final Teacher teacher2 = this.teacherService.query(teacher);
         association2.setTeacher(teacher2.getTeacherId());
         this.associationService.updateByPrimaryKey(association2);
-        return JSONResult.build(200, "ok", (Object)null);
+        return JSONResult.build(200, "ok", null);
     }
 }

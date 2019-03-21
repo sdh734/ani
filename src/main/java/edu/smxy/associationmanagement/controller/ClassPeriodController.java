@@ -24,6 +24,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 指导记录Controller 主要功能:添加 统计 导出到Excel
+ */
 @ResponseBody
 @RestController
 @EnableAutoConfiguration
@@ -67,19 +70,7 @@ public class ClassPeriodController {
     @RequestMapping({"/getAllGuideByAssid"})
     public JSONResult getAllGuideByAssid(final String assid) {
         // TODO: 2019/03/13 设置更多筛选条件
-        final List<ClassPeriod> classPeriods =
-                this.classPeriodService.getAllByAssid(Integer.valueOf(assid));
-        final List<ClassPeriodResult> classPeriodResults = new ArrayList<>();
-        for (final ClassPeriod i : classPeriods) {
-            final ClassPeriodResult classPeriodResult = new ClassPeriodResult(i);
-            classPeriodResult.setClassperiodAssciation(
-                    this.associationService
-                            .selectByPrimaryKey(i.getClassperiodAssciation())
-                            .getAssociationName());
-            classPeriodResult.setClassperiodTeacher(
-                    this.teacherService.selectByPrimaryKey(i.getClassperiodTeacher()).getTeacherName());
-            classPeriodResults.add(classPeriodResult);
-        }
+        List<ClassPeriodResult> classPeriodResults = getClassPeriodResult(assid);
         return JSONResult.build(200, "ok", classPeriodResults);
     }
 
@@ -92,20 +83,11 @@ public class ClassPeriodController {
     @RequestMapping({"/getAllGuideByAssidtoExcel"})
     public JSONResult getAllGuideByAssidtoExcel(
             final String assid, final HttpServletResponse response) {
+        // TODO: 2019/03/21 修改excel导出方式 改为使用Alibaba的EasyExcel库
         // TODO: 2019/03/13 修改方法增加按指定时间段内所有的指导情况
-        final List<ClassPeriod> classPeriods =
-                this.classPeriodService.getAllByAssid(Integer.valueOf(assid));
-        final List<ClassPeriodResult> classPeriodResults = new ArrayList<>();
-        for (final ClassPeriod i : classPeriods) {
-            final ClassPeriodResult classPeriodResult = new ClassPeriodResult(i);
-            classPeriodResult.setClassperiodAssciation(
-                    this.associationService
-                            .selectByPrimaryKey(i.getClassperiodAssciation())
-                            .getAssociationName());
-            classPeriodResult.setClassperiodTeacher(
-                    this.teacherService.selectByPrimaryKey(i.getClassperiodTeacher()).getTeacherName());
-            classPeriodResults.add(classPeriodResult);
-        }
+
+        getClassPeriodResult(assid);
+        List<ClassPeriodResult> classPeriodResults = getClassPeriodResult(assid);
         final Association association =
                 this.associationService.selectByPrimaryKey(Integer.valueOf(assid));
         // 本地目录
@@ -130,5 +112,28 @@ public class ClassPeriodController {
         } else {
             return JSONResult.build(404, "error", "当前协会无指导历史记录");
         }
+    }
+
+    /**
+     * 根据协会id获得指导记录
+     *
+     * @param assid 协会id
+     * @return 指导记录集合
+     */
+    private List<ClassPeriodResult> getClassPeriodResult(String assid) {
+        final List<ClassPeriod> classPeriods =
+                this.classPeriodService.getAllByAssid(Integer.valueOf(assid));
+        final List<ClassPeriodResult> classPeriodResults = new ArrayList<>();
+        for (final ClassPeriod i : classPeriods) {
+            final ClassPeriodResult classPeriodResult = new ClassPeriodResult(i);
+            classPeriodResult.setClassperiodAssciation(
+                    this.associationService
+                            .selectByPrimaryKey(i.getClassperiodAssciation())
+                            .getAssociationName());
+            classPeriodResult.setClassperiodTeacher(
+                    this.teacherService.selectByPrimaryKey(i.getClassperiodTeacher()).getTeacherName());
+            classPeriodResults.add(classPeriodResult);
+        }
+        return classPeriodResults;
     }
 }

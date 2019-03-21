@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * 用户Controller
  * @author SDH
  */
 @ResponseBody
@@ -25,11 +26,22 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 添加用户
+     *
+     * @param user
+     * @return
+     */
     @PostMapping({"/adduser"})
     public int addUser(final User user) {
         return this.userService.addUser(user);
     }
 
+    /**
+     * 根据id 获得用户信息
+     * @param cookie
+     * @return
+     */
     @PostMapping({"/finduser"})
     public JSONResult findUser(@RequestBody final MyCookie cookie) {
         final User user = new User();
@@ -45,6 +57,11 @@ public class UserController {
         return JSONResult.build(500, "无法找到_ID_对应的用户", null);
     }
 
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
     @PostMapping({"/updateUser"})
     public JSONResult updateUserInfo(@RequestBody User user) {
         int record = userService.updateByPrimaryKey(user);
@@ -55,6 +72,13 @@ public class UserController {
         }
     }
 
+    /**
+     * 登陆
+     * @param account
+     * @param password
+     * @param request
+     * @return
+     */
     @PostMapping({"/login"})
     public JSONResult login(
             final String account, final String password, final HttpServletRequest request) {
@@ -69,6 +93,13 @@ public class UserController {
         return JSONResult.build(500, "找不到该用户", null);
     }
 
+    /**
+     * 登出
+     * @param userid
+     * @param request
+     * @param response
+     * @return
+     */
     @PostMapping({"/logout"})
     public int logout(
             final String userid, final HttpServletRequest request, final HttpServletResponse response) {
@@ -76,5 +107,5 @@ public class UserController {
         CookieUtils.writeCookie(response, "userid", "");
         CookieUtils.writeCookie(response, "sessionid", "");
         return 0;
-  }
+    }
 }

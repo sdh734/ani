@@ -33,6 +33,7 @@ public class SuggestController {
     @Autowired
     UserService userService;
 
+    //获得所有的用户 0 协会 其他 社联管理员和团委老师
     @RequestMapping({"/getSelectListByRadioValue"})
     public JSONResult getSelectListByRadioValue(final int type) {
         if (type == 0) {
@@ -48,6 +49,12 @@ public class SuggestController {
         return JSONResult.build(200, "1", userList2);
     }
 
+    /**
+     * 添加建议 协会 -> 社联
+     *
+     * @param suggest
+     * @return
+     */
     @RequestMapping({"/addSuggestAssToSL"})
     public JSONResult addSuggestAssToSL(final Suggest suggest) {
         final int result = this.suggestService.insert(suggest);
@@ -57,6 +64,11 @@ public class SuggestController {
         return JSONResult.build(500, "error", null);
     }
 
+    /**
+     * 添加建议 社联 -> 协会
+     * @param suggest
+     * @return
+     */
     @RequestMapping({"/addSuggestSLToAss"})
     public JSONResult addSuggestSLToAss(final Suggest suggest) {
         final int result = this.suggestService.insert(suggest);
@@ -66,6 +78,11 @@ public class SuggestController {
         return JSONResult.build(500, "error", null);
     }
 
+    /**
+     * 添加建议 协会 -> 协会
+     * @param suggest
+     * @return
+     */
     @RequestMapping({"/addSuggestAssToAss"})
     public JSONResult addSuggestAssToAss(final Suggest suggest) {
         final int result = this.suggestService.insert(suggest);
@@ -75,6 +92,11 @@ public class SuggestController {
         return JSONResult.build(500, "error", null);
     }
 
+    /**
+     * 根据作者信息获得所有发出的建议
+     * @param authorid
+     * @return
+     */
     @RequestMapping({"/getAllSuggestByAuthorId"})
     public JSONResult getAllSuggestByAuthorId(final Integer authorid) {
         final List<Suggest> suggests = this.suggestService.getAllSuggestByAuthorId(authorid);
@@ -117,6 +139,11 @@ public class SuggestController {
         return JSONResult.build(200, "ok", suggestResults);
     }
 
+    /**
+     * 根据接受者的id获得所有收到的文件
+     * @param receiveid
+     * @return
+     */
     @RequestMapping({"/getAllSuggestByReceiveId"})
     public JSONResult getAllSuggestByReceiveId(final Integer receiveid) {
         final List<Suggest> suggests = this.suggestService.getAllSuggestByReceiveId(receiveid);
@@ -159,6 +186,11 @@ public class SuggestController {
         return JSONResult.build(200, "ok", suggestResults);
     }
 
+    /**
+     * 更新建议
+     * @param request
+     * @return
+     */
     @RequestMapping({"/updateSuggest"})
     public JSONResult updateSuggest(final HttpServletRequest request) {
         final Suggest suggest = new Suggest();
@@ -178,6 +210,11 @@ public class SuggestController {
         return JSONResult.build(500, "error", null);
     }
 
+    /**
+     * 根据id删除建议
+     * @param id
+     * @return
+     */
     @RequestMapping({"/deleteSuggestById"})
     public JSONResult deleteSuggestById(final int id) {
         this.suggestService.deleteByPrimaryKey(id);

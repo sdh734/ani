@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 事务 Controller 主要方法: 添加事务 查询所有事务
+ * 活动 Controller 主要方法: 添加,修改,删除活动 查询所有活动
  */
 @RestController
 @ResponseBody
@@ -31,7 +31,7 @@ public class ActivityController {
     AssociationService associationService;
 
     /**
-     * 添加事务
+     * 添加活动
      *
      * @param request 请求体 从请求体中获取各个参数
      * @return 成功消息
@@ -57,7 +57,7 @@ public class ActivityController {
     }
 
     /**
-     * 获得所有事项
+     * 获得所有活动
      *
      * @return 返回所有活动
      */
@@ -67,6 +67,21 @@ public class ActivityController {
         return getJsonResultFromActivities(activities);
     }
 
+    /**
+     * 根据协会id获得活动集合
+     *
+     * @param assid 协会id
+     * @return
+     */
+    @RequestMapping({"/getAllActivityByAssId"})
+    public JSONResult getAllActivityByAssId(final int assid) {
+        final List<Activity> activities = this.activityService.getAllActivityByAssid(assid);
+        return getJsonResultFromActivities(activities);
+    }
+
+    /**
+     * 根据传入的活动集合构建JSONResult
+     */
     private JSONResult getJsonResultFromActivities(List<Activity> activities) {
         final List<ActivityResult> activityResults = new ArrayList<>();
         for (final Activity activity : activities) {
@@ -82,12 +97,11 @@ public class ActivityController {
         return JSONResult.build(200, "ok", activityResults);
     }
 
-    @RequestMapping({"/getAllActivityByAssId"})
-    public JSONResult getAllActivityByAssId(final int assid) {
-        final List<Activity> activities = this.activityService.getAllActivityByAssid(assid);
-        return getJsonResultFromActivities(activities);
-    }
-
+    /**
+     * 更新活动信息
+     * @param request
+     * @return 200 更新成功 500 更新失败
+     */
     @RequestMapping({"/updateActivity"})
     public JSONResult updateActivity(final HttpServletRequest request) {
         final Activity activity = new Activity();
@@ -106,6 +120,11 @@ public class ActivityController {
         return JSONResult.build(500, "error", null);
     }
 
+    /**
+     * 删除活动
+     * @param id 活动id
+     * @return 200 删除成功 500 删除失败
+     */
     @RequestMapping({"/deleteActivityByid"})
     public JSONResult deleteActivityByid(final int id) {
         final int result = this.activityService.deleteByPrimaryKey(id);
