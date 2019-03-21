@@ -45,6 +45,16 @@ public class UserController {
         return JSONResult.build(500, "无法找到_ID_对应的用户", null);
     }
 
+    @PostMapping({"/updateUser"})
+    public JSONResult updateUserInfo(@RequestBody User user) {
+        int record = userService.updateByPrimaryKey(user);
+        if (record > 0) {
+            return JSONResult.build(200, "修改成功", null);
+        } else {
+            return JSONResult.build(400, "修改失败", null);
+        }
+    }
+
     @PostMapping({"/login"})
     public JSONResult login(
             final String account, final String password, final HttpServletRequest request) {
