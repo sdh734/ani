@@ -1,8 +1,10 @@
 package edu.smxy.associationmanagement.controller;
 
+
 import com.alibaba.excel.EasyExcelFactory;
+import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.metadata.Sheet;
-import com.xuxueli.poi.excel.ExcelExportUtil;
+import com.alibaba.excel.support.ExcelTypeEnum;
 import edu.smxy.associationmanagement.domain.Association;
 import edu.smxy.associationmanagement.domain.JSONResult;
 import edu.smxy.associationmanagement.domain.Member;
@@ -67,20 +69,29 @@ public class MemberController {
             String path = "G:\\upload\\exceltemp\\";
             // 服务器目录
             // String path = ""/www/wwwroot/ass/upload/";
-            ExcelExportUtil.exportToFile(memberResults, path + name + ".xls");
-            File file = new File(path + name + ".xls");
+            try {
+
+                ExcelWriter writer = EasyExcelFactory.getWriter(new FileOutputStream(new File(path + name + ".xlsx")), ExcelTypeEnum.XLSX, true);
+                Sheet sheet1 = new Sheet(1, 1, MemberResult.class, "协会指导情况统计表", null);
+                sheet1.setAutoWidth(true);
+                writer.write(memberResults, sheet1);
+                writer.finish();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            File file = new File(path + name + ".xlsx");
             try (final InputStream inputStream = new FileInputStream(file);
                  final OutputStream outputStream = response.getOutputStream()) {
                 response.setContentType("application/x-download");
                 response.addHeader(
                         "Content-Disposition",
-                        "attachment;fileName=" + URLEncoder.encode(name + ".xls", "UTF-8"));
+                        "attachment;fileName=" + URLEncoder.encode(name + ".xlsx", "UTF-8"));
                 IOUtils.copy(inputStream, outputStream);
                 outputStream.flush();
             } catch (IOException e2) {
                 e2.printStackTrace();
             } finally {
-                if (file.exists()) {
+                if (file != null) {
                     boolean delete = file.delete();
                 }
             }

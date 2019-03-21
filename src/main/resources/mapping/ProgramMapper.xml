@@ -1,34 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.smxy.associationmanagement.mapper.ProgramMapper">
-   <resultMap id="BaseResultMap" type="edu.smxy.associationmanagement.domain.Program">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="associationid" jdbcType="INTEGER" property="associationid" />
-    <result column="eventid" jdbcType="INTEGER" property="eventid" />
-    <result column="programname" jdbcType="VARCHAR" property="programname" />
-    <result column="programnumber" jdbcType="INTEGER" property="programnumber" />
-    <result column="programmanager" jdbcType="VARCHAR" property="programmanager" />
-    <result column="managerphone" jdbcType="VARCHAR" property="managerphone" />
-    <result column="programprops" jdbcType="VARCHAR" property="programprops" />
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="edu.smxy.associationmanagement.domain.Program">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="associationid" jdbcType="INTEGER" property="associationid"/>
+        <result column="eventid" jdbcType="INTEGER" property="eventid"/>
+        <result column="programname" jdbcType="VARCHAR" property="programname"/>
+        <result column="programnumber" jdbcType="INTEGER" property="programnumber"/>
+        <result column="programmanager" jdbcType="VARCHAR" property="programmanager"/>
+        <result column="managerphone" jdbcType="VARCHAR" property="managerphone"/>
+        <result column="programprops" jdbcType="VARCHAR" property="programprops"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, associationid, eventid, programname, programnumber, programmanager, managerphone, 
     programprops
   </sql>
     <select id="getProgramByEventId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select  * from t_program where eventid = #{eventid,jdbcType=INTEGER}
     </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_program
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="getProgramByEventIdAndAssId" parameterType="edu.smxy.associationmanagement.domain.Program"
+            resultMap="BaseResultMap">
+    SELECT
+	  *
+   FROM
+	`t_program`
+    WHERE
+	t_program.associationid =  #{associationid,jdbcType=INTEGER}
+	AND t_program.eventid = #{eventid,jdbcType=INTEGER}
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_program
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_program
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="edu.smxy.associationmanagement.domain.Program">
+    <insert id="insert" parameterType="edu.smxy.associationmanagement.domain.Program">
     insert into t_program (id, associationid, eventid, 
       programname, programnumber, programmanager, 
       managerphone, programprops)
@@ -36,89 +46,89 @@
       #{programname,jdbcType=VARCHAR}, #{programnumber,jdbcType=INTEGER}, #{programmanager,jdbcType=VARCHAR}, 
       #{managerphone,jdbcType=VARCHAR}, #{programprops,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="edu.smxy.associationmanagement.domain.Program">
-    insert into t_program
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="associationid != null">
-        associationid,
-      </if>
-      <if test="eventid != null">
-        eventid,
-      </if>
-      <if test="programname != null">
-        programname,
-      </if>
-      <if test="programnumber != null">
-        programnumber,
-      </if>
-      <if test="programmanager != null">
-        programmanager,
-      </if>
-      <if test="managerphone != null">
-        managerphone,
-      </if>
-      <if test="programprops != null">
-        programprops,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="associationid != null">
-        #{associationid,jdbcType=INTEGER},
-      </if>
-      <if test="eventid != null">
-        #{eventid,jdbcType=INTEGER},
-      </if>
-      <if test="programname != null">
-        #{programname,jdbcType=VARCHAR},
-      </if>
-      <if test="programnumber != null">
-        #{programnumber,jdbcType=INTEGER},
-      </if>
-      <if test="programmanager != null">
-        #{programmanager,jdbcType=VARCHAR},
-      </if>
-      <if test="managerphone != null">
-        #{managerphone,jdbcType=VARCHAR},
-      </if>
-      <if test="programprops != null">
-        #{programprops,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="edu.smxy.associationmanagement.domain.Program">
-    update t_program
-    <set>
-      <if test="associationid != null">
-        associationid = #{associationid,jdbcType=INTEGER},
-      </if>
-      <if test="eventid != null">
-        eventid = #{eventid,jdbcType=INTEGER},
-      </if>
-      <if test="programname != null">
-        programname = #{programname,jdbcType=VARCHAR},
-      </if>
-      <if test="programnumber != null">
-        programnumber = #{programnumber,jdbcType=INTEGER},
-      </if>
-      <if test="programmanager != null">
-        programmanager = #{programmanager,jdbcType=VARCHAR},
-      </if>
-      <if test="managerphone != null">
-        managerphone = #{managerphone,jdbcType=VARCHAR},
-      </if>
-      <if test="programprops != null">
-        programprops = #{programprops,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="edu.smxy.associationmanagement.domain.Program">
+    <insert id="insertSelective" parameterType="edu.smxy.associationmanagement.domain.Program">
+        insert into t_program
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="associationid != null">
+                associationid,
+            </if>
+            <if test="eventid != null">
+                eventid,
+            </if>
+            <if test="programname != null">
+                programname,
+            </if>
+            <if test="programnumber != null">
+                programnumber,
+            </if>
+            <if test="programmanager != null">
+                programmanager,
+            </if>
+            <if test="managerphone != null">
+                managerphone,
+            </if>
+            <if test="programprops != null">
+                programprops,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="associationid != null">
+                #{associationid,jdbcType=INTEGER},
+            </if>
+            <if test="eventid != null">
+                #{eventid,jdbcType=INTEGER},
+            </if>
+            <if test="programname != null">
+                #{programname,jdbcType=VARCHAR},
+            </if>
+            <if test="programnumber != null">
+                #{programnumber,jdbcType=INTEGER},
+            </if>
+            <if test="programmanager != null">
+                #{programmanager,jdbcType=VARCHAR},
+            </if>
+            <if test="managerphone != null">
+                #{managerphone,jdbcType=VARCHAR},
+            </if>
+            <if test="programprops != null">
+                #{programprops,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="edu.smxy.associationmanagement.domain.Program">
+        update t_program
+        <set>
+            <if test="associationid != null">
+                associationid = #{associationid,jdbcType=INTEGER},
+            </if>
+            <if test="eventid != null">
+                eventid = #{eventid,jdbcType=INTEGER},
+            </if>
+            <if test="programname != null">
+                programname = #{programname,jdbcType=VARCHAR},
+            </if>
+            <if test="programnumber != null">
+                programnumber = #{programnumber,jdbcType=INTEGER},
+            </if>
+            <if test="programmanager != null">
+                programmanager = #{programmanager,jdbcType=VARCHAR},
+            </if>
+            <if test="managerphone != null">
+                managerphone = #{managerphone,jdbcType=VARCHAR},
+            </if>
+            <if test="programprops != null">
+                programprops = #{programprops,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="edu.smxy.associationmanagement.domain.Program">
     update t_program
     set associationid = #{associationid,jdbcType=INTEGER},
       eventid = #{eventid,jdbcType=INTEGER},
@@ -127,6 +137,7 @@
       programmanager = #{programmanager,jdbcType=VARCHAR},
       managerphone = #{managerphone,jdbcType=VARCHAR},
       programprops = #{programprops,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where associationid = #{associationid,jdbcType=INTEGER} AND
+      eventid = #{eventid,jdbcType=INTEGER}
   </update>
 </mapper>

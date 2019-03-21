@@ -11,6 +11,7 @@ import edu.smxy.associationmanagement.services.program.ProgramService;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,29 @@ public class ProgramController {
             return JSONResult.build(200, "\u63d2\u5165\u6210\u529f", null);
         }
         return JSONResult.build(500, "error", null);
+    }
+
+    @PostMapping({"/updateProgram"})
+    public JSONResult updateProgram(Program program) {
+        int record = programService.updateByPrimaryKey(program);
+        if (record > 0) {
+            return JSONResult.build(200, "ok", null);
+        } else {
+            return JSONResult.build(500, "error", null);
+        }
+    }
+
+    @PostMapping({"/getProgramByEventIdAndAssId"})
+    public JSONResult getProgramByEventIdAndAssId(int eventid, int assid) {
+        Program program = new Program();
+        program.setAssociationid(assid);
+        program.setEventid(eventid);
+        Program result = programService.getProgramByEventIdAndAssId(program);
+        if (result != null) {
+            return JSONResult.build(200, "ok", result);
+        } else {
+            return JSONResult.build(500, "error", null);
+        }
     }
 
     @RequestMapping({"/getProgramByEventId"})
