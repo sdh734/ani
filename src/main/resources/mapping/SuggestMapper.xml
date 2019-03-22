@@ -7,13 +7,14 @@
         <result column = "authorid" property = "authorid" jdbcType = "INTEGER"/>
         <result column = "receiveid" property = "receiveid" jdbcType = "INTEGER"/>
         <result column = "createtime" property = "createtime" jdbcType = "TIMESTAMP"/>
+        <result column="anonymous" property="anonymous" jdbcType="INTEGER"/>
     </resultMap>
     <resultMap id = "ResultMapWithBLOBs" type = "edu.smxy.associationmanagement.domain.Suggest"
                extends = "BaseResultMap">
         <result column = "content" property = "content" jdbcType = "LONGVARCHAR"/>
     </resultMap>
     <sql id = "Base_Column_List">
-        id, type, authorid, receiveid, createtime
+        id, type, authorid, receiveid, createtime,anonymous
     </sql>
     <sql id = "Blob_Column_List">
         content
@@ -48,10 +49,10 @@
     </delete>
     <insert id = "insert" parameterType = "edu.smxy.associationmanagement.domain.Suggest">
         insert into t_suggest (id, type, authorid,
-        receiveid, createtime, content
+        receiveid, createtime, content,anonymous
         )
         values (#{id,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{authorid,jdbcType=INTEGER},
-        #{receiveid,jdbcType=INTEGER}, now(), #{content,jdbcType=LONGVARCHAR}
+        #{receiveid,jdbcType=INTEGER}, now(), #{content,jdbcType=LONGVARCHAR},#{anonymous,jdbcType=INTEGER}
         )
     </insert>
     <insert id = "insertSelective" parameterType = "edu.smxy.associationmanagement.domain.Suggest">
@@ -124,7 +125,8 @@
         authorid = #{authorid,jdbcType=INTEGER},
         receiveid = #{receiveid,jdbcType=INTEGER},
         createtime = #{createtime,jdbcType=TIMESTAMP},
-        content = #{content,jdbcType=LONGVARCHAR}
+        content = #{content,jdbcType=LONGVARCHAR},
+        anonymous = #{anonymous,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id = "updateByPrimaryKey" parameterType = "edu.smxy.associationmanagement.domain.Suggest">
@@ -132,7 +134,8 @@
         set type = #{type,jdbcType=INTEGER},
         authorid = #{authorid,jdbcType=INTEGER},
         receiveid = #{receiveid,jdbcType=INTEGER},
-        createtime = #{createtime,jdbcType=TIMESTAMP}
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+        anonymous = #{anonymous,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>

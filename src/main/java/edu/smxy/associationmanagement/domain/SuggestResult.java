@@ -1,7 +1,7 @@
 package edu.smxy.associationmanagement.domain;
 
-import java.util.*;
-import java.text.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class SuggestResult
 {
@@ -15,18 +15,8 @@ public class SuggestResult
     private String time;
     private String content;
     private String contentreport;
-    
-    public String getContentreport() {
-        return this.contentreport;
-    }
-    
-    public void setContentreport(final String contentreport) {
-        this.contentreport = contentreport;
-    }
-    
-    public SuggestResult() {
-    }
-    
+    private int anonymous;
+
     public SuggestResult(final Suggest suggest) {
         this.id = suggest.getId();
         this.authorid = suggest.getAuthorid();
@@ -34,9 +24,29 @@ public class SuggestResult
         this.createtime = suggest.getCreatetime();
         this.receiveid = suggest.getReceiveid();
         this.type = suggest.getType();
+        this.anonymous = suggest.getAnonymous();
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.time = simpleDateFormat.format(suggest.getCreatetime());
         this.contentreport = suggest.getContent().substring(0, (suggest.getContent().length() > 5) ? 5 : suggest.getContent().length());
+    }
+
+    public int getAnonymous() {
+        return anonymous;
+    }
+
+    public String getContentreport() {
+        return this.contentreport;
+    }
+
+    public void setContentreport(final String contentreport) {
+        this.contentreport = contentreport;
+    }
+
+    public SuggestResult() {
+    }
+
+    public void setAnonymous(int anonymous) {
+        this.anonymous = anonymous;
     }
     
     public Integer getId() {

@@ -1,6 +1,6 @@
 package edu.smxy.associationmanagement.domain;
 
-import java.util.*;
+import java.util.Date;
 
 public class Suggest
 {
@@ -10,7 +10,16 @@ public class Suggest
     private Integer receiveid;
     private Date createtime;
     private String content;
-    
+    private int anonymous;
+
+    public int getAnonymous() {
+        return anonymous;
+    }
+
+    public void setAnonymous(int anonymous) {
+        this.anonymous = anonymous;
+    }
+
     public Integer getId() {
         return this.id;
     }

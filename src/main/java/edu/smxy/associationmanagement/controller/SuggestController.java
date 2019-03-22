@@ -48,43 +48,14 @@ public class SuggestController {
         }
         return JSONResult.build(200, "1", userList2);
     }
-
     /**
-     * 添加建议 协会 -> 社联
-     *
+     * 添加建议
      * @param suggest
      * @return
      */
-    @RequestMapping({"/addSuggestAssToSL"})
-    public JSONResult addSuggestAssToSL(final Suggest suggest) {
-        final int result = this.suggestService.insert(suggest);
-        if (result > 0) {
-            return JSONResult.build(200, "ok", null);
-        }
-        return JSONResult.build(500, "error", null);
-    }
-
-    /**
-     * 添加建议 社联 -> 协会
-     * @param suggest
-     * @return
-     */
-    @RequestMapping({"/addSuggestSLToAss"})
-    public JSONResult addSuggestSLToAss(final Suggest suggest) {
-        final int result = this.suggestService.insert(suggest);
-        if (result > 0) {
-            return JSONResult.build(200, "ok", null);
-        }
-        return JSONResult.build(500, "error", null);
-    }
-
-    /**
-     * 添加建议 协会 -> 协会
-     * @param suggest
-     * @return
-     */
-    @RequestMapping({"/addSuggestAssToAss"})
-    public JSONResult addSuggestAssToAss(final Suggest suggest) {
+    @RequestMapping({"/addSuggest"})
+    public JSONResult addSuggest(final Suggest suggest) {
+        System.out.println(suggest);
         final int result = this.suggestService.insert(suggest);
         if (result > 0) {
             return JSONResult.build(200, "ok", null);
