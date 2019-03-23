@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.smxy.associationmanagement.mapper.FundingMapper">
+    <resultMap id="BaseResultMap" type="edu.smxy.associationmanagement.domain.Funding">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="funding_assid" property="fundingAssid" jdbcType="INTEGER"/>
+        <result column="funding_name" property="fundingName" jdbcType="VARCHAR"/>
+        <result column="funding_type" property="fundingType" jdbcType="INTEGER"/>
+        <result column="funding_cost" property="fundingCost" jdbcType="DECIMAL"/>
+        <result column="funding_info" property="fundingInfo" jdbcType="VARCHAR"/>
+        <result column="funding_time" property="fundingTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, funding_assid, funding_name, funding_type, funding_cost, funding_info, funding_time
+  </sql>
+    <select id="getAllFundingByAssid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_funding
+        where funding_assid = #{assid,jdbcType=INTEGER}
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_funding
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_funding
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="edu.smxy.associationmanagement.domain.Funding">
+    insert into t_funding (id, funding_assid, funding_name, 
+      funding_type, funding_cost, funding_info, 
+      funding_time)
+    values (#{id,jdbcType=INTEGER}, #{fundingAssid,jdbcType=INTEGER}, #{fundingName,jdbcType=VARCHAR}, 
+      #{fundingType,jdbcType=INTEGER}, #{fundingCost,jdbcType=DECIMAL}, #{fundingInfo,jdbcType=VARCHAR}, 
+      #{fundingTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="edu.smxy.associationmanagement.domain.Funding">
+        insert into t_funding
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="fundingAssid != null">
+                funding_assid,
+            </if>
+            <if test="fundingName != null">
+                funding_name,
+            </if>
+            <if test="fundingType != null">
+                funding_type,
+            </if>
+            <if test="fundingCost != null">
+                funding_cost,
+            </if>
+            <if test="fundingInfo != null">
+                funding_info,
+            </if>
+            <if test="fundingTime != null">
+                funding_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="fundingAssid != null">
+                #{fundingAssid,jdbcType=INTEGER},
+            </if>
+            <if test="fundingName != null">
+                #{fundingName,jdbcType=VARCHAR},
+            </if>
+            <if test="fundingType != null">
+                #{fundingType,jdbcType=INTEGER},
+            </if>
+            <if test="fundingCost != null">
+                #{fundingCost,jdbcType=DECIMAL},
+            </if>
+            <if test="fundingInfo != null">
+                #{fundingInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="fundingTime != null">
+                #{fundingTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="edu.smxy.associationmanagement.domain.Funding">
+        update t_funding
+        <set>
+            <if test="fundingAssid != null">
+                funding_assid = #{fundingAssid,jdbcType=INTEGER},
+            </if>
+            <if test="fundingName != null">
+                funding_name = #{fundingName,jdbcType=VARCHAR},
+            </if>
+            <if test="fundingType != null">
+                funding_type = #{fundingType,jdbcType=INTEGER},
+            </if>
+            <if test="fundingCost != null">
+                funding_cost = #{fundingCost,jdbcType=DECIMAL},
+            </if>
+            <if test="fundingInfo != null">
+                funding_info = #{fundingInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="fundingTime != null">
+                funding_time = #{fundingTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="edu.smxy.associationmanagement.domain.Funding">
+    update t_funding
+    set funding_assid = #{fundingAssid,jdbcType=INTEGER},
+      funding_name = #{fundingName,jdbcType=VARCHAR},
+      funding_type = #{fundingType,jdbcType=INTEGER},
+      funding_cost = #{fundingCost,jdbcType=DECIMAL},
+      funding_info = #{fundingInfo,jdbcType=VARCHAR},
+      funding_time = #{fundingTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
