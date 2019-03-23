@@ -108,4 +108,26 @@ public class UserController {
         CookieUtils.writeCookie(response, "sessionid", "");
         return 0;
     }
+
+    /**
+     * 安卓平台登陆方法
+     *
+     * @param account
+     * @param password
+     * @param request
+     * @param response
+     * @return
+     */
+    @PostMapping("/loginforAndroid")
+    public JSONResult loginForAndroid(String account, String password, HttpServletRequest request, HttpServletResponse response) {
+        User user = new User();
+        user.setAccount(account);
+        user.setPassword(password);
+        User result = userService.findUser(user);
+        if (result != null) {
+            return JSONResult.build(200, "", result);
+        }
+        return JSONResult.build(500, "找不到该用户", null);
+    }
+
 }
