@@ -1,6 +1,7 @@
 package edu.smxy.associationmanagement.services.funding;
 
 import edu.smxy.associationmanagement.domain.Funding;
+import edu.smxy.associationmanagement.domain.chartjs.ChartRequest;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface FundingService {
     int updateByPrimaryKey(Funding record);
 
     List<Funding> getAllFundingByAssid(int assid);
+
+    List<Funding> getCountByAssidInTime(ChartRequest record);
 }

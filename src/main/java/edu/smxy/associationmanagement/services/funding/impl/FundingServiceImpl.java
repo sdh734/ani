@@ -1,6 +1,7 @@
 package edu.smxy.associationmanagement.services.funding.impl;
 
 import edu.smxy.associationmanagement.domain.Funding;
+import edu.smxy.associationmanagement.domain.chartjs.ChartRequest;
 import edu.smxy.associationmanagement.mapper.FundingMapper;
 import edu.smxy.associationmanagement.services.funding.FundingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +53,10 @@ public class FundingServiceImpl implements FundingService {
     @Override
     public List<Funding> getAllFundingByAssid(int assid) {
         return fundingMapper.getAllFundingByAssid(assid);
+    }
+
+    @Override
+    public List<Funding> getCountByAssidInTime(ChartRequest record) {
+        return fundingMapper.getCountByAssidInTime(record);
     }
 }
