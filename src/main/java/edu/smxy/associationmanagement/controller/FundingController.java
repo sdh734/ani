@@ -128,8 +128,7 @@ public class FundingController {
     /** 下面开始统计功能 主要包含以下功能 1. 统计某协会在某段时间内的支出或者收入记录 2. 统计某协会在某段时间内的收入和支出总计 3. 统计某协会在某段时间内的支出或者收入变化 */
 
     /**
-     * 1. 统计某协会在某段时间内的支出或者收入记录 3. 统计某协会在某段时间内的支出或者收入变化 返回值一样 前端做相应处理
-     * TODO: 2019/03/26  增加按收入支出分类
+     * 1. 统计某协会在某段时间内的支出或者收入记录 3. 统计某协会在某段时间内的支出或者收入变化 返回值一样 前端做相应处理 TODO: 2019/03/26 增加按收入支出分类
      *
      * @param record
      * @return
@@ -160,17 +159,19 @@ public class FundingController {
      */
     @PostMapping({"/getCount2"})
     public JSONResult getCount2(ChartRequest record) {
-        List<Funding> fundings = getCountByAssidInTime(record);
+        record.setEndTime(record.getEndTime().replace('"', ' ').replace("'", "").trim());
+        record.setStartTime(record.getStartTime().replace('"', ' ').replace("'", "").trim());
+        List<Funding> fundings = fundingService.getCostCountByAssidInTime(record);
         List<String> labels = new ArrayList<>();
         List<String> values = new ArrayList<>();
-        //1 支出 2 收入
+        // 1 支出 2 收入
         BigDecimal cost1 = new BigDecimal(0), cost2 = new BigDecimal(0);
         if (fundings.size() > 0) {
             for (Funding f : fundings) {
                 if (f.getFundingType() == 0) {
-                    cost1.add(f.getFundingCost());
+                    cost1 = cost1.add(f.getFundingCost());
                 } else {
-                    cost2.add(f.getFundingCost());
+                    cost2 = cost2.add(f.getFundingCost());
                 }
             }
             labels.add("支出总和");

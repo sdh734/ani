@@ -129,6 +129,18 @@
         WHERE
         funding_time &gt; STR_TO_DATE(#{startTime,jdbcType=VARCHAR} , '%Y-%m-%d' )
         AND funding_time &lt; STR_TO_DATE( #{endTime,jdbcType=VARCHAR}, '%Y-%m-%d' )
+        AND funding_type = #{type,jdbcType=INTEGER}
+        AND funding_assid = #{assId,jdbcType=INTEGER};
+    </select>
+    <select id="getCostCountByAssidInTime" parameterType="edu.smxy.associationmanagement.domain.chartjs.ChartRequest"
+            resultMap="BaseResultMap">
+        SELECT
+          *
+        FROM
+        `t_funding`
+        WHERE
+        funding_time &gt; STR_TO_DATE(#{startTime,jdbcType=VARCHAR} , '%Y-%m-%d' )
+        AND funding_time &lt; STR_TO_DATE( #{endTime,jdbcType=VARCHAR}, '%Y-%m-%d' )
         AND funding_assid = #{assId,jdbcType=INTEGER};
     </select>
 </mapper>

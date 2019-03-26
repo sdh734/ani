@@ -11,9 +11,18 @@ public class ChartRequest {
     private String startTime;
     private String endTime;
     private int assId;
+    private int type;
 
     public String getStartTime() {
         return startTime;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public void setStartTime(String startTime) {

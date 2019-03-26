@@ -59,4 +59,9 @@ public class FundingServiceImpl implements FundingService {
     public List<Funding> getCountByAssidInTime(ChartRequest record) {
         return fundingMapper.getCountByAssidInTime(record);
     }
+
+    @Override
+    public List<Funding> getCostCountByAssidInTime(ChartRequest record) {
+        return fundingMapper.getCostCountByAssidInTime(record);
+    }
 }

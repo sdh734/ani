@@ -21,4 +21,6 @@ public interface FundingMapper {
     List<Funding> getAllFundingByAssid(int assid);
 
     List<Funding> getCountByAssidInTime(ChartRequest record);
+
+    List<Funding> getCostCountByAssidInTime(ChartRequest record);
 }

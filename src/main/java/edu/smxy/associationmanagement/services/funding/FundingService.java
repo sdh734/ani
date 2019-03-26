@@ -20,5 +20,7 @@ public interface FundingService {
 
     List<Funding> getAllFundingByAssid(int assid);
 
+    List<Funding> getCostCountByAssidInTime(ChartRequest record);
+
     List<Funding> getCountByAssidInTime(ChartRequest record);
 }
