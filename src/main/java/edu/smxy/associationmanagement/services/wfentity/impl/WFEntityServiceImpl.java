@@ -6,6 +6,8 @@ import edu.smxy.associationmanagement.services.wfentity.WFEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @program: associationmanagement
  * @description: 流程实体类实现类
@@ -45,5 +47,10 @@ public class WFEntityServiceImpl implements WFEntityService {
     @Override
     public int updateByPrimaryKey(WFEntity record) {
         return wfEntityMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public List<WFEntity> getRunningApply(int typeid, int authorid) {
+        return wfEntityMapper.getRunningApply(typeid, authorid);
     }
 }

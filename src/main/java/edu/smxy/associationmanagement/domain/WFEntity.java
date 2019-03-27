@@ -19,6 +19,16 @@ public class WFEntity {
 
     private Integer dataTableid;
 
+	private Integer isClose;
+
+	public Integer getIsClose() {
+		return isClose;
+	}
+
+	public void setIsClose(Integer isClose) {
+		this.isClose = isClose;
+	}
+
     public Integer getId() {
         return id;
     }

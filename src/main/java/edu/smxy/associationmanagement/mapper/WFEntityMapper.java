@@ -2,6 +2,8 @@ package edu.smxy.associationmanagement.mapper;
 
 import edu.smxy.associationmanagement.domain.WFEntity;
 
+import java.util.List;
+
 public interface WFEntityMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface WFEntityMapper {
     int updateByPrimaryKeySelective(WFEntity record);
 
     int updateByPrimaryKey(WFEntity record);
+
+	List<WFEntity> getRunningApply(int typeid, int authorid);
 }

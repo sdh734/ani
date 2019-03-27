@@ -10,9 +10,11 @@
         <result column="Type_ID" property="typeId" jdbcType="INTEGER"/>
         <result column="Data_TableName" property="dataTablename" jdbcType="VARCHAR"/>
         <result column="Data_TableID" property="dataTableid" jdbcType="INTEGER"/>
+        <result column="isClose" property="isClose" jdbcType="INTEGER"/>
+
     </resultMap>
     <sql id="Base_Column_List">
-    ID, Author_ID, Status, Create_Time, Title, Type_ID, Data_TableName, Data_TableID
+    ID, Author_ID, Status, Create_Time, Title, Type_ID, Data_TableName, Data_TableID,isClose
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -122,7 +124,22 @@
       Title = #{title,jdbcType=VARCHAR},
       Type_ID = #{typeId,jdbcType=INTEGER},
       Data_TableName = #{dataTablename,jdbcType=VARCHAR},
-      Data_TableID = #{dataTableid,jdbcType=INTEGER}
+      Data_TableID = #{dataTableid,jdbcType=INTEGER},
+      isClose = #{isClose,jdbcType=INTEGER}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+
+    <select id="getRunningApply" resultMap="BaseResultMap">
+        SELECT
+	    *
+        FROM
+	      t_wfentity a LEFT JOIN t_applytype b on a.Type_ID = b.ID
+        WHERE
+	      `Status` IN ( 1, 2, 3, 4 )
+	    AND Type_ID = #{typeid,jdbcType=INTEGER}
+	    AND Author_ID = #{authorid,jdbcType=INTEGER}
+        AND a.Create_Time &lt; b.End_Time
+        AND a.Create_Time &gt; b.Start_Time
+    </select>
+
 </mapper>
