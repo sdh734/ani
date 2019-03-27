@@ -17,18 +17,19 @@ public class ChartResponse {
     //颜色集合
     private List<String> colors;
 
-    private String[] colorss = new String[]{"rgba(255, 99, 132, 0.2)",
-            "rgba(54, 162, 235, 0.2)", "rgba(255, 206, 86, 0.2)",
-            "rgba(75, 192, 192, 0.2)", "rgba(153, 102, 255, 0.2)",
-            "rgba(255, 159, 64, 0.2)", "rgba(1,147,154,0.2)",
-            "rgba(0,255,127,0.2)", "rgba(255,215,0,0.2)",
-            "rgba(143,188,143,0.2)", "rgba(192,192,192,0.2)",
-            "rgba(9,105,162,0.2)", "rgba(255,0,255,0.2)"};
+    private String[] colorss = new String[]{"rgba(255, 99, 132, 0.4)",
+            "rgba(54, 162, 235, 0.4)", "rgba(255, 206, 86, 0.4)",
+            "rgba(75, 192, 192, 0.4)", "rgba(153, 102, 255, 0.4)",
+            "rgba(255, 159, 64, 0.4)", "rgba(1,147,154,0.4)",
+            "rgba(0,255,127,0.4)", "rgba(255,215,0,0.4)",
+            "rgba(143,188,143,0.4)", "rgba(192,192,192,0.4)",
+            "rgba(9,105,162,0.4)", "rgba(255,0,255,0.4)"};
 
     public ChartResponse(List<String> labels, List<String> values) {
         this.labels = labels;
         this.values = values;
         this.colors = getColorsList();
+
     }
 
     public ChartResponse() {
