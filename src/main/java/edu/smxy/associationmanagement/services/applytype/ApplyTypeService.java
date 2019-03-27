@@ -17,4 +17,6 @@ public interface ApplyTypeService {
     int updateByPrimaryKeySelective(ApplyType record);
 
     int updateByPrimaryKey(ApplyType record);
+
+    ApplyType isInTime(Integer id);
 }

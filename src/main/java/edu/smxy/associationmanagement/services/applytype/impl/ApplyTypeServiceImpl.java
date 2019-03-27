@@ -46,4 +46,9 @@ public class ApplyTypeServiceImpl implements ApplyTypeService {
     public int updateByPrimaryKey(ApplyType record) {
         return applyTypeMapper.updateByPrimaryKey(record);
     }
+
+    @Override
+    public ApplyType isInTime(Integer id) {
+        return applyTypeMapper.isInTime(id);
+    }
 }

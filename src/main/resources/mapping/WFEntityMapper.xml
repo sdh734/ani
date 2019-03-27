@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.smxy.associationmanagement.mapper.WFEntityMapper">
+    <resultMap id="BaseResultMap" type="edu.smxy.associationmanagement.domain.WFEntity">
+        <id column="ID" property="id" jdbcType="INTEGER"/>
+        <result column="Author_ID" property="authorId" jdbcType="INTEGER"/>
+        <result column="Status" property="status" jdbcType="INTEGER"/>
+        <result column="Create_Time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="Title" property="title" jdbcType="VARCHAR"/>
+        <result column="Type_ID" property="typeId" jdbcType="INTEGER"/>
+        <result column="Data_TableName" property="dataTablename" jdbcType="VARCHAR"/>
+        <result column="Data_TableID" property="dataTableid" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ID, Author_ID, Status, Create_Time, Title, Type_ID, Data_TableName, Data_TableID
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_wfentity
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_wfentity
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="edu.smxy.associationmanagement.domain.WFEntity">
+    insert into t_wfentity (ID, Author_ID, Status, 
+      Create_Time, Title, Type_ID, 
+      Data_TableName, Data_TableID)
+    values (#{id,jdbcType=INTEGER}, #{authorId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, 
+      #{dataTablename,jdbcType=VARCHAR}, #{dataTableid,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="edu.smxy.associationmanagement.domain.WFEntity">
+        insert into t_wfentity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="authorId != null">
+                Author_ID,
+            </if>
+            <if test="status != null">
+                Status,
+            </if>
+            <if test="createTime != null">
+                Create_Time,
+            </if>
+            <if test="title != null">
+                Title,
+            </if>
+            <if test="typeId != null">
+                Type_ID,
+            </if>
+            <if test="dataTablename != null">
+                Data_TableName,
+            </if>
+            <if test="dataTableid != null">
+                Data_TableID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="authorId != null">
+                #{authorId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="dataTablename != null">
+                #{dataTablename,jdbcType=VARCHAR},
+            </if>
+            <if test="dataTableid != null">
+                #{dataTableid,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="edu.smxy.associationmanagement.domain.WFEntity">
+        update t_wfentity
+        <set>
+            <if test="authorId != null">
+                Author_ID = #{authorId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                Status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                Create_Time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="title != null">
+                Title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                Type_ID = #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="dataTablename != null">
+                Data_TableName = #{dataTablename,jdbcType=VARCHAR},
+            </if>
+            <if test="dataTableid != null">
+                Data_TableID = #{dataTableid,jdbcType=INTEGER},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="edu.smxy.associationmanagement.domain.WFEntity">
+    update t_wfentity
+    set Author_ID = #{authorId,jdbcType=INTEGER},
+      Status = #{status,jdbcType=INTEGER},
+      Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      Title = #{title,jdbcType=VARCHAR},
+      Type_ID = #{typeId,jdbcType=INTEGER},
+      Data_TableName = #{dataTablename,jdbcType=VARCHAR},
+      Data_TableID = #{dataTableid,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

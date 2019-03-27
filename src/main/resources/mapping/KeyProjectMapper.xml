@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.smxy.associationmanagement.mapper.KeyProjectMapper">
+    <resultMap id="BaseResultMap" type="edu.smxy.associationmanagement.domain.KeyProject">
+        <id column="ID" property="id" jdbcType="INTEGER"/>
+        <result column="Ass_ID" property="assId" jdbcType="INTEGER"/>
+        <result column="Status" property="status" jdbcType="INTEGER"/>
+        <result column="Name" property="name" jdbcType="VARCHAR"/>
+        <result column="Manager" property="manager" jdbcType="VARCHAR"/>
+        <result column="Manager_Phone" property="managerPhone" jdbcType="VARCHAR"/>
+        <result column="ApplyFile_ID" property="applyfileId" jdbcType="INTEGER"/>
+        <result column="FinishFile_ID" property="finishfileId" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ID, Ass_ID, Status, Name, Manager, Manager_Phone, ApplyFile_ID, FinishFile_ID
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_keyproject
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_keyproject
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="edu.smxy.associationmanagement.domain.KeyProject">
+    insert into t_keyproject (ID, Ass_ID, Status, 
+      Name, Manager, Manager_Phone, 
+      ApplyFile_ID, FinishFile_ID)
+    values (#{id,jdbcType=INTEGER}, #{assId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{manager,jdbcType=VARCHAR}, #{managerPhone,jdbcType=VARCHAR}, 
+      #{applyfileId,jdbcType=INTEGER}, #{finishfileId,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="edu.smxy.associationmanagement.domain.KeyProject">
+        insert into t_keyproject
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="assId != null">
+                Ass_ID,
+            </if>
+            <if test="status != null">
+                Status,
+            </if>
+            <if test="name != null">
+                Name,
+            </if>
+            <if test="manager != null">
+                Manager,
+            </if>
+            <if test="managerPhone != null">
+                Manager_Phone,
+            </if>
+            <if test="applyfileId != null">
+                ApplyFile_ID,
+            </if>
+            <if test="finishfileId != null">
+                FinishFile_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="assId != null">
+                #{assId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="manager != null">
+                #{manager,jdbcType=VARCHAR},
+            </if>
+            <if test="managerPhone != null">
+                #{managerPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="applyfileId != null">
+                #{applyfileId,jdbcType=INTEGER},
+            </if>
+            <if test="finishfileId != null">
+                #{finishfileId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="edu.smxy.associationmanagement.domain.KeyProject">
+        update t_keyproject
+        <set>
+            <if test="assId != null">
+                Ass_ID = #{assId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                Status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                Name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="manager != null">
+                Manager = #{manager,jdbcType=VARCHAR},
+            </if>
+            <if test="managerPhone != null">
+                Manager_Phone = #{managerPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="applyfileId != null">
+                ApplyFile_ID = #{applyfileId,jdbcType=INTEGER},
+            </if>
+            <if test="finishfileId != null">
+                FinishFile_ID = #{finishfileId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="edu.smxy.associationmanagement.domain.KeyProject">
+    update t_keyproject
+    set Ass_ID = #{assId,jdbcType=INTEGER},
+      Status = #{status,jdbcType=INTEGER},
+      Name = #{name,jdbcType=VARCHAR},
+      Manager = #{manager,jdbcType=VARCHAR},
+      Manager_Phone = #{managerPhone,jdbcType=VARCHAR},
+      ApplyFile_ID = #{applyfileId,jdbcType=INTEGER},
+      FinishFile_ID = #{finishfileId,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
