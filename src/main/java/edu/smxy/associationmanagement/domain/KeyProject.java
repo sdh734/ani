@@ -1,83 +1,83 @@
 package edu.smxy.associationmanagement.domain;
 
 public class KeyProject {
-    private Integer id;
+	private Integer id;
 
-    private Integer assId;
+	private Integer assId;
 
-    private Integer status;
+	private Integer status;
 
-    private String name;
+	private String name;
 
-    private String manager;
+	private String manager;
 
-    private String managerPhone;
+	private String managerPhone;
 
-    private Integer applyfileId;
+	private Integer applyfileId;
 
-    private Integer finishfileId;
+	private Integer finishfileId;
 
-    public Integer getId() {
-        return id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public Integer getAssId() {
-        return assId;
-    }
+	public Integer getAssId() {
+		return assId;
+	}
 
-    public void setAssId(Integer assId) {
-        this.assId = assId;
-    }
+	public void setAssId(Integer assId) {
+		this.assId = assId;
+	}
 
-    public Integer getStatus() {
-        return status;
-    }
+	public Integer getStatus() {
+		return status;
+	}
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
 
-    public String getManager() {
-        return manager;
-    }
+	public String getManager() {
+		return manager;
+	}
 
-    public void setManager(String manager) {
-        this.manager = manager == null ? null : manager.trim();
-    }
+	public void setManager(String manager) {
+		this.manager = manager == null ? null : manager.trim();
+	}
 
-    public String getManagerPhone() {
-        return managerPhone;
-    }
+	public String getManagerPhone() {
+		return managerPhone;
+	}
 
-    public void setManagerPhone(String managerPhone) {
-        this.managerPhone = managerPhone == null ? null : managerPhone.trim();
-    }
+	public void setManagerPhone(String managerPhone) {
+		this.managerPhone = managerPhone == null ? null : managerPhone.trim();
+	}
 
-    public Integer getApplyfileId() {
-        return applyfileId;
-    }
+	public Integer getApplyfileId() {
+		return applyfileId;
+	}
 
-    public void setApplyfileId(Integer applyfileId) {
-        this.applyfileId = applyfileId;
-    }
+	public void setApplyfileId(Integer applyfileId) {
+		this.applyfileId = applyfileId;
+	}
 
-    public Integer getFinishfileId() {
-        return finishfileId;
-    }
+	public Integer getFinishfileId() {
+		return finishfileId;
+	}
 
-    public void setFinishfileId(Integer finishfileId) {
-        this.finishfileId = finishfileId;
-    }
+	public void setFinishfileId(Integer finishfileId) {
+		this.finishfileId = finishfileId;
+	}
 }

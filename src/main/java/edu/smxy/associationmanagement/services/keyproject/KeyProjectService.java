@@ -7,17 +7,17 @@ import edu.smxy.associationmanagement.domain.KeyProject;
  * @description: 重点立项Service
  * @author: SDH
  * @create: 2019-03-27 19:49
- **/
+ */
 public interface KeyProjectService {
-    int deleteByPrimaryKey(Integer id);
+	int deleteByPrimaryKey(Integer id);
 
-    int insert(KeyProject record);
+	int insert(KeyProject record);
 
-    int insertSelective(KeyProject record);
+	int insertSelective(KeyProject record);
 
-    KeyProject selectByPrimaryKey(Integer id);
+	KeyProject selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(KeyProject record);
+	int updateByPrimaryKeySelective(KeyProject record);
 
-    int updateByPrimaryKey(KeyProject record);
+	int updateByPrimaryKey(KeyProject record);
 }

@@ -11,10 +11,10 @@
         <result column="Data_TableName" property="dataTablename" jdbcType="VARCHAR"/>
         <result column="Data_TableID" property="dataTableid" jdbcType="INTEGER"/>
         <result column="isClose" property="isClose" jdbcType="INTEGER"/>
-
+        <result column="Info" property="info" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-    ID, Author_ID, Status, Create_Time, Title, Type_ID, Data_TableName, Data_TableID,isClose
+    ID, Author_ID, Status, Create_Time, Title, Type_ID, Data_TableName, Data_TableID,isClose,Info
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -29,10 +29,10 @@
     <insert id="insert" parameterType="edu.smxy.associationmanagement.domain.WFEntity">
     insert into t_wfentity (ID, Author_ID, Status, 
       Create_Time, Title, Type_ID, 
-      Data_TableName, Data_TableID)
+      Data_TableName, Data_TableID,isClose,Info)
     values (#{id,jdbcType=INTEGER}, #{authorId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, 
-      #{dataTablename,jdbcType=VARCHAR}, #{dataTableid,jdbcType=INTEGER})
+      #{dataTablename,jdbcType=VARCHAR}, #{dataTableid,jdbcType=INTEGER},#{isClose,jdbcType=INTEGER},#{info,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="edu.smxy.associationmanagement.domain.WFEntity">
         insert into t_wfentity
@@ -125,7 +125,8 @@
       Type_ID = #{typeId,jdbcType=INTEGER},
       Data_TableName = #{dataTablename,jdbcType=VARCHAR},
       Data_TableID = #{dataTableid,jdbcType=INTEGER},
-      isClose = #{isClose,jdbcType=INTEGER}
+      isClose = #{isClose,jdbcType=INTEGER},
+      Info = #{info,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
 
@@ -135,11 +136,21 @@
         FROM
 	      t_wfentity a LEFT JOIN t_applytype b on a.Type_ID = b.ID
         WHERE
-	      `Status` IN ( 1, 2, 3, 4 )
+	      `Status` IN ( 1, 2, 3, 4, 5 )
 	    AND Type_ID = #{typeid,jdbcType=INTEGER}
 	    AND Author_ID = #{authorid,jdbcType=INTEGER}
         AND a.Create_Time &lt; b.End_Time
         AND a.Create_Time &gt; b.Start_Time
     </select>
-
+    <select id="getRunningApplyAdmin" resultMap="BaseResultMap">
+        SELECT
+	    *
+        FROM
+	      t_wfentity a LEFT JOIN t_applytype b on a.Type_ID = b.ID
+        WHERE
+	      `Status` IN ( #{status,jdbcType=INTEGER} )
+	    AND Type_ID = #{typeid,jdbcType=INTEGER}
+        AND a.Create_Time &lt; b.End_Time
+        AND a.Create_Time &gt; b.Start_Time
+    </select>
 </mapper>

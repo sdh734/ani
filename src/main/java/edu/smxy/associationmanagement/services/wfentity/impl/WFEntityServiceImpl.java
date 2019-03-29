@@ -13,44 +13,49 @@ import java.util.List;
  * @description: 流程实体类实现类
  * @author: SDH
  * @create: 2019-03-27 20:14
- **/
+ */
 @Service("WFEntityService")
 public class WFEntityServiceImpl implements WFEntityService {
-    @Autowired
-    WFEntityMapper wfEntityMapper;
+	@Autowired
+	WFEntityMapper wfEntityMapper;
 
-    @Override
-    public int deleteByPrimaryKey(Integer id) {
-        return wfEntityMapper.deleteByPrimaryKey(id);
-    }
+	@Override
+	public int deleteByPrimaryKey(Integer id) {
+		return wfEntityMapper.deleteByPrimaryKey(id);
+	}
 
-    @Override
-    public int insert(WFEntity record) {
-        return wfEntityMapper.insert(record);
-    }
+	@Override
+	public int insert(WFEntity record) {
+		return wfEntityMapper.insert(record);
+	}
 
-    @Override
-    public int insertSelective(WFEntity record) {
-        return wfEntityMapper.insertSelective(record);
-    }
+	@Override
+	public int insertSelective(WFEntity record) {
+		return wfEntityMapper.insertSelective(record);
+	}
 
-    @Override
-    public WFEntity selectByPrimaryKey(Integer id) {
-        return wfEntityMapper.selectByPrimaryKey(id);
-    }
+	@Override
+	public WFEntity selectByPrimaryKey(Integer id) {
+		return wfEntityMapper.selectByPrimaryKey(id);
+	}
 
-    @Override
-    public int updateByPrimaryKeySelective(WFEntity record) {
-        return wfEntityMapper.updateByPrimaryKeySelective(record);
-    }
+	@Override
+	public int updateByPrimaryKeySelective(WFEntity record) {
+		return wfEntityMapper.updateByPrimaryKeySelective(record);
+	}
 
-    @Override
-    public int updateByPrimaryKey(WFEntity record) {
-        return wfEntityMapper.updateByPrimaryKey(record);
-    }
+	@Override
+	public int updateByPrimaryKey(WFEntity record) {
+		return wfEntityMapper.updateByPrimaryKey(record);
+	}
 
-    @Override
-    public List<WFEntity> getRunningApply(int typeid, int authorid) {
-        return wfEntityMapper.getRunningApply(typeid, authorid);
-    }
+	@Override
+	public List<WFEntity> getRunningApply(int typeid, int authorid) {
+		return wfEntityMapper.getRunningApply(typeid, authorid);
+	}
+
+	@Override
+	public List<WFEntity> getRunningApplyAdmin(int typeid, int status) {
+		return wfEntityMapper.getRunningApplyAdmin(typeid, status);
+	}
 }

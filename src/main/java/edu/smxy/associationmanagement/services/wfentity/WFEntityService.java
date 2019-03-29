@@ -24,4 +24,6 @@ public interface WFEntityService {
 	int updateByPrimaryKey(WFEntity record);
 
 	List<WFEntity> getRunningApply(int typeid, int authorid);
+
+	List<WFEntity> getRunningApplyAdmin(int typeid, int status);
 }

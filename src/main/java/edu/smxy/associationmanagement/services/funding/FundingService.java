@@ -6,21 +6,21 @@ import edu.smxy.associationmanagement.domain.chartjs.ChartRequest;
 import java.util.List;
 
 public interface FundingService {
-    int deleteByPrimaryKey(Integer id);
+	int deleteByPrimaryKey(Integer id);
 
-    int insert(Funding record);
+	int insert(Funding record);
 
-    int insertSelective(Funding record);
+	int insertSelective(Funding record);
 
-    Funding selectByPrimaryKey(Integer id);
+	Funding selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Funding record);
+	int updateByPrimaryKeySelective(Funding record);
 
-    int updateByPrimaryKey(Funding record);
+	int updateByPrimaryKey(Funding record);
 
-    List<Funding> getAllFundingByAssid(int assid);
+	List<Funding> getAllFundingByAssid(int assid);
 
-    List<Funding> getCostCountByAssidInTime(ChartRequest record);
+	List<Funding> getCostCountByAssidInTime(ChartRequest record);
 
-    List<Funding> getCountByAssidInTime(ChartRequest record);
+	List<Funding> getCountByAssidInTime(ChartRequest record);
 }

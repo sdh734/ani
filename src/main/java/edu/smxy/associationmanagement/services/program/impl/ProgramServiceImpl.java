@@ -10,39 +10,39 @@ import java.util.List;
 
 @Service("ProgramService")
 public class ProgramServiceImpl implements ProgramService {
-    @Autowired
-    ProgramMapper programMapper;
+	@Autowired
+	ProgramMapper programMapper;
 
-    public int deleteByPrimaryKey(final Integer id) {
-        return this.programMapper.deleteByPrimaryKey(id);
-    }
+	public int deleteByPrimaryKey(final Integer id) {
+		return this.programMapper.deleteByPrimaryKey(id);
+	}
 
-    public int insert(final Program record) {
-        return this.programMapper.insert(record);
-    }
+	public int insert(final Program record) {
+		return this.programMapper.insert(record);
+	}
 
-    public int insertSelective(final Program record) {
-        return this.programMapper.insertSelective(record);
-    }
+	public int insertSelective(final Program record) {
+		return this.programMapper.insertSelective(record);
+	}
 
-    public Program selectByPrimaryKey(final Integer id) {
-        return this.programMapper.selectByPrimaryKey(id);
-    }
+	public Program selectByPrimaryKey(final Integer id) {
+		return this.programMapper.selectByPrimaryKey(id);
+	}
 
-    public int updateByPrimaryKeySelective(final Program record) {
-        return this.programMapper.updateByPrimaryKeySelective(record);
-    }
+	public int updateByPrimaryKeySelective(final Program record) {
+		return this.programMapper.updateByPrimaryKeySelective(record);
+	}
 
-    public int updateByPrimaryKey(final Program record) {
-        return this.programMapper.updateByPrimaryKey(record);
-    }
+	public int updateByPrimaryKey(final Program record) {
+		return this.programMapper.updateByPrimaryKey(record);
+	}
 
-    public List<Program> getProgramByEventId(final int eventid) {
-        return this.programMapper.getProgramByEventId(eventid);
-    }
+	public List<Program> getProgramByEventId(final int eventid) {
+		return this.programMapper.getProgramByEventId(eventid);
+	}
 
-    @Override
-    public Program getProgramByEventIdAndAssId(Program program) {
-        return programMapper.getProgramByEventIdAndAssId(program);
-    }
+	@Override
+	public Program getProgramByEventIdAndAssId(Program program) {
+		return programMapper.getProgramByEventIdAndAssId(program);
+	}
 }

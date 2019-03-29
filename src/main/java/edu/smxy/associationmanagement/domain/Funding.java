@@ -4,73 +4,73 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Funding {
-    private Integer id;
+	private Integer id;
 
-    private Integer fundingAssid;
+	private Integer fundingAssid;
 
-    private String fundingName;
+	private String fundingName;
 
-    private Integer fundingType;
+	private Integer fundingType;
 
-    private BigDecimal fundingCost;
+	private BigDecimal fundingCost;
 
-    private String fundingInfo;
+	private String fundingInfo;
 
-    private Date fundingTime;
+	private Date fundingTime;
 
-    public Integer getId() {
-        return id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public Integer getFundingAssid() {
-        return fundingAssid;
-    }
+	public Integer getFundingAssid() {
+		return fundingAssid;
+	}
 
-    public void setFundingAssid(Integer fundingAssid) {
-        this.fundingAssid = fundingAssid;
-    }
+	public void setFundingAssid(Integer fundingAssid) {
+		this.fundingAssid = fundingAssid;
+	}
 
-    public String getFundingName() {
-        return fundingName;
-    }
+	public String getFundingName() {
+		return fundingName;
+	}
 
-    public void setFundingName(String fundingName) {
-        this.fundingName = fundingName == null ? null : fundingName.trim();
-    }
+	public void setFundingName(String fundingName) {
+		this.fundingName = fundingName == null ? null : fundingName.trim();
+	}
 
-    public Integer getFundingType() {
-        return fundingType;
-    }
+	public Integer getFundingType() {
+		return fundingType;
+	}
 
-    public void setFundingType(Integer fundingType) {
-        this.fundingType = fundingType;
-    }
+	public void setFundingType(Integer fundingType) {
+		this.fundingType = fundingType;
+	}
 
-    public BigDecimal getFundingCost() {
-        return fundingCost;
-    }
+	public BigDecimal getFundingCost() {
+		return fundingCost;
+	}
 
-    public void setFundingCost(BigDecimal fundingCost) {
-        this.fundingCost = fundingCost;
-    }
+	public void setFundingCost(BigDecimal fundingCost) {
+		this.fundingCost = fundingCost;
+	}
 
-    public String getFundingInfo() {
-        return fundingInfo;
-    }
+	public String getFundingInfo() {
+		return fundingInfo;
+	}
 
-    public void setFundingInfo(String fundingInfo) {
-        this.fundingInfo = fundingInfo == null ? null : fundingInfo.trim();
-    }
+	public void setFundingInfo(String fundingInfo) {
+		this.fundingInfo = fundingInfo == null ? null : fundingInfo.trim();
+	}
 
-    public Date getFundingTime() {
-        return fundingTime;
-    }
+	public Date getFundingTime() {
+		return fundingTime;
+	}
 
-    public void setFundingTime(Date fundingTime) {
-        this.fundingTime = fundingTime;
-    }
+	public void setFundingTime(Date fundingTime) {
+		this.fundingTime = fundingTime;
+	}
 }

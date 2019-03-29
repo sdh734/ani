@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace = "edu.smxy.associationmanagement.mapper.SuggestMapper">
-    <resultMap id = "BaseResultMap" type = "edu.smxy.associationmanagement.domain.Suggest">
-        <id column = "id" property = "id" jdbcType = "INTEGER"/>
-        <result column = "type" property = "type" jdbcType = "INTEGER"/>
-        <result column = "authorid" property = "authorid" jdbcType = "INTEGER"/>
-        <result column = "receiveid" property = "receiveid" jdbcType = "INTEGER"/>
-        <result column = "createtime" property = "createtime" jdbcType = "TIMESTAMP"/>
+<mapper namespace="edu.smxy.associationmanagement.mapper.SuggestMapper">
+    <resultMap id="BaseResultMap" type="edu.smxy.associationmanagement.domain.Suggest">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="authorid" property="authorid" jdbcType="INTEGER"/>
+        <result column="receiveid" property="receiveid" jdbcType="INTEGER"/>
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP"/>
         <result column="anonymous" property="anonymous" jdbcType="INTEGER"/>
     </resultMap>
-    <resultMap id = "ResultMapWithBLOBs" type = "edu.smxy.associationmanagement.domain.Suggest"
-               extends = "BaseResultMap">
-        <result column = "content" property = "content" jdbcType = "LONGVARCHAR"/>
+    <resultMap id="ResultMapWithBLOBs" type="edu.smxy.associationmanagement.domain.Suggest"
+               extends="BaseResultMap">
+        <result column="content" property="content" jdbcType="LONGVARCHAR"/>
     </resultMap>
-    <sql id = "Base_Column_List">
+    <sql id="Base_Column_List">
         id, type, authorid, receiveid, createtime,anonymous
     </sql>
-    <sql id = "Blob_Column_List">
+    <sql id="Blob_Column_List">
         content
     </sql>
-    <select id = "getAllSuggestByAuthorId" resultMap = "ResultMapWithBLOBs" parameterType = "java.lang.Integer">
+    <select id="getAllSuggestByAuthorId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
         select
-        <include refid = "Base_Column_List"/>
+        <include refid="Base_Column_List"/>
         ,
-        <include refid = "Blob_Column_List"/>
+        <include refid="Blob_Column_List"/>
         from t_suggest
         where authorid = #{authorid,jdbcType=INTEGER}
     </select>
-    <select id = "getAllSuggestByReceiveId" resultMap = "ResultMapWithBLOBs" parameterType = "java.lang.Integer">
+    <select id="getAllSuggestByReceiveId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
         select
-        <include refid = "Base_Column_List"/>
+        <include refid="Base_Column_List"/>
         ,
-        <include refid = "Blob_Column_List"/>
+        <include refid="Blob_Column_List"/>
         from t_suggest
         where receiveid = #{receiveid,jdbcType=INTEGER}
     </select>
-    <select id = "selectByPrimaryKey" resultMap = "ResultMapWithBLOBs" parameterType = "java.lang.Integer">
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
         select
-        <include refid = "Base_Column_List"/>
+        <include refid="Base_Column_List"/>
         ,
-        <include refid = "Blob_Column_List"/>
+        <include refid="Blob_Column_List"/>
         from t_suggest
         where id = #{id,jdbcType=INTEGER}
     </select>
-    <delete id = "deleteByPrimaryKey" parameterType = "java.lang.Integer">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from t_suggest
         where id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id = "insert" parameterType = "edu.smxy.associationmanagement.domain.Suggest">
+    <insert id="insert" parameterType="edu.smxy.associationmanagement.domain.Suggest">
         insert into t_suggest (id, type, authorid,
         receiveid, createtime, content,anonymous
         )
@@ -55,71 +55,71 @@
         #{receiveid,jdbcType=INTEGER}, now(), #{content,jdbcType=LONGVARCHAR},#{anonymous,jdbcType=INTEGER}
         )
     </insert>
-    <insert id = "insertSelective" parameterType = "edu.smxy.associationmanagement.domain.Suggest">
+    <insert id="insertSelective" parameterType="edu.smxy.associationmanagement.domain.Suggest">
         insert into t_suggest
-        <trim prefix = "(" suffix = ")" suffixOverrides = ",">
-            <if test = "id != null">
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
                 id,
             </if>
-            <if test = "type != null">
+            <if test="type != null">
                 type,
             </if>
-            <if test = "authorid != null">
+            <if test="authorid != null">
                 authorid,
             </if>
-            <if test = "receiveid != null">
+            <if test="receiveid != null">
                 receiveid,
             </if>
-            <if test = "createtime != null">
+            <if test="createtime != null">
                 createtime,
             </if>
-            <if test = "content != null">
+            <if test="content != null">
                 content,
             </if>
         </trim>
-        <trim prefix = "values (" suffix = ")" suffixOverrides = ",">
-            <if test = "id != null">
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
                 #{id,jdbcType=INTEGER},
             </if>
-            <if test = "type != null">
+            <if test="type != null">
                 #{type,jdbcType=INTEGER},
             </if>
-            <if test = "authorid != null">
+            <if test="authorid != null">
                 #{authorid,jdbcType=INTEGER},
             </if>
-            <if test = "receiveid != null">
+            <if test="receiveid != null">
                 #{receiveid,jdbcType=INTEGER},
             </if>
-            <if test = "createtime != null">
+            <if test="createtime != null">
                 #{createtime,jdbcType=TIMESTAMP},
             </if>
-            <if test = "content != null">
+            <if test="content != null">
                 #{content,jdbcType=LONGVARCHAR},
             </if>
         </trim>
     </insert>
-    <update id = "updateByPrimaryKeySelective" parameterType = "edu.smxy.associationmanagement.domain.Suggest">
+    <update id="updateByPrimaryKeySelective" parameterType="edu.smxy.associationmanagement.domain.Suggest">
         update t_suggest
         <set>
-            <if test = "type != null">
+            <if test="type != null">
                 type = #{type,jdbcType=INTEGER},
             </if>
-            <if test = "authorid != null">
+            <if test="authorid != null">
                 authorid = #{authorid,jdbcType=INTEGER},
             </if>
-            <if test = "receiveid != null">
+            <if test="receiveid != null">
                 receiveid = #{receiveid,jdbcType=INTEGER},
             </if>
-            <if test = "createtime != null">
+            <if test="createtime != null">
                 createtime = #{createtime,jdbcType=TIMESTAMP},
             </if>
-            <if test = "content != null">
+            <if test="content != null">
                 content = #{content,jdbcType=LONGVARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id = "updateByPrimaryKeyWithBLOBs" parameterType = "edu.smxy.associationmanagement.domain.Suggest">
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="edu.smxy.associationmanagement.domain.Suggest">
         update t_suggest
         set type = #{type,jdbcType=INTEGER},
         authorid = #{authorid,jdbcType=INTEGER},
@@ -129,7 +129,7 @@
         anonymous = #{anonymous,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id = "updateByPrimaryKey" parameterType = "edu.smxy.associationmanagement.domain.Suggest">
+    <update id="updateByPrimaryKey" parameterType="edu.smxy.associationmanagement.domain.Suggest">
         update t_suggest
         set type = #{type,jdbcType=INTEGER},
         authorid = #{authorid,jdbcType=INTEGER},

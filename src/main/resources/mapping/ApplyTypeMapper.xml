@@ -85,7 +85,7 @@
     FROM
     `t_applytype`
     WHERE
-    id = 1
+    id = #{applytype,jdbcType=INTEGER}
     AND NOW( ) &gt; Start_Time
     AND NOW( ) &lt; End_Time
   </select>

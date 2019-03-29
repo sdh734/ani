@@ -11,22 +11,22 @@ import org.springframework.web.filter.CorsFilter;
  */
 @Configuration
 public class Cors {
-    private CorsConfiguration buildConfig() {
-        final CorsConfiguration corsConfiguration = new CorsConfiguration();
-        // 允许所有Origin
-        corsConfiguration.addAllowedOrigin("*");
-        // 允许所有Header
-        corsConfiguration.addAllowedHeader("*");
-        // 允许所有方法
-        corsConfiguration.addAllowedMethod("*");
-        corsConfiguration.setAllowCredentials(true);
-        return corsConfiguration;
-    }
+	private CorsConfiguration buildConfig() {
+		final CorsConfiguration corsConfiguration = new CorsConfiguration();
+		// 允许所有Origin
+		corsConfiguration.addAllowedOrigin("*");
+		// 允许所有Header
+		corsConfiguration.addAllowedHeader("*");
+		// 允许所有方法
+		corsConfiguration.addAllowedMethod("*");
+		corsConfiguration.setAllowCredentials(true);
+		return corsConfiguration;
+	}
 
-    @Bean
-    public CorsFilter corsFilter() {
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", this.buildConfig());
-        return new CorsFilter(source);
-    }
+	@Bean
+	public CorsFilter corsFilter() {
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", this.buildConfig());
+		return new CorsFilter(source);
+	}
 }

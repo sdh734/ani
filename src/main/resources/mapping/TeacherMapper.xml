@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="edu.smxy.associationmanagement.mapper.TeacherMapper" >
-  <resultMap id="BaseResultMap" type="edu.smxy.associationmanagement.domain.Teacher" >
-    <id column="teacher_id" property="teacherId" jdbcType="INTEGER" />
-    <result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
-    <result column="teacher_college" property="teacherCollege" jdbcType="VARCHAR" />
-    <result column="teacher_association" property="teacherAssociation" jdbcType="INTEGER" />
-    <result column="teacher_phone" property="teacherPhone" jdbcType="VARCHAR" />
-    <result column="teacher_gender" property="teacherGender" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="edu.smxy.associationmanagement.mapper.TeacherMapper">
+    <resultMap id="BaseResultMap" type="edu.smxy.associationmanagement.domain.Teacher">
+        <id column="teacher_id" property="teacherId" jdbcType="INTEGER"/>
+        <result column="teacher_name" property="teacherName" jdbcType="VARCHAR"/>
+        <result column="teacher_college" property="teacherCollege" jdbcType="VARCHAR"/>
+        <result column="teacher_association" property="teacherAssociation" jdbcType="INTEGER"/>
+        <result column="teacher_phone" property="teacherPhone" jdbcType="VARCHAR"/>
+        <result column="teacher_gender" property="teacherGender" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     teacher_id, teacher_name, teacher_college, teacher_association, teacher_phone, teacher_gender
   </sql>
-    <select id = "query" resultMap = "BaseResultMap" parameterType = "edu.smxy.associationmanagement.domain.Teacher">
+    <select id="query" resultMap="BaseResultMap" parameterType="edu.smxy.associationmanagement.domain.Teacher">
     SELECT
 	*
     FROM
@@ -23,17 +23,17 @@
 	AND teacher_phone = #{teacherPhone,jdbcType=VARCHAR}
 	AND teacher_gender =  #{teacherGender,jdbcType=VARCHAR}
     </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_teacher
-    where teacher_id = #{teacherId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_teacher
+        where teacher_id = #{teacherId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_teacher
     where teacher_id = #{teacherId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="edu.smxy.associationmanagement.domain.Teacher" >
+    <insert id="insert" parameterType="edu.smxy.associationmanagement.domain.Teacher">
     insert into t_teacher (teacher_id, teacher_name, teacher_college, 
       teacher_association, teacher_phone, teacher_gender
       )
@@ -41,71 +41,71 @@
       #{teacherAssociation,jdbcType=INTEGER}, #{teacherPhone,jdbcType=VARCHAR}, #{teacherGender,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="edu.smxy.associationmanagement.domain.Teacher" >
-    insert into t_teacher
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="teacherId != null" >
-        teacher_id,
-      </if>
-      <if test="teacherName != null" >
-        teacher_name,
-      </if>
-      <if test="teacherCollege != null" >
-        teacher_college,
-      </if>
-      <if test="teacherAssociation != null" >
-        teacher_association,
-      </if>
-      <if test="teacherPhone != null" >
-        teacher_phone,
-      </if>
-      <if test="teacherGender != null" >
-        teacher_gender,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="teacherId != null" >
-        #{teacherId,jdbcType=INTEGER},
-      </if>
-      <if test="teacherName != null" >
-        #{teacherName,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherCollege != null" >
-        #{teacherCollege,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherAssociation != null" >
-        #{teacherAssociation,jdbcType=INTEGER},
-      </if>
-      <if test="teacherPhone != null" >
-        #{teacherPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherGender != null" >
-        #{teacherGender,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="edu.smxy.associationmanagement.domain.Teacher" >
-    update t_teacher
-    <set >
-      <if test="teacherName != null" >
-        teacher_name = #{teacherName,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherCollege != null" >
-        teacher_college = #{teacherCollege,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherAssociation != null" >
-        teacher_association = #{teacherAssociation,jdbcType=INTEGER},
-      </if>
-      <if test="teacherPhone != null" >
-        teacher_phone = #{teacherPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherGender != null" >
-        teacher_gender = #{teacherGender,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where teacher_id = #{teacherId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="edu.smxy.associationmanagement.domain.Teacher" >
+    <insert id="insertSelective" parameterType="edu.smxy.associationmanagement.domain.Teacher">
+        insert into t_teacher
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="teacherId != null">
+                teacher_id,
+            </if>
+            <if test="teacherName != null">
+                teacher_name,
+            </if>
+            <if test="teacherCollege != null">
+                teacher_college,
+            </if>
+            <if test="teacherAssociation != null">
+                teacher_association,
+            </if>
+            <if test="teacherPhone != null">
+                teacher_phone,
+            </if>
+            <if test="teacherGender != null">
+                teacher_gender,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="teacherId != null">
+                #{teacherId,jdbcType=INTEGER},
+            </if>
+            <if test="teacherName != null">
+                #{teacherName,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherCollege != null">
+                #{teacherCollege,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherAssociation != null">
+                #{teacherAssociation,jdbcType=INTEGER},
+            </if>
+            <if test="teacherPhone != null">
+                #{teacherPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherGender != null">
+                #{teacherGender,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="edu.smxy.associationmanagement.domain.Teacher">
+        update t_teacher
+        <set>
+            <if test="teacherName != null">
+                teacher_name = #{teacherName,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherCollege != null">
+                teacher_college = #{teacherCollege,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherAssociation != null">
+                teacher_association = #{teacherAssociation,jdbcType=INTEGER},
+            </if>
+            <if test="teacherPhone != null">
+                teacher_phone = #{teacherPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherGender != null">
+                teacher_gender = #{teacherGender,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where teacher_id = #{teacherId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="edu.smxy.associationmanagement.domain.Teacher">
     update t_teacher
     set teacher_name = #{teacherName,jdbcType=VARCHAR},
       teacher_college = #{teacherCollege,jdbcType=VARCHAR},

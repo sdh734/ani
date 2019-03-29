@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="edu.smxy.associationmanagement.mapper.MemberMapper" >
-  <resultMap id="BaseResultMap" type="edu.smxy.associationmanagement.domain.Member" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="associationid" property="associationid" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="gender" property="gender" jdbcType="VARCHAR" />
-    <result column="college" property="college" jdbcType="VARCHAR" />
-    <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="position" property="position" jdbcType="VARCHAR" />
-    <result column="studentid" property="studentid" jdbcType="VARCHAR" />
-    <result column="department" property="department" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="edu.smxy.associationmanagement.mapper.MemberMapper">
+    <resultMap id="BaseResultMap" type="edu.smxy.associationmanagement.domain.Member">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="associationid" property="associationid" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="VARCHAR"/>
+        <result column="college" property="college" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="position" property="position" jdbcType="VARCHAR"/>
+        <result column="studentid" property="studentid" jdbcType="VARCHAR"/>
+        <result column="department" property="department" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, associationid, name, gender, college, phone, position, studentid, department
   </sql>
     <select id="getAllMemberByAssociationId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from t_member
         where associationid = #{associationid,jdbcType=INTEGER}
     </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_member
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_member
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_member
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="edu.smxy.associationmanagement.domain.Member" >
+    <insert id="insert" parameterType="edu.smxy.associationmanagement.domain.Member">
     insert into t_member (id, associationid, name, 
       gender, college, phone, 
       position, studentid, department
@@ -51,98 +51,98 @@
       #{position,jdbcType=VARCHAR}, #{studentid,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}
       )
     </insert>
-  <insert id="insertSelective" parameterType="edu.smxy.associationmanagement.domain.Member" >
-    insert into t_member
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="associationid != null" >
-        associationid,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="gender != null" >
-        gender,
-      </if>
-      <if test="college != null" >
-        college,
-      </if>
-      <if test="phone != null" >
-        phone,
-      </if>
-      <if test="position != null" >
-        position,
-      </if>
-      <if test="studentid != null" >
-        studentid,
-      </if>
-      <if test="department != null" >
-        department,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="associationid != null" >
-        #{associationid,jdbcType=INTEGER},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="gender != null" >
-        #{gender,jdbcType=VARCHAR},
-      </if>
-      <if test="college != null" >
-        #{college,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null" >
-        #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="position != null" >
-        #{position,jdbcType=VARCHAR},
-      </if>
-      <if test="studentid != null" >
-        #{studentid,jdbcType=VARCHAR},
-      </if>
-      <if test="department != null" >
-        #{department,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="edu.smxy.associationmanagement.domain.Member" >
-    update t_member
-    <set >
-      <if test="associationid != null" >
-        associationid = #{associationid,jdbcType=INTEGER},
-      </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="gender != null" >
-        gender = #{gender,jdbcType=VARCHAR},
-      </if>
-      <if test="college != null" >
-        college = #{college,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null" >
-        phone = #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="position != null" >
-        position = #{position,jdbcType=VARCHAR},
-      </if>
-      <if test="studentid != null" >
-        studentid = #{studentid,jdbcType=VARCHAR},
-      </if>
-      <if test="department != null" >
-        department = #{department,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="edu.smxy.associationmanagement.domain.Member" >
+    <insert id="insertSelective" parameterType="edu.smxy.associationmanagement.domain.Member">
+        insert into t_member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="associationid != null">
+                associationid,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="college != null">
+                college,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="position != null">
+                position,
+            </if>
+            <if test="studentid != null">
+                studentid,
+            </if>
+            <if test="department != null">
+                department,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="associationid != null">
+                #{associationid,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="college != null">
+                #{college,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="studentid != null">
+                #{studentid,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null">
+                #{department,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="edu.smxy.associationmanagement.domain.Member">
+        update t_member
+        <set>
+            <if test="associationid != null">
+                associationid = #{associationid,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="college != null">
+                college = #{college,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                position = #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="studentid != null">
+                studentid = #{studentid,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null">
+                department = #{department,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="edu.smxy.associationmanagement.domain.Member">
     update t_member
     set associationid = #{associationid,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
