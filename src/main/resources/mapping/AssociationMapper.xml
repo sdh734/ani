@@ -12,24 +12,27 @@
         <result column="registration_file" property="registrationFile" jdbcType="INTEGER"/>
         <result column="temp_file" property="tempFile" jdbcType="INTEGER"/>
         <result column="is_deleted" property="isDeleted" jdbcType="INTEGER"/>
+        <result column="delete_file" property="deleteFile" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Base_Column_List">
-        associationid, association_name, presidentid, creation_time, is_registered,count ,teacher,registration_file,temp_file,is_deleted
+        associationid, association_name, presidentid, creation_time, is_registered,count ,teacher,registration_file,temp_file,is_deleted,delete_file
     </sql>
     <select id="query" resultMap="BaseResultMap"
             parameterType="edu.smxy.associationmanagement.domain.Association">
         select *
         from t_association
         WHERE association_name = #{associationName,jdbcType=VARCHAR}
+        AND is_deleted = 0
     </select>
     <select id="getAll" resultMap="BaseResultMap">
         select *
-        from t_association
+        from t_association where is_deleted = 0
     </select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select *
         from t_association
         where associationid = #{associationid,jdbcType=INTEGER}
+        AND is_deleted = 0
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from t_association
@@ -37,11 +40,11 @@
     </delete>
     <insert id="insert" parameterType="edu.smxy.associationmanagement.domain.Association">
         insert into t_association (associationid, association_name, presidentid,
-        creation_time, is_registered, count,teacher,registration_file,temp_file,is_deleted
+        creation_time, is_registered, count,teacher,registration_file,temp_file,is_deleted,delete_file
         )
         values (#{associationid,jdbcType=INTEGER}, #{associationName,jdbcType=VARCHAR}, #{presidentid,jdbcType=INTEGER},
         #{creationTime,jdbcType=TIMESTAMP}, #{isRegistered,jdbcType=BIT}, #{count,jdbcType=INTEGER}, #{teacher,jdbcType=INTEGER},
-        #{registrationFile,jdbcType=INTEGER},#{tempFile,jdbcType=INTEGER},#{isDeleted,jdbcType=INTEGER}
+        #{registrationFile,jdbcType=INTEGER},#{tempFile,jdbcType=INTEGER},#{isDeleted,jdbcType=INTEGER},#{deleteFile,jdbcType=INTEGER}
         )
     </insert>
     <insert id="insertSelective" parameterType="edu.smxy.associationmanagement.domain.Association">
@@ -118,7 +121,8 @@
         teacher =#{teacher,jdbcType=INTEGER},
         registration_file = #{registrationFile,jdbcType=INTEGER},
         temp_file = #{tempFile,jdbcType=INTEGER},
-        is_deleted = #{isDeleted,jdbcType=INTEGER}
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+        delete_file = #{deleteFile,jdbcType=INTEGER}
         where associationid = #{associationid,jdbcType=INTEGER}
     </update>
 </mapper>

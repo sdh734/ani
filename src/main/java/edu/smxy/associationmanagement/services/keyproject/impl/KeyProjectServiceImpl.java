@@ -6,6 +6,8 @@ import edu.smxy.associationmanagement.services.keyproject.KeyProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @program: associationmanagement
  * @description: 重点立项实现类
@@ -45,5 +47,15 @@ public class KeyProjectServiceImpl implements KeyProjectService {
 	@Override
 	public int updateByPrimaryKey(KeyProject record) {
 		return keyProjectMapper.updateByPrimaryKey(record);
+	}
+
+	@Override
+	public KeyProject selectByRecord(KeyProject record) {
+		return keyProjectMapper.selectByRecord(record);
+	}
+
+	@Override
+	public List<KeyProject> getAllRunningKeyProjectByAssId(int assid) {
+		return keyProjectMapper.getAllRunningKeyProjectByAssId(assid);
 	}
 }

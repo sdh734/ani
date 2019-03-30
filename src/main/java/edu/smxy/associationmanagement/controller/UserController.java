@@ -1,8 +1,10 @@
 package edu.smxy.associationmanagement.controller;
 
+import edu.smxy.associationmanagement.domain.Association;
 import edu.smxy.associationmanagement.domain.JSONResult;
 import edu.smxy.associationmanagement.domain.MyCookie;
 import edu.smxy.associationmanagement.domain.User;
+import edu.smxy.associationmanagement.services.association.AssociationService;
 import edu.smxy.associationmanagement.services.users.UserService;
 import edu.smxy.associationmanagement.utils.CookieUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private AssociationService associationService;
 
 	/**
 	 * 添加用户
@@ -91,10 +95,19 @@ public class UserController {
 		user.setPassword(password);
 		final User result = this.userService.findUser(user);
 		if (result != null) {
-			request.getSession().setAttribute("userid", result.getId());
-			return JSONResult.build(200, "", new MyCookie(result.getId(), request.getSession().getId()));
+			if (result.getAssociationid() == - 1) {
+				return JSONResult.build(200, "管理员", new MyCookie(result.getId(), request.getSession().getId()));
+			} else {
+				Association association = associationService.selectByPrimaryKey(result.getAssociationid());
+				if (association == null) {
+					return JSONResult.build(400, "当前协会已注销", null);
+				} else {
+					return JSONResult.build(200, "协会", new MyCookie(result.getId(), request.getSession().getId()));
+				}
+			}
+		} else {
+			return JSONResult.build(500, "找不到该用户", null);
 		}
-		return JSONResult.build(500, "找不到该用户", null);
 	}
 
 	/**

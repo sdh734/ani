@@ -8,9 +8,10 @@
         <result column="eventid" property="eventid" jdbcType="INTEGER"/>
         <result column="authorid" property="authorid" jdbcType="INTEGER"/>
         <result column="apply_type" property="applyType" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, filename, filepath, eventid, authorid,apply_type
+    id, filename, filepath, eventid, authorid,apply_type,create_time
   </sql>
     <select id="getAllFile" resultMap="BaseResultMap">
         select
@@ -33,7 +34,9 @@
       *
       FROM
       t_file
-      where filename= #{filename,jdbcType=VARCHAR} and filepath = #{filepath,jdbcType=VARCHAR}
+      where filename= #{filename,jdbcType=VARCHAR}
+      and filepath = #{filepath,jdbcType=VARCHAR}
+      and create_time = #{createTime,jdbcType=VARCHAR}
   </select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -81,6 +84,12 @@
             <if test="authorid != null">
                 authorid,
             </if>
+            <if test="applyType != null">
+                apply_type,
+            </if>
+            <if test="createTime != null">
+                create_time
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -97,6 +106,12 @@
             </if>
             <if test="authorid != null">
                 #{authorid,jdbcType=INTEGER},
+            </if>
+            <if test="applyType != null">
+                #{applyType,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP}
             </if>
         </trim>
     </insert>

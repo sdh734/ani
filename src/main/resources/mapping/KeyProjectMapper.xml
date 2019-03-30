@@ -14,6 +14,27 @@
     <sql id="Base_Column_List">
     ID, Ass_ID, Status, Name, Manager, Manager_Phone, ApplyFile_ID, FinishFile_ID
   </sql>
+    <select id="getAllRunningKeyProjectByAssId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+	         *
+        FROM
+	        `t_keyproject`
+        WHERE
+	        Ass_ID = #{assid,jdbcType=INTEGER}
+	    AND `Status` =1
+    </select>
+    <select id="selectByRecord" resultMap="BaseResultMap"
+            parameterType="edu.smxy.associationmanagement.domain.KeyProject">
+        select
+        <include refid="Base_Column_List"/>
+        from t_keyproject
+        where Ass_ID = #{assId,jdbcType=INTEGER}
+        AND Status = #{status,jdbcType=INTEGER}
+        AND Name = #{name,jdbcType=VARCHAR}
+        AND Manager = #{manager,jdbcType=VARCHAR}
+        AND Manager_Phone = #{managerPhone,jdbcType=VARCHAR}
+        AND ApplyFile_ID = #{applyfileId,jdbcType=INTEGER}
+    </select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>

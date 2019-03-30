@@ -20,7 +20,7 @@ public class FileServiceImpl implements FileService {
 
 	@Override
 	public void uploadFile(final File file) {
-		this.fileMapper.insert(file);
+		this.fileMapper.insertSelective(file);
 	}
 
 	@Override

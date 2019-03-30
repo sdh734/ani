@@ -13,6 +13,15 @@ public class Association {
 	private Integer registrationFile;
 	private Integer tempFile;
 	private Integer isDeleted;
+	private Integer deleteFile;
+
+	public Integer getDeleteFile() {
+		return deleteFile;
+	}
+
+	public void setDeleteFile(Integer deleteFile) {
+		this.deleteFile = deleteFile;
+	}
 
 	public Integer getIsDeleted() {
 		return isDeleted;

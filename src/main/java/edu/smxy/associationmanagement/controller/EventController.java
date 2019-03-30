@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @ResponseBody
@@ -269,6 +270,7 @@ public class EventController {
 					new edu.smxy.associationmanagement.domain.File();
 			file2.setFilename(filename);
 			file2.setFilepath(path);
+			file2.setCreateTime(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
 			this.fileService.uploadFile(file2);
 			event.setTemplateFileId(this.fileService.selectByRecord(file2).getId());
 		} catch (IOException e) {
