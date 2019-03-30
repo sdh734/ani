@@ -67,4 +67,9 @@ public class UserServiceImpl implements UserService {
 	public List<User> getAll() {
 		return this.userMapper.getAll();
 	}
+	
+	@Override
+	public List<User> getAllByType(int type) {
+		return userMapper.getAllByType(type);
+	}
 }

@@ -5,19 +5,21 @@ import edu.smxy.associationmanagement.domain.User;
 import java.util.List;
 
 public interface UserMapper {
-	int deleteByPrimaryKey(final Integer id);
+  int deleteByPrimaryKey(final Integer id);
 
-	int insert(final User record);
+  int insert(final User record);
 
-	int insertSelective(final User record);
+  int insertSelective(final User record);
 
-	User selectByPrimaryKey(final Integer id);
+  User selectByPrimaryKey(final Integer id);
 
-	int updateByPrimaryKeySelective(final User record);
+  int updateByPrimaryKeySelective(final User record);
 
-	int updateByPrimaryKey(final User record);
+  int updateByPrimaryKey(final User record);
 
-	User query(final User user);
+  User query(final User user);
 
-	List<User> getAll();
+  List<User> getAll();
+
+  List<User> getAllByType(int type);
 }

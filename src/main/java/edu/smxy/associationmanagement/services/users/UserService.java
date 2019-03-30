@@ -26,4 +26,6 @@ public interface UserService {
 	User findUser(final User user);
 
 	User selectUserById(final int id);
+	
+	 List<User> getAllByType(int type);
 }

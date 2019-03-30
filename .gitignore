@@ -1,0 +1,10 @@
+.idea/
+.mvn/
+.settings/
+target/
+.classpath
+.project
+src/test/java/edu/smxy/associationmanagement/AssociationmanagementApplicationTests.java
+src/main/java/edu/smxy/associationmanagement/domain/Test.java
+src/main/java/edu/smxy/associationmanagement/controller/testcontroller/TestUserController.java
+src/main/java/edu/smxy/associationmanagement/controller/testcontroller/TestFileController.java
