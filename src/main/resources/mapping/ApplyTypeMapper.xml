@@ -6,10 +6,19 @@
         <result column="Name" property="name" jdbcType="VARCHAR"/>
         <result column="Start_Time" property="startTime" jdbcType="TIMESTAMP"/>
         <result column="End_Time" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="template_File" property="templateFile" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Base_Column_List">
-    ID, Name, Start_Time, End_Time
+    ID, Name, Start_Time, End_Time,template_File
   </sql>
+    <select id="getTemplateFileById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+	        *
+        FROM
+	        `t_applytype`
+        WHERE
+	        id = #{applytype,jdbcType=INTEGER}
+    </select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
@@ -76,7 +85,8 @@
     update t_applytype
     set Name = #{name,jdbcType=VARCHAR},
       Start_Time = #{startTime,jdbcType=TIMESTAMP},
-      End_Time = #{endTime,jdbcType=TIMESTAMP}
+      End_Time = #{endTime,jdbcType=TIMESTAMP},
+      template_File = #{templateFile,jdbcType=INTEGER}
     where ID = #{id,jdbcType=INTEGER}
   </update>
     <select id="isInTime" parameterType="java.lang.Integer" resultMap="BaseResultMap">

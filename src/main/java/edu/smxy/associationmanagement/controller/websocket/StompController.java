@@ -1,16 +1,16 @@
 package edu.smxy.associationmanagement.controller.websocket;
 
-import com.alibaba.fastjson.JSONObject;
+import edu.smxy.associationmanagement.domain.stomp.StompRequestMessage;
+import edu.smxy.associationmanagement.domain.stomp.StompResponseMessage;
 import edu.smxy.associationmanagement.utils.StompMessageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @program: associationmanagement
@@ -18,52 +18,66 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author: SDH
  * @create: 2019-03-22 14:10
  */
-@Controller
+@RestController
 @ResponseBody
 public class StompController {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-    
-    @Autowired private SimpMessagingTemplate messagingTemplate;
-    
-    /**
-     * 发送消息接口,将传入消息发送给所有订阅了"/topic/admin"的客户端
-     *
-     * @param userMessage 消息内容
-     * @return
-     */
-    @MessageMapping("/sendtoadmin")
-    @SendTo("/topic/admin")
-    public String adminMessage(String userMessage) {
-        return userMessage;
+  private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+  @Autowired private SimpMessagingTemplate messagingTemplate;
+
+  /**
+   * 发送给群组的消息接口 群组URL由message 传入
+   *
+   * @param message
+   */
+  @PostMapping({"/sendToTopic"})
+  public void sendToTopic(StompRequestMessage message) {
+    StompResponseMessage message1 = getResponseFromRequest(message);
+    StompMessageUtil.sendToTopic(message1);
+  }
+
+  /**
+   * 发送给指定用户的接口 用户id由message传入
+   *
+   * @param message
+   */
+  @PostMapping({"/sendToUser"})
+  public void sendToUser(StompRequestMessage message) {
+    StompResponseMessage message1 = getResponseFromRequest(message);
+    StompMessageUtil.sendToUser(message1);
+  }
+
+  private StompResponseMessage getResponseFromRequest(StompRequestMessage message) {
+    StompResponseMessage message1 = new StompResponseMessage();
+    message1.setReceiveId(message.getReceiveId());
+    message1.setType(message.getType());
+    message1.setMessage(message.getMessage());
+    message1.setCreateId(message.getCreateId());
+    message1.setCreateName(message.getCreateName());
+    message1.setTopicUrl(message.getTopicUrl());
+    return message1;
+  }
+
+  /**
+   * 测试方法
+   *
+   * @return
+   */
+  @RequestMapping("/startStomp.do")
+  public String startStomp() {
+    final int counter = 20;
+    int index = 0;
+    while (index++ < counter) {
+      StompResponseMessage message = new StompResponseMessage();
+      message.setCreateId(11);
+      message.setReceiveId(12);
+      message.setMessage("12333");
+      message.setType(0);
+      message.setTopicUrl("/topic/ass");
+      message.setCreateName("SDH");
+      message.setReveiveName("ZXX");
+      StompMessageUtil.sendToUserByType(1, message);
     }
-    
-    /**
-     * 将传入消息发送给指定用户客户端
-     *
-     * @param json 传入数据 格式: { "id":接收人id, "message":消息内容 }
-     */
-    @MessageMapping("/sendtouser")
-    public void userMessage(String json) {
-        JSONObject object = JSONObject.parseObject(json);
-        messagingTemplate.convertAndSendToUser(
-                object.getString("id"), "/message", object.getString("message"));
-    }
-    
-    /**
-     * 测试方法
-     *
-     * @return
-     */
-    @RequestMapping("/startStomp.do")
-    public String startStomp() {
-        if (StompMessageUtil.getMessageTemplate() == null) {
-            StompMessageUtil.setMessageTemplate(this.messagingTemplate);
-        }
-        final int counter = 20;
-        int index = 0;
-        while (index++ < counter) {
-            StompMessageUtil.sendToUserByType(1, "服务器推送的消息" + index);
-        }
-        return "ok";
-    }
+    return "ok";
+  }
 }

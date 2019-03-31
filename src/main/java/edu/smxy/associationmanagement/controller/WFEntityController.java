@@ -4,19 +4,24 @@ import edu.smxy.associationmanagement.domain.Association;
 import edu.smxy.associationmanagement.domain.JSONResult;
 import edu.smxy.associationmanagement.domain.KeyProject;
 import edu.smxy.associationmanagement.domain.WFEntity;
+import edu.smxy.associationmanagement.domain.stomp.StompResponseMessage;
 import edu.smxy.associationmanagement.services.association.AssociationService;
 import edu.smxy.associationmanagement.services.file.FileService;
 import edu.smxy.associationmanagement.services.keyproject.KeyProjectService;
 import edu.smxy.associationmanagement.services.wfentity.WFEntityService;
+import edu.smxy.associationmanagement.utils.StompMessageUtil;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -71,6 +76,54 @@ public class WFEntityController {
     }
   }
 
+  /**
+   * 根据流程实例id 下载附件
+   *
+   * @param wfid
+   * @param response
+   */
+  @GetMapping({"/getWFFileById"})
+  public void getWFFileById(int wfid, int applytype, HttpServletResponse response) {
+    WFEntity wfEntity = wfEntityService.selectByPrimaryKey(wfid);
+    String table = wfEntity.getDataTablename();
+    int tableid = wfEntity.getDataTableid();
+    edu.smxy.associationmanagement.domain.File file = null;
+    if (table.equals("t_keyproject")) {
+      KeyProject keyProject = keyProjectService.selectByPrimaryKey(tableid);
+      if (applytype == 1) {
+        file = fileService.searchFileById(keyProject.getApplyfileId());
+      } else if (applytype == 2) {
+        file = fileService.searchFileById(keyProject.getFinishfileId());
+      }
+    } else {
+      Association association = associationService.selectByPrimaryKey(tableid);
+      if (wfEntity.getStatus() == 5) {
+        if (applytype == 3) {
+          file = fileService.searchFileById(association.getRegistrationFile());
+        }
+        if (applytype == 4) {
+          file = fileService.searchFileById(association.getDeleteFile());
+        }
+      } else {
+        file = fileService.searchFileById(association.getTempFile());
+      }
+    }
+    if (file != null) {
+      final String filepath = file.getFilepath();
+      String filename = file.getFilename();
+      try (final InputStream inputStream =
+              new FileInputStream(new java.io.File(filepath + filename));
+          final OutputStream outputStream = response.getOutputStream()) {
+        response.setContentType("application/x-download");
+        filename = URLEncoder.encode(file.getFilename(), "UTF-8");
+        response.addHeader("Content-Disposition", "attachment;fileName=" + filename);
+        IOUtils.copy(inputStream, outputStream);
+        outputStream.flush();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+  }
   /**
    * 新增流程方法
    *
@@ -174,6 +227,13 @@ public class WFEntityController {
     wfEntity.setCreateTime(new Date());
     int record = wfEntityService.insert(wfEntity);
     if (record > 0) {
+      StompResponseMessage message = new StompResponseMessage();
+      message.setCreateName(associationService.selectByPrimaryKey(authorid).getAssociationName());
+      message.setCreateId(authorid);
+      message.setMessage("已发起" + wfEntity.getTitle() + "流程,请注意审核");
+      message.setType(0);
+      // 发出消息
+      StompMessageUtil.sendToUserByType(1, message);
       return JSONResult.build(200, "ok", null);
     } else {
       return JSONResult.build(500, "error", null);
@@ -197,8 +257,7 @@ public class WFEntityController {
       @RequestParam("id") int id,
       @RequestParam("keyprojectname") String keyprojectname,
       @RequestParam("keyprojectmanager") String keyprojectmanager,
-      @RequestParam("keyprojectphone") String keyprojectphone,
-      @RequestParam("keyid") int keyid) {
+      @RequestParam("keyprojectphone") String keyprojectphone) {
     WFEntity wfEntity = wfEntityService.selectByPrimaryKey(id);
     wfEntity.setTitle(applyTitle);
     wfEntity.setInfo(applyInfo);
@@ -250,6 +309,14 @@ public class WFEntityController {
     }
     int record = wfEntityService.updateByPrimaryKey(wfEntity);
     if (record > 0) {
+      StompResponseMessage message = new StompResponseMessage();
+      message.setCreateName(
+          associationService.selectByPrimaryKey(wfEntity.getAuthorId()).getAssociationName());
+      message.setCreateId(wfEntity.getAuthorId());
+      message.setMessage("已修改" + wfEntity.getTitle() + "流程,请注意审核");
+      message.setType(0);
+      // 发出消息
+      StompMessageUtil.sendToUserByType(1, message);
       return JSONResult.build(200, "ok", null);
     } else {
       return JSONResult.build(500, "error", null);
@@ -266,21 +333,30 @@ public class WFEntityController {
   @PostMapping({"/cancelApply"})
   public JSONResult cancelApply(int id, int type) {
     WFEntity wfEntity = wfEntityService.selectByPrimaryKey(id);
+    StompResponseMessage message = new StompResponseMessage();
+    message.setCreateName("管理员");
+    message.setCreateId(-1);
+    message.setType(0);
+    message.setReceiveId(wfEntity.getAuthorId());
     switch (type) {
         // 文件不规范退回
       case 3:
         wfEntity.setStatus(3);
+        message.setMessage("已退回" + wfEntity.getTitle() + "流程,退回原因: 文件不规范  请修改");
         break;
         // 不符合申请要求退回 同时关闭申请流程
       case 4:
         wfEntity.setStatus(4);
         wfEntity.setIsClose(1);
+        message.setMessage("已退回" + wfEntity.getTitle() + "流程,退回原因: 不符合申请要求  请重新申请");
         break;
       default:
         break;
     }
     int record = wfEntityService.updateByPrimaryKey(wfEntity);
     if (record > 0) {
+      // 发出消息
+      StompMessageUtil.sendToUser(message);
       return JSONResult.build(200, "ok", null);
     } else {
       return JSONResult.build(500, "error", null);
@@ -288,7 +364,7 @@ public class WFEntityController {
   }
 
   /**
-   * 同意申请方法 目前只写了注册登记的
+   * 同意申请方法
    *
    * @param id 申请流程id
    * @return
@@ -296,11 +372,17 @@ public class WFEntityController {
   @PostMapping({"/accessApply"})
   public JSONResult accessApply(int id) {
     WFEntity wfEntity = wfEntityService.selectByPrimaryKey(id);
+    StompResponseMessage message = new StompResponseMessage();
+    message.setCreateName("管理员");
+    message.setCreateId(-1);
+    message.setType(0);
+    message.setReceiveId(wfEntity.getAuthorId());
     switch (wfEntity.getStatus()) {
         // 1 当前状态是社联管理人员审核
       case 1:
         // 设置状态为团委老师审核
         wfEntity.setStatus(2);
+        message.setMessage("已同意" + wfEntity.getTitle() + "流程,当前状态: 团委老师审核中");
         break;
         // 当前状态是团委老师审核
       case 2:
@@ -346,12 +428,15 @@ public class WFEntityController {
           default:
             break;
         }
+        message.setMessage("已同意" + wfEntity.getTitle() + "流程,当前状态: 已完成");
         break;
       default:
         break;
     }
     int record = wfEntityService.updateByPrimaryKey(wfEntity);
     if (record > 0) {
+      // 发出消息
+      StompMessageUtil.sendToUser(message);
       return JSONResult.build(200, "ok", null);
     } else {
       return JSONResult.build(500, "error", null);

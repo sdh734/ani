@@ -1,10 +1,9 @@
 package edu.smxy.associationmanagement.services.applytype;
 
 import edu.smxy.associationmanagement.domain.ApplyType;
+import edu.smxy.associationmanagement.domain.File;
 
-/**
- * 申请类型Service接口
- */
+/** 申请类型Service接口 */
 public interface ApplyTypeService {
   int deleteByPrimaryKey(Integer id);
 
@@ -19,4 +18,6 @@ public interface ApplyTypeService {
   int updateByPrimaryKey(ApplyType record);
 
   ApplyType isInTime(Integer id);
+
+  ApplyType getTemplateFileById(Integer applytype);
 }
