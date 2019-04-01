@@ -6,6 +6,7 @@ import edu.smxy.associationmanagement.domain.JSONResult;
 import edu.smxy.associationmanagement.domain.stomp.StompResponseMessage;
 import edu.smxy.associationmanagement.services.event.EventService;
 import edu.smxy.associationmanagement.services.file.FileService;
+import edu.smxy.associationmanagement.utils.PathUtil;
 import edu.smxy.associationmanagement.utils.StompMessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -124,10 +125,9 @@ public class EventController {
   public JSONResult updateFileEventWithFile(
       @RequestParam("file") final MultipartFile file, final HttpServletRequest request) {
     final String filename = file.getOriginalFilename();
-    // 本地目录
-    final String path = "G:\\upload\\eventtamplate\\";
-    // 服务器目录
-    // final String path = "/www/wwwroot/ass/upload/";
+      // 目录
+      final String path = PathUtil.EVENT_TEMPLATE;
+
     final Event event = new Event();
     final String eventid = request.getParameter("eventid");
     final String eventname = request.getParameter("eventName");
@@ -277,10 +277,9 @@ public class EventController {
   public JSONResult addEventFile(
       @RequestParam("file") final MultipartFile file, final HttpServletRequest request) {
     final String filename = file.getOriginalFilename();
-    // 本地目录
-    final String path = "G:\\upload\\eventtamplate\\";
-    // 服务器目录
-    // final String path = "/www/wwwroot/ass/upload/";
+      // 目录
+      final String path = PathUtil.EVENT_TEMPLATE;
+    
     final Event event = new Event();
     try {
       file.transferTo(new File(path + filename));
@@ -346,9 +345,7 @@ public class EventController {
       @RequestParam("eventid") final String eventid) {
     final String filename = file.getOriginalFilename();
     // 本地目录
-    final String path = "G:\\upload\\eventfile\\";
-    // 服务器目录
-    // final String path = "/www/wwwroot/ass/upload/";
+      final String path = PathUtil.EVENT_FILE;
     try {
       file.transferTo(new File(path + filename));
       final edu.smxy.associationmanagement.domain.File file2 =

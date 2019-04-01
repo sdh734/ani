@@ -8,6 +8,7 @@ import edu.smxy.associationmanagement.domain.ProgramResult;
 import edu.smxy.associationmanagement.services.association.AssociationService;
 import edu.smxy.associationmanagement.services.event.EventService;
 import edu.smxy.associationmanagement.services.program.ProgramService;
+import edu.smxy.associationmanagement.utils.PathUtil;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -125,7 +126,7 @@ public class ProgramController {
 	@RequestMapping({"/getProgramtoExcel"})
 	public void getProgramtoExcel(final int eventid, final HttpServletResponse response) {
 		// 本地目录
-		String path = "G:\\upload\\exceltemp\\";
+		String path = PathUtil.EXCEL_TEMP;
 		// 服务器目录
 		// String path = ""/www/wwwroot/ass/upload/";
 		List<ProgramResult> results = getProgramResults(eventid);

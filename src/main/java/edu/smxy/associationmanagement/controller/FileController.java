@@ -7,6 +7,7 @@ import edu.smxy.associationmanagement.services.applytype.ApplyTypeService;
 import edu.smxy.associationmanagement.services.association.AssociationService;
 import edu.smxy.associationmanagement.services.event.EventService;
 import edu.smxy.associationmanagement.services.file.FileService;
+import edu.smxy.associationmanagement.utils.PathUtil;
 import edu.smxy.associationmanagement.utils.ZipUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,7 @@ public class FileController {
   public String upload(@RequestParam("file") final MultipartFile file) {
     final String filename = file.getOriginalFilename();
     // 本地目录
-    final String path = "G:\\upload\\";
-    // 服务器目录
-    // final String path = "/www/wwwroot/ass/upload/";
+    final String path = PathUtil.ROOT_PATH;
     try {
       file.transferTo(new File(path + filename));
       final edu.smxy.associationmanagement.domain.File f =
@@ -63,9 +62,7 @@ public class FileController {
       @RequestParam("file") final MultipartFile file, @RequestParam("applytype") int applytype) {
     final String filename = file.getOriginalFilename();
     // 本地目录
-    final String path = "G:\\upload\\apply\\template\\";
-    // 服务器目录
-    // final String path = "/www/wwwroot/ass/upload/";
+    final String path = PathUtil.APPLYPATH_TEMPLATE;
     try {
       file.transferTo(new File(path + filename));
       edu.smxy.associationmanagement.domain.File f =
@@ -127,7 +124,7 @@ public class FileController {
       paths.add(file.getFilepath() + file.getFilename());
     }
     // 本地目录
-    final String zipBasePath = "G:\\upload\\ziptemp\\";
+    final String zipBasePath = PathUtil.ZIP_TEMP;
     // 服务器目录
     // final String zipBasePath = "/www/wwwroot/ass/upload/";
 
@@ -256,7 +253,7 @@ public class FileController {
       @RequestParam("id") final String id) {
     final String filename = file.getOriginalFilename();
     // 本地目录
-    final String path = "G:\\upload\\eventfile\\";
+    final String path = PathUtil.EVENT_FILE;
     // 服务器目录
     // final String zipBasePath = "/www/wwwroot/ass/upload/";
     try {

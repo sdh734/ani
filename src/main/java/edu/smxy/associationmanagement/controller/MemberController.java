@@ -11,6 +11,7 @@ import edu.smxy.associationmanagement.domain.MemberResult;
 import edu.smxy.associationmanagement.services.association.AssociationService;
 import edu.smxy.associationmanagement.services.member.MemberService;
 import edu.smxy.associationmanagement.utils.ExcelListener;
+import edu.smxy.associationmanagement.utils.PathUtil;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -65,9 +66,8 @@ public class MemberController {
 		final String name = this.associationService.selectByPrimaryKey(id).getAssociationName();
 		if (memberResults.size() > 0) {
 			// 本地目录
-			String path = "G:\\upload\\exceltemp\\";
-			// 服务器目录
-			// String path = ""/www/wwwroot/ass/upload/";
+			String path = PathUtil.EXCEL_TEMP;
+
 			try {
 
 				ExcelWriter writer =
@@ -111,10 +111,8 @@ public class MemberController {
 	public JSONResult uploadFiletoMember(@RequestParam("file") final MultipartFile file) {
 		final String filename = file.getOriginalFilename();
 		// 本地目录
-		String path = "G:\\upload\\exceltemp\\";
+		String path = PathUtil.EXCEL_TEMP;
 		File file2 = null;
-		// 服务器目录
-		// String path = ""/www/wwwroot/ass/upload/";
 		try {
 			file.transferTo(new File(path + filename));
 			file2 = new File(path + filename);

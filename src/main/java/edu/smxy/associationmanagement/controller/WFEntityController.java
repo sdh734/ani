@@ -9,6 +9,7 @@ import edu.smxy.associationmanagement.services.association.AssociationService;
 import edu.smxy.associationmanagement.services.file.FileService;
 import edu.smxy.associationmanagement.services.keyproject.KeyProjectService;
 import edu.smxy.associationmanagement.services.wfentity.WFEntityService;
+import edu.smxy.associationmanagement.utils.PathUtil;
 import edu.smxy.associationmanagement.utils.StompMessageUtil;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -162,9 +163,9 @@ public class WFEntityController {
         String filename = file.getOriginalFilename();
         String path = "";
         if (applytype == 1 || applytype == 2) {
-          path = "G:\\upload\\apply\\KeyProject\\";
+          path = PathUtil.APPLYPATH_KEYPROJECT;
         } else {
-          path = "G:\\upload\\apply\\AssReg\\";
+          path = PathUtil.APPLYPATH_ASSREG;
         }
 
         file.transferTo(new File(path + filename));

@@ -18,7 +18,7 @@
         <include refid="Base_Column_List"/>
         from t_file
         WHERE
-        t_file.eventid != -1 and !ISNULL(t_file.authorid)
+        t_file.eventid &gt; 0 and !ISNULL(t_file.authorid)
     </select>
     <select id="getAllFileByAssid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select

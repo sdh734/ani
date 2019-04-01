@@ -8,6 +8,7 @@ import edu.smxy.associationmanagement.domain.JSONResult;
 import edu.smxy.associationmanagement.services.association.AssociationService;
 import edu.smxy.associationmanagement.services.classperiod.ClassPeriodService;
 import edu.smxy.associationmanagement.services.teacher.TeacherService;
+import edu.smxy.associationmanagement.utils.PathUtil;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -90,11 +91,9 @@ public class ClassPeriodController {
 		List<ClassPeriodResult> classPeriodResults = getClassPeriodResult(assid);
 		final Association association =
 				this.associationService.selectByPrimaryKey(Integer.valueOf(assid));
-		// 本地目录
-		final String filepath =
-				"G:\\upload\\guideinfo\\" + association.getAssociationName() + "-指导情况统计.xls";
-		// 服务器目录
-		// final String filepath = "/www/wwwroot/ass/upload/";
+        // 目录
+        final String filepath = PathUtil.GUIDE_INFO + association.getAssociationName() + "-指导情况统计.xls";
+
 		final String filename = association.getAssociationName() + "-指导情况统计.xls";
 		if (classPeriodResults.size() > 0) {
 			ExcelExportUtil.exportToFile(classPeriodResults, filepath);
