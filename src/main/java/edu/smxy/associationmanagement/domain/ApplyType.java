@@ -10,7 +10,17 @@ public class ApplyType {
 	private Date startTime;
 
 	private Date endTime;
-
+	
+	private Integer templateFile;
+	
+	public Integer getTemplateFile() {
+		return templateFile;
+	}
+	
+	public void setTemplateFile(Integer templateFile) {
+		this.templateFile = templateFile;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
