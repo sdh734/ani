@@ -3,8 +3,6 @@ package edu.smxy.associationmanagement.controller.websocket;
 import edu.smxy.associationmanagement.domain.stomp.StompRequestMessage;
 import edu.smxy.associationmanagement.domain.stomp.StompResponseMessage;
 import edu.smxy.associationmanagement.utils.StompMessageUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @ResponseBody
 public class StompController {
-  private Logger logger = LoggerFactory.getLogger(this.getClass());
 
   @Autowired private SimpMessagingTemplate messagingTemplate;
 
