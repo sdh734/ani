@@ -19,12 +19,12 @@ import java.util.List;
  * @author: SDH
  * @createTime: 2019-03-31 01:06
  */
-@Component
 @ResponseBody
 public class StompMessageUtil {
+
+  private static UserService userService = SpringContextUtils.getBean(UserService.class);
   private static SimpMessagingTemplate messageTemplate =
       SpringContextUtils.getBean(SimpMessagingTemplate.class);
-  private static UserService userService = SpringContextUtils.getBean(UserService.class);
 
   public static SimpMessagingTemplate getMessageTemplate() {
     return messageTemplate;
