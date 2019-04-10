@@ -4,7 +4,6 @@ import edu.smxy.associationmanagement.domain.User;
 import edu.smxy.associationmanagement.domain.stomp.StompResponseMessage;
 import edu.smxy.associationmanagement.services.users.UserService;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
