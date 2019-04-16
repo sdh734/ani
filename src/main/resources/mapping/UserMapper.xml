@@ -130,4 +130,15 @@
             parameterType="edu.smxy.associationmanagement.domain.User">
     select * from t_users where account = #{account,jdbcType=VARCHAR} AND password = #{password,jdbcType=VARCHAR}
   </select>
+    <select id="queryUser" resultType="edu.smxy.associationmanagement.domain.User" parameterType="edu.smxy.associationmanagement.domain.User">
+        SELECT
+        *
+        FROM t_users
+        WHERE
+        account = #{account,jdbcType=VARCHAR}
+        AND password = #{password,jdbcType=VARCHAR}
+        AND name=#{name,jdbcType=VARCHAR}
+        AND phone=#{phone,jdbcType=VARCHAR}
+        AND associationid=#{associationid,jdbcType=INTEGER}
+    </select>
 </mapper>

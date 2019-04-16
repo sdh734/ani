@@ -72,4 +72,9 @@ public class UserServiceImpl implements UserService {
 	public List<User> getAllByType(int type) {
 		return userMapper.getAllByType(type);
 	}
+	
+	@Override
+	public User queryUser(User user) {
+		return userMapper.queryUser(user);
+	}
 }

@@ -74,6 +74,7 @@ public class AssociationController {
 		association.setCount(Integer.valueOf(request.getParameter("assnumber")));
 		association.setCreationTime(new Date());
 		association.setIsRegistered(true);
+		association.setIsDeleted(0);
 		this.associationService.insert(association);
 		final Association association2 = this.associationService.query(association);
 		teacher.setTeacherName(request.getParameter("assteachername"));
@@ -89,7 +90,7 @@ public class AssociationController {
 		user.setType(0);
 		user.setAssociationid(association2.getAssociationid());
 		this.userService.insert(user);
-		final User user2 = this.userService.query(user);
+		final User user2 = this.userService.queryUser(user);
 		association2.setPresidentid(user2.getId());
 		final Teacher teacher2 = this.teacherService.query(teacher);
 		association2.setTeacher(teacher2.getTeacherId());

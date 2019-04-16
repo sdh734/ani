@@ -22,6 +22,7 @@
 	AND teacher_college =  #{teacherCollege,jdbcType=VARCHAR}
 	AND teacher_phone = #{teacherPhone,jdbcType=VARCHAR}
 	AND teacher_gender =  #{teacherGender,jdbcType=VARCHAR}
+	AND teacher_association=#{teacherAssociation,jdbcType=INTEGER}
     </select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select

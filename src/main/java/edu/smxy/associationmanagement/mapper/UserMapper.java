@@ -22,5 +22,6 @@ public interface UserMapper {
   List<User> getAll();
 
   List<User> getAllByType(int type);
-  
+
+  User queryUser(User user);
 }
